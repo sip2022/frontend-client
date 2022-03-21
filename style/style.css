@@ -4,6 +4,8 @@
     padding: 0;
 }
 
+
+/*-------------LOGIN---------------*/
 .mainLogin{
     text-align: center;
     justify-content: center;
@@ -109,3 +111,27 @@
     
 }
 
+/*-----NUEVO USUARIO-----------*/
+
+.mainNuevoUsuario{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding: 90px 0 90px 0px;
+    background-image: url(../img/fondoLogin.jpg);
+    background-attachment: contain;
+	background-size: cover;
+}
+
+.subNuevoUsuario{
+    display: grid;
+   padding: 50px;
+    height: 500px;
+    width: 40%;
+    box-shadow: 10px 13px 20px rgb(129, 129, 129);
+    background-color: azure;
+}
+
+#obligatoro{
+    color: red;
+}
