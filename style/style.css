@@ -114,24 +114,47 @@
 /*-----NUEVO USUARIO-----------*/
 
 .mainNuevoUsuario{
+    display: flex;
     text-align: center;
     justify-content: center;
-    display: flex;
-    padding: 90px 0 90px 0px;
+    align-items: center;
+    height: 100vh;
     background-image: url(../img/fondoLogin.jpg);
-    background-attachment: contain;
 	background-size: cover;
 }
 
 .subNuevoUsuario{
-    display: grid;
-   padding: 50px;
-    height: 500px;
-    width: 40%;
+    padding: 50px;
+    position: relative;
+    width: 25%;
     box-shadow: 10px 13px 20px rgb(129, 129, 129);
     background-color: azure;
 }
 
-#obligatoro{
-    color: red;
+
+.camposNuevoUser{
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.tituloCrearUser{
+    text-align: start;
+    margin-bottom: 10px;
+    font-size: 40px;
+    color: rgb(40, 41, 29);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.crearUser{
+    padding: 10px 40px;
+    color:white;
+    font-size: 17px;
+    background-color: rgba(129, 5, 129, 0.651);
+    border-radius: 15px;
 }
