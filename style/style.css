@@ -60,7 +60,7 @@ header nav ul{
     height: 70px;
     display: flex;
     flex-direction: row;
-
+justify-content: center;
     background-color: rgb(112, 112, 112);
 }
 
@@ -77,12 +77,16 @@ header nav ul{
     padding-left: 20px;
 }
 
+
 .iconos{
     height: 30px;
     width: 30px;
 }
 
-
+.iconos:hover{
+    height: 35px;
+    width: 35px;
+}
 
 
 /*-------------LOGIN---------------*/
