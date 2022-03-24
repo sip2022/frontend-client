@@ -4,6 +4,23 @@
     padding: 0;
 }
 
+/*-------------HEADER---------------*/
+header{
+    height: 3em;
+    width: 100%;
+    position: fixed;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.boton_header{
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 0.5em 2em 0.5em 2em;
+    color: rgb(66, 66, 66);
+}
 
 /*-------------LOGIN---------------*/
 .mainLogin{
