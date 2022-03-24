@@ -23,10 +23,11 @@
     height: 400px;
     width: 30%;
     box-shadow: 10px 13px 20px rgb(129, 129, 129);
-    padding-top: 30px;
+    /* padding-top: 30px; */
     border-radius: 50px;
     background-color: azure;
 
+    justify-content: center;
 }
 
 .iconoUser{
