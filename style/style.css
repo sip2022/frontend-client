@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+.bodyHome{
+    height: 100vh;
+    overflow: hidden;
+}
 
 /*-------------LOGIN---------------*/
 .mainLogin{
@@ -12,8 +16,8 @@
     display: flex;
     padding: 90px 0 90px 0px;
     background-image: url(../img/fondoLogin.jpg);
-    background-attachment: contain;
 	background-size: cover;
+    height: 100%;
 }
 
 .subMainLogin{
