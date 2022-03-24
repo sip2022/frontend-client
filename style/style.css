@@ -5,7 +5,7 @@
 }
 
 .bodyHome{
-    height: 100vh;
+    height: calc(100vh - 70px);
     overflow: hidden;
 }
 
@@ -27,6 +27,36 @@ header{
     color: rgb(66, 66, 66);
 }
 
+/*-----------FOOTER--------*/
+.miFooter{
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+
+    background-color: rgb(112, 112, 112);
+}
+
+.listaFooter{
+    padding: 20px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.listaFooter li{
+    padding-left: 20px;
+}
+
+.iconos{
+    height: 30px;
+    width: 30px;
+}
+
+
+
+
 /*-------------LOGIN---------------*/
 .mainLogin{
     text-align: center;
@@ -35,7 +65,7 @@ header{
     padding: 90px 0 90px 0px;
     background-image: url(../img/fondoLogin.jpg);
 	background-size: cover;
-    height: 100%;
+
 }
 
 .subMainLogin{
@@ -141,7 +171,7 @@ header{
     text-align: center;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 70px);
     background-image: url(../img/fondoLogin.jpg);
 	background-size: cover;
 }
