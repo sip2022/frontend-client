@@ -89,6 +89,18 @@ justify-content: center;
 }
 
 
+
+/*-----------HOME-------------------*/
+.mainHome{
+    height: 900px;
+    width: 100%;
+    background: linear-gradient(to right, #659999, #f4791f);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+
 /*-------------LOGIN---------------*/
 .mainLogin{
     text-align: center;
