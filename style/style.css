@@ -107,16 +107,16 @@ header nav ul{
 .seccionActividades{
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
-    grid-template-rows: 50px 50px 400px;
+    grid-template-rows: 50px 50px 350px;
     grid-template-areas:
         "tituloUnoHome tituloUnoHome tituloUnoHome tituloUnoHome"
         "tituloDosHome tituloDosHome tituloDosHome tituloDosHome"
         " carta1 carta2 carta3 cartaVerMas";
     column-gap: 1%;
     justify-items:center;
-    row-gap: 20px;
+    row-gap: 5px;
     padding-top: 60px;
-    margin-bottom: 50px;
+
 }
 
 .tituloUnoHome{
@@ -129,36 +129,88 @@ header nav ul{
 
 
 .carta{
-    height: 300px;
+    height: 100%;
     width: 85%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
     text-align: center;
-    background-color: red;
-         
+    background: linear-gradient(to right, #659999, #f4791f);
+    border: 2px solid rgb(0, 225, 255);
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px black;
 }
 
 .carta img{
     height: 70%;
+    width: 95%;
 }
+
+.carta button {
+    height: 15%;
+    width: 70%;
+    color: white;
+    font-size: 20px;
+    background-color: rgb(194, 12, 194);
+    border-radius: 10px;
+}
+
+
 
 .masActividades{
  background-image: url(../img/verMasActividades.jpg);
+ background-repeat: no-repeat;
+ background-size:cover;
  overflow: hidden;
  text-align: center;
  justify-content: center;
 }
 
+.masActividades a{
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+    box-shadow: 1px 1px 10px rgb(96, 165, 255);
+}
+
+.masActividades a:hover{
+    font-size: 45px;
+}
 
 .masPlanes{
     background-image: url(../img/verMasPlanes.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
     overflow: hidden;
     text-align: center;
     justify-content: center;
 }
 
+.masPlanes a{
+    color: rgb(73, 3, 80);
+    text-decoration: none;
+    font-size: 40px;
+    box-shadow: 1px 1px 10px rgb(29, 0, 156);
+}
 
+.masPlanes a:hover{
+    font-size: 45px;
+}
+
+
+.nosotrosHome{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nosotrosHome video{
+    height: 80%;
+    width: 60%;
+    border: 1px solid black;
+}
 
 /*-------------LOGIN---------------*/
 .mainLogin{
