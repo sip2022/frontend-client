@@ -63,8 +63,6 @@ header nav ul{
     justify-content: center;
     background-color: rgb(112, 112, 112);
 
-    position: fixed;
-    bottom: 0%;
     width: 100%;
 }
 
