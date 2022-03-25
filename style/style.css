@@ -96,13 +96,68 @@ header nav ul{
 
 /*-----------HOME-------------------*/
 .mainHome{
-    height: 900px;
+    height: 2000px;
     width: 100%;
     background: linear-gradient(to right, #659999, #f4791f);
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
 }
+
+.seccionActividades{
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24%;
+    grid-template-rows: 50px 50px 400px;
+    grid-template-areas:
+        "tituloUnoHome tituloUnoHome tituloUnoHome tituloUnoHome"
+        "tituloDosHome tituloDosHome tituloDosHome tituloDosHome"
+        " carta1 carta2 carta3 cartaVerMas";
+    column-gap: 1%;
+    justify-items:center;
+    row-gap: 20px;
+    padding-top: 60px;
+    margin-bottom: 50px;
+}
+
+.tituloUnoHome{
+    grid-area: tituloUnoHome;
+}
+
+.tituloDosHome{
+    grid-area: tituloDosHome;
+}
+
+
+.carta{
+    height: 300px;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    background-color: red;
+         
+}
+
+.carta img{
+    height: 70%;
+}
+
+.masActividades{
+ background-image: url(../img/verMasActividades.jpg);
+ overflow: hidden;
+ text-align: center;
+ justify-content: center;
+}
+
+
+.masPlanes{
+    background-image: url(../img/verMasPlanes.jpg);
+    overflow: hidden;
+    text-align: center;
+    justify-content: center;
+}
+
 
 
 /*-------------LOGIN---------------*/
