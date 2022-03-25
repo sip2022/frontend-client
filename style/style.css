@@ -395,3 +395,32 @@ header nav ul{
     width: 33%;
 }
 
+.sect_hidden{
+    visibility: hidden;
+}
+
+.boton_press{
+    background-color: lightslategray;
+}
+
+#settings{
+    height: 15em;
+    background-color: gray;
+    margin: 1em;
+    padding: 0.5em;
+    overflow: scroll;
+}
+
+#settings section{
+    /* height: 100%;
+    width: 100%; */
+}
+#settings_usuarios{
+    background-color: lightcoral;
+}
+#settings_actividades{
+    background-color: lightslategray;
+}
+#settings_planes{
+    background-color: lightseagreen;
+}
