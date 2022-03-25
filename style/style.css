@@ -225,11 +225,12 @@ header nav ul{
 }
 
 .subNuevoUsuario{
-    padding: 50px;
+    padding: 1em;
     position: relative;
     width: 25%;
     box-shadow: 10px 13px 20px rgb(129, 129, 129);
     background-color: azure;
+    border-radius: 15px;
 }
 
 
@@ -243,11 +244,11 @@ header nav ul{
 }
 
 .tituloCrearUser{
-    text-align: start;
+    text-align: center;
     margin-bottom: 10px;
     font-size: 40px;
     color: rgb(40, 41, 29);
-    position: absolute;
+    /* position: absolute; */
     top: 10px;
     left: 10px;
 }
