@@ -89,6 +89,10 @@ header nav ul{
     width: 35px;
 }
 
+#footer_login, #footer_nuevoUser{
+    position: fixed;
+    bottom: 0%;
+}
 
 
 /*-----------HOME-------------------*/
