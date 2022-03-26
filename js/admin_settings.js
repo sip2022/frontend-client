@@ -35,6 +35,33 @@ class Admin_settings{
                 boton_planes.classList.add("boton_press")
             });
         });
+
+        let submit_newUser = document.getElementById("submit_newUser");
+        submit_newUser.addEventListener("click", ()=>{
+            fetch("https://sip-api-dev.herokuapp.com/user", {
+                method: 'POST', 
+                mode: 'cors', 
+                cache: 'no-cache', 
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
+                body: JSON.stringify(
+                    {
+                        "dni": 12345678,
+                        "password": "asdwd3456",
+                        "email": "diegoFake@email.com",
+                        "firstName": "diego",
+                        "lastName": "maradona",
+                        "age": 35,
+                        "phone": 1234
+                    }
+                )})
+                .then(data => {
+                    console.log('Success:', data);
+                    })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    });
+        })
+
         
 
     }

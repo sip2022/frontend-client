@@ -24,7 +24,7 @@
     </header>
 
     <main class="mainNuevoUsuario">
-        <form class="subNuevoUsuario">
+        <form class="subNuevoUsuario" action="https://sip-api-dev.herokuapp.com/user" method="POST">
             <h1 class="tituloCrearUser">Crear Cuenta</h1>
             <article class="camposNuevoUser">
                 <label for="campoNombre">Nombre</label>
@@ -34,6 +34,11 @@
             <article class="camposNuevoUser">
                 <label for="campoApellido">Apellido</label>
                 <input required id="campoApellido" type="text">
+            </article>
+
+            <article class="camposNuevoUser">
+                <label for="campoApellido">DNI</label>
+                <input required id="campoDNI" type="number">
             </article>
             
             <article class="camposNuevoUser">
@@ -50,8 +55,9 @@
                 <label for="campoPass">Contraseña</label>
                 <input required id="campoPass" type="password" name="" id="">
             </article>
-            <button class="crearUser">Crear</button>
-            
+
+            <button id="submit_newUser" class="crearUser">Crear</button>
+            <!-- <input id="submit_newUser" class="crearUser" type="submit" value="Crear"> -->
 
         </form>
 
