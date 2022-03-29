@@ -69,3 +69,10 @@ class Admin_settings{
 }
 
 let admin_settings = new Admin_settings();
+
+//  Supuesto y Restricciones
+// La organización deberá contratar un servicio externo para llevar a cabo el mantenimiento futuro del sistema, no es necesariamente instalar terminales ya que el sistema puede utilizarse vía móvil para facilitar la usabilidad del mismo. 
+
+// Además se debe saber que, una vez terminado el sistema, el equipo de desarrollo lo subirá al servidor que la organización le indique, dándole el control y la responsabilidad total a ellos. Esto último con el fin de evitar futuras incriminaciones al equipo ,por cualquier incidente o cambio que puedan llegar a realizar sobre el sistema.
+
+// No será necesario que Géminis Club adquiera licencias ya que las librerías y herramientas a utilizar son de uso gratuito.
