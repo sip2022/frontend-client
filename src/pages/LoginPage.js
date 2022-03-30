@@ -1,8 +1,10 @@
+import LoginForm from "../components/login/LoginForm";
+
 function LoginPage() {
     return(
-        <div>
-            Login
-        </div>
+        <section>
+            <LoginForm />
+        </section>
     );
 }
 

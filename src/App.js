@@ -6,6 +6,7 @@ import ContactosPage from './pages/ContactosPage'
 import LoginPage from './pages/LoginPage'
 
 import {Routes, Route} from 'react-router-dom';
+import NewUserPage from './pages/NewUser';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/planes' element={<PlanesPage />} />
           <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/newUser' element={<NewUserPage />} />
         </Routes>
       </Layout>
     </div>
