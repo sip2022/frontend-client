@@ -5,8 +5,8 @@ import classes from './mainNavigation.module.css';
 function MainNavigation() {
 
     return(
-        <header >
-            <div >Club Geminis</div>
+        <header className={classes.header}>
+            <div className={classes.logo}>Club Geminis</div>
             <nav>
                 <ul>
                     <li>
@@ -19,7 +19,7 @@ function MainNavigation() {
                         <Link to='/contactos'>Contactos</Link>
                     </li>
                     <li>
-                        <Link to='/planes'>Planes</Link>
+                        <Link to='/login'>Iniciar sesion/Registrarse</Link>
                     </li>
                 </ul>
             </nav>
