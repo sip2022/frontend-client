@@ -10,6 +10,8 @@
     justify-content: space-evenly;
     background-color: #F8B551;
     /* padding: 0 10%; */
+    position: sticky;
+    top: 0;
 }
 
 .logo{
