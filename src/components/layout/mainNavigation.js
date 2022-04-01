@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import classes from './mainNavigation.module.css';
+import { useContext } from 'react';
+import AuthContext from '../../store/authContext';
 
 function MainNavigation() {
+
+    const authCtx = useContext(AuthContext);
 
     return(
         <header className={classes.header}>
@@ -18,12 +22,30 @@ function MainNavigation() {
                     <li>
                         <Link to='/contactos'>Contactos</Link>
                     </li>
-                    <li>
-                        <Link to='/login'>Iniciar sesion/Registrarse</Link>
-                    </li>
+
+                    {authCtx.isLogged ? <LoggedSection userName={authCtx.logguedName} /> : <NotLoggedSection />}                
+
                 </ul>
             </nav>
         </header>
+    );
+}
+
+function LoggedSection(props) {
+    // TODO cmopletar para que muestre el nombre y la imagen del usuario
+    return (
+        <li>
+            <Link to='/login'>{props.userName}</Link>
+        </li> 
+    );
+}
+
+function NotLoggedSection() {
+    
+    return (
+        <li>
+            <Link to='/login'>Iniciar sesion/Registrarse</Link>
+        </li> 
     );
 }
 
