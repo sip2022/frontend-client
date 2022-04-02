@@ -14,24 +14,20 @@ export function AuthContextProvider(props) {
     const [loggedName, setLoggedName] = useState();
 
     useEffect( () => {
-        // TODO get cookies
         const username = Cookies.get('username');
         if(username){
             setIsLogged(true);
             setLoggedName(username);
         }
-        console.log('Se verificaron las cookies. Esto deberia pasar una vez solamente')
     }, []);
-
+    
     function loginUserHandler(userName) {
-        // TODO set cookies
         Cookies.set('username', userName, {expires: 1});
         setLoggedName(userName);
         setIsLogged(true);
     }
 
     function logoutUserHandler(){
-        // TODO set cookies
         Cookies.remove('username');
         setLoggedName(null);
         setIsLogged(false);
