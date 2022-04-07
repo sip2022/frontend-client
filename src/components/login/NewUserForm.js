@@ -4,7 +4,14 @@ import { useRef } from 'react';
 
 import CardForm from '../ui/CardForm';
 
+
+import { register } from "../../actions/auth";
+import { useDispatch } from 'react-redux';
+
+
 function NewUserForm(props) {
+
+    const dispatch = useDispatch()
 
     const navigate = useNavigate();
 
@@ -19,37 +26,33 @@ function NewUserForm(props) {
     function submitHandler(event) {
         event.preventDefault();
 
-        const enteredDni = dniInputRef.current.value;
+        const enteredDni = parseInt(dniInputRef.current.value);
         const enteredPass = passInputRef.current.value;
         const enteredEmail = emailInputRef.current.value;
         const enteredFirstName = firstNameInputRef.current.value;
         const enteredLastName = lastNameInputRef.current.value;
-        const enteredAge = ageInputRef.current.value;
+        const enteredAge = parseInt(ageInputRef.current.value);
         const enteredPhone = phoneInputRef.current.value;
 
-        fetch("https://sip-api-dev.herokuapp.com/user", {
-                method: 'POST', 
-                mode: 'cors', 
-                cache: 'no-cache', 
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}, 
-                body: JSON.stringify(
-                    {
-                        "dni": enteredDni,
-                        "password": enteredPass,
-                        "email": enteredEmail,
-                        "firstName": enteredFirstName,
-                        "lastName": enteredLastName,
-                        "age": enteredAge,
-                        "phone": enteredPhone
-                    }
-                )})
-            .then(data => {
-                console.log('Success:', data);
-                })
-            .catch((error) => {
-                console.error('Error:', error);
-                });
-        
+        // firstName, lastName, dni, email, age, phone, password
+        dispatch(register(
+            enteredFirstName,
+            enteredLastName,
+            enteredDni,
+            enteredEmail,
+            enteredAge,
+            enteredPhone,
+            enteredPass
+        ))
+            .then(()=>{
+                // navigate('/', {replace: true})
+                console.log("Registro exitoso!")
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+
+    
     }
     
     function goLoginUser(event) {
@@ -95,7 +98,7 @@ function NewUserForm(props) {
                 </div>
 
                 <div className={classes.action}>
-                    <a id="login-Usuario" href="login.html" onClick={goLoginUser}>Iniciar Sesion</a>
+                    <a id="login-Usuario" href="login.html" onClick={goLoginUser}>¿Ya tienes una cuenta?</a>
                 </div>
             </form>
         </CardForm>

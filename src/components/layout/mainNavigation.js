@@ -2,11 +2,9 @@ import { Link } from 'react-router-dom';
 
 import classes from './mainNavigation.module.css';
 import { useContext } from 'react';
-import AuthContext from '../../store/authContext';
 
 function MainNavigation() {
-
-    const authCtx = useContext(AuthContext);
+    // NEED REDUX HERE
 
     return(
         <header className={classes.header}>
@@ -23,8 +21,8 @@ function MainNavigation() {
                         <Link to='/contactos'>Contactos</Link>
                     </li>
 
-                    {authCtx.isLogged ? <LoggedSection userName={authCtx.logguedName} /> : <NotLoggedSection />}                
-
+                    {/* {authCtx.isLogged ? <LoggedSection userName={''} /> : <NotLoggedSection />}                 */}
+                    <NotLoggedSection />
                 </ul>
             </nav>
         </header>

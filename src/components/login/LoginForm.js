@@ -3,22 +3,44 @@ import { useNavigate } from 'react-router-dom';
 
 import CardForm from '../ui/CardForm';
 import { useContext, useRef } from 'react';
-import AuthContext from '../../store/authContext';
+
+
+import {login} from "../../actions/auth";
+import { useDispatch } from 'react-redux';
+
 
 function LoginForm(props) {
 
+    const dispatch = useDispatch()
+
     const navigate = useNavigate();
 
-    const authCtx = useContext(AuthContext);
-
     const nameInputRef = useRef();
+
+    const state = {
+        username: "",
+        password: "",
+    }
+
+    function onChangeUsername(e) {
+        state.username = e
+    }
+    function onChangePassword(e) {
+        state.password = e
+    }
     
     function submitHandler(event) {
         event.preventDefault();
-        // TODO fetch
-        authCtx.loginUser(nameInputRef.current.value);
-        
-        navigate('/', {replace: true});
+        state.loading = true;
+        // validates data
+        // if(validado){}
+        dispatch(login(state.username, state.password))
+            .then( () => {
+                navigate('/', {replace: true});
+            })
+            .catch( (error) => {
+                console.log(error)
+            })
     }
 
     function goNewUser(event) {
@@ -29,7 +51,7 @@ function LoginForm(props) {
     return(
         <CardForm >
             <form className={classes.form} onSubmit={submitHandler}>
-                <img className={classes.iconoUser} src="../../images/userIcono.png" alt="" />
+                <img className={classes.iconoUser} src="../../../images/userIcono.png" alt="" />
                 <h1>Bienvenido</h1>
                 <div className={classes.field}>
                     <input id="nombre-Usuario" type="text" placeholder="Ingrese Usuario" ref={nameInputRef} required />
