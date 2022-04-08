@@ -1,6 +1,5 @@
 import axios from 'axios';
-import authHeader from './auth-header';
-
+import authHeader from './auth-Header';
 
 const API_URL = 'https://sip-api-dev.herokuapp.com/';
 
@@ -13,9 +12,9 @@ class UserService {
     */
 
 
-    // getPublicContent() {
-    //     return axios.get(API_URL + 'all');
-    // }
+    getUserList() {
+        return axios.get(API_URL + 'all');
+    }
 
     // getUserBoard() {
     //     return axios.get(API_URL + 'user', { headers: authHeader() });
