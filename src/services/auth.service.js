@@ -1,12 +1,13 @@
 import axios from "axios";
+
 // URL a la que pegar para login --> /singup y /singin
 // const API_URL = "http://localhost:8080/api/auth/"; 
 const API_URL = "https://sip-api-dev.herokuapp.com"
 
 const headers = {
     'Content-Type': 'application/json'
+    // 'Access-Control-Allow-Origin': '*'
 }
-
 
 class AuthService {
 
@@ -27,14 +28,15 @@ class AuthService {
 
     register(firstName, lastName, dni, email, age, phone, password) {
         //   https://sip-api-dev.herokuapp.com/user
-        return axios.post(API_URL+"/register", JSON.stringify({
+        return axios.post(API_URL + "/register", JSON.stringify({
             dni: dni,
             password: password,
             email: email,
             firstName: firstName,
             lastName: lastName,
             age: age,
-            phone: phone,
+            // phone: JSON.stringify(phone),
+            phone: 2134,
             "rolesNames": ["USER"]
         }), {
             headers: headers

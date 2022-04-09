@@ -9,6 +9,7 @@ import {Routes, Route} from 'react-router-dom';
 import NewUserPage from './pages/NewUser';
 import { useState } from 'react';
 import UserListPage from './pages/UserListPage';
+import ActivacionPage from './pages/ActivacionPage';
 
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/newUser' element={<NewUserPage />} />
+          <Route path='/activacion' element={<ActivacionPage />} />
           <Route path='/userList' element={<UserListPage />} />
         </Routes>
       </Layout>

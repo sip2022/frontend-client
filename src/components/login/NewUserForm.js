@@ -45,8 +45,7 @@ function NewUserForm(props) {
             enteredPass
         ))
             .then(()=>{
-                // navigate('/', {replace: true})
-                console.log("Registro exitoso!")
+                navigate('/activacion', {replace: true})
             })
             .catch(function(error){
                 console.log(error)
