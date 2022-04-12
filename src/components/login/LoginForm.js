@@ -2,10 +2,10 @@ import classes from './LoginForm.module.css';
 import { useNavigate } from 'react-router-dom';
 
 import CardForm from '../ui/CardForm';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 
 
-import {login} from "../../actions/auth";
+import { login } from "../../actions/auth";
 import { useDispatch } from 'react-redux';
 
 
@@ -18,12 +18,12 @@ function LoginForm(props) {
     const nameInputRef = useRef();
 
     const state = {
-        username: "",
+        email: "",
         password: "",
     }
 
-    function onChangeUsername(e) {
-        state.username = e
+    function onChangeEmail(e) {
+        state.email = e
     }
     function onChangePassword(e) {
         state.password = e
@@ -32,14 +32,18 @@ function LoginForm(props) {
     function submitHandler(event) {
         event.preventDefault();
         state.loading = true;
+
         // validates data
         // if(validado){}
-        dispatch(login(state.username, state.password))
+
+        dispatch(login(state.email, state.password))
             .then( () => {
                 navigate('/', {replace: true});
             })
             .catch( (error) => {
+                console.log("Error al loguearse")
                 console.log(error)
+                // TODO mostrar mensaje de error
             })
     }
 
@@ -54,10 +58,10 @@ function LoginForm(props) {
                 <img className={classes.iconoUser} src="../../../images/userIcono.png" alt="" />
                 <h1>Bienvenido</h1>
                 <div className={classes.field}>
-                    <input id="nombre-Usuario" type="text" placeholder="Ingrese Usuario" ref={nameInputRef} required />
+                    <input id="email-Usuario" type="email" placeholder="Ingrese E-mail" ref={nameInputRef} onChange={onChangeEmail} required />
                 </div>
                 <div className={classes.field}>
-                    <input id="contra-Usuario" type="password" placeholder="Ingrese Contraseña" required />
+                    <input id="contra-Usuario" type="password" placeholder="Ingrese Contraseña" onChange={onChangePassword} required />
                 </div>
                 <a className={classes.link} id="olvContraLogin" href="/">¿Olvidaste la contraseña?</a>
                 <div className={classes.action}>

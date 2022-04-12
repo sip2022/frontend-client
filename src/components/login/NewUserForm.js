@@ -49,6 +49,7 @@ function NewUserForm(props) {
             })
             .catch(function(error){
                 console.log(error)
+                // TODO mostrar mensaje de error
             })
 
     

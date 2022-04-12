@@ -45,15 +45,14 @@ export const register = (firstName, lastName, dni, email, age, phone, password) 
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
+        console.log("correcto")
         return Promise.resolve();
       },
       (error) => {
         const message =
           (error.response &&
             error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+            error.response.data.message) || error.message || error.toString();
         dispatch({
           type: LOGIN_FAIL,
         });
@@ -61,6 +60,8 @@ export const register = (firstName, lastName, dni, email, age, phone, password) 
           type: SET_MESSAGE,
           payload: message,
         });
+          
+        console.log("malo")
         return Promise.reject();
       }
     );

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// URL a la que pegar para login --> /singup y /singin
-// const API_URL = "http://localhost:8080/api/auth/"; 
 const API_URL = "https://sip-api-dev.herokuapp.com"
 
 const headers = {
@@ -36,7 +34,7 @@ class AuthService {
             lastName: lastName,
             age: age,
             // phone: JSON.stringify(phone),
-            phone: 2134,
+            phone: parseInt(phone),
             "rolesNames": ["USER"]
         }), {
             headers: headers

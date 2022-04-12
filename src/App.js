@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage'
 
 import {Routes, Route} from 'react-router-dom';
 import NewUserPage from './pages/NewUser';
-import { useState } from 'react';
 import UserListPage from './pages/UserListPage';
 import ActivacionPage from './pages/ActivacionPage';
 
