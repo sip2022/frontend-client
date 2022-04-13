@@ -10,6 +10,7 @@ const headers = {
 class AuthService {
 
     login(username, password) {
+        // username contiene el mail --> username = mail
         // return axios
         //     .post(API_URL + "signin", { username, password })
         //     .then((response) => {
