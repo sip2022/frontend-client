@@ -1,17 +1,14 @@
 import classes from "./NewUserForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 import CardForm from "../ui/CardForm";
-
-import { register } from "../../actions/auth";
 import { useDispatch } from "react-redux";
 
-function NewUserForm() {
+// import { register } from "../../actions/auth";
+
+export default function NewUserForm() {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
@@ -22,91 +19,78 @@ function NewUserForm() {
     age: "",
   });
   const [errors, setErrors] = useState({});
-  const [{ disable, loading, isVacio }, setFlag] = useState({
+  const [{ disable, loading }, setFlag] = useState({
     disable: true,
     loading: false,
-    isVacio: 7
   });
-  // setFlag(prev => ({
-  //   ...prev,
-  //   loading: true
-  // }))
-
 
   function handleChange({ value, name }) {
-    const ob = {};
+    var error = validate(value, name);
+    if (!error) {
+      Object.values(input).filter((e) => e === "").length
+        ? setFlag((prev) => ({ ...prev, disable: true }))
+        : setFlag((prev) => ({ ...prev, disable: false }));
+    } else {
+      setFlag((prev) => ({ ...prev, disable: true }));
+    }
+  }
+
+  function validate(value, name) {
+    let ob = {};
+
+    setInput((prev) => ({ ...prev, [name]: value }));
     switch (name) {
       case "firstName":
-        ob[name] = value.length < 3 && "El Nombre debe tener minimo 3 caracteres.";
+        if (value.length < 3) 
+          ob[name] = "El Nombre debe tener minimo 3 caracteres.";
         break;
       case "lastName":
-        ob[name] = value.length < 3 && "El Apellido debe tener minimo 3 caracteres.";
+        if (value.length < 3) 
+          ob[name] = "El Apellido debe tener minimo 3 caracteres.";
         break;
-      // case 'age':
-      //     errors.age = value.length < 3 ? ' - ' : '' ;
-      //     break;
-      // case 'phone':
-      //     errors.phone = value.length < 3 ? ' - ' : '' ;
-      //     break;
+      case "age":
+        if (value > 100) 
+          ob[name] = " - ";
+        break;
+      case "phone":
+        if (value.length < 3 || value.length > 10) 
+          ob[name] = " - ";
+        break;
       case "dni":
-        ob[name] = value.length !== 8 && "El DNI debe ser de 8 numero exactos.";
+        if (value.length !== 8) 
+          ob[name] = "El DNI debe ser de 8 numero exactos.";
         break;
       case "email":
         var emailPattern = /\S+@\S+\.\S+/;
-        ob[name] = !emailPattern.test(value) && "El mail introducido no es valido.";
+        if (!emailPattern.test(value)) 
+          ob[name] = "El mail introducido no es valido.";
         break;
       case "password":
-        ob[name] =
-          value.length < 8 && "La contraseña debe tener minimo 8 caracteres.";
+        if (value.length < 8)
+          ob[name] = "La contraseña debe tener minimo 8 caracteres.";
         break;
       default:
         break;
     }
 
-
+    setErrors(ob);
     if (Object.keys(ob).length > 0) {
-      setErrors(ob);
-    }else{
-      setFlag( prev => ({
-        ...prev,
-        isVacio: prev.isVacio - 1
-      }))
-      setInput(prev => ({
-        ...prev,
-        [name]: value
-      }));
+      return true;
+    } else {
+      return false;
     }
-
   }
-
 
   function submitHandler(event) {
     event.preventDefault();
-
-    // validar:
-    // si algun campo esta vacio
-    // si no, enviar
-
-
-    // firstName, lastName, dni, email, age, phone, password
-    dispatch(
-      register(
-        input.firstName,
-        input.lastName,
-        input.dni,
-        input.email,
-        input.age,
-        input.phone,
-        input.password
-      )
-    )
-      .then(() => {
-        navigate("/activacion", { replace: true });
-      })
-      .catch(function (error) {
-        console.log(error);
-        // TODO mostrar mensaje de error
-      });
+    // dispatch(register(input))
+    //   .then(() => {
+    //     navigate("/activacion", { replace: true });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     // TODO mostrar mensaje de error
+    //   });
 
     console.log("no validado");
   }
@@ -119,113 +103,71 @@ function NewUserForm() {
   return (
     <CardForm>
       <form className={classes.form} onSubmit={submitHandler}>
-        <h1>¡Crea un nuevo usuario!</h1>
-
-        <div className={classes.field}>
-          <input
-            name="firstName"
-            id="campoNombre"
-            type="text"
-            placeholder="Nombre de Usuario"
-            required
-            value={input.firstName}
-            onChange={(e) => handleChange(e.target)}
-          />
-          {errors && (
-            <div className={classes.failAlert}>{errors.firstName}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="lastName"
-            id="campoApellido"
-            type="text"
-            placeholder="Apellido de usuario"
-            required
-            value={input.lastName}
-            onChange={handleChange}
-          />
-          {!input.errors.lastName ? null : (
-            <div className={classes.failAlert}>{input.errors.lastName}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="dni"
-            id="campoDNI"
-            type="number"
-            placeholder="DNI"
-            required
-            value={input.dni}
-            onChange={handleChange}
-          />
-          {!input.errors.dni ? null : (
-            <div className={classes.failAlert}>{input.errors.dni}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="age"
-            id="campoEdad"
-            type="number"
-            placeholder="Edad"
-            min="-1"
-            required
-            value={input.age}
-            onChange={handleChange}
-          />
-          {!input.errors.age ? null : (
-            <div className={classes.failAlert}>{input.errors.age}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="phone"
-            id="campoTel"
-            type="tel"
-            placeholder="Telefono"
-            // required
-            value={input.phone}
-            onChange={handleChange}
-          />
-          {!input.errors.phone ? null : (
-            <div className={classes.failAlert}>{input.errors.phone}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="email"
-            id="campoMail"
-            type="email"
-            placeholder="E-mail"
-            required
-            value={input.email}
-            onChange={handleChange}
-          />
-          {!input.errors.email ? null : (
-            <div className={classes.failAlert}>{input.errors.email}</div>
-          )}
-        </div>
-
-        <div className={classes.field}>
-          <input
-            name="password"
-            id="campoPass"
-            type="password"
-            placeholder="Contraseña"
-            required
-            value={input.password}
-            onChange={handleChange}
-          />
-          {!input.errors.password ? null : (
-            <div className={classes.failAlert}>{input.errors.password}</div>
-          )}
-        </div>
+        <h1>BIENVENIDO</h1>
+        <Input
+          name="firstName"
+          key="campoNombre"
+          type="text"
+          placeholder="Nombre"
+          value={input.firstName}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="lastName"
+          key="campoApellido"
+          type="text"
+          placeholder="Apellido"
+          value={input.lastName}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          type="text"
+          name="dni"
+          key="campoDNI"
+          placeholder="DNI"
+          value={input.dni}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="age"
+          key="campoEdad"
+          type="number"
+          placeholder="Edad"
+          value={input.age}
+          min={15}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="phone"
+          key="campoTel"
+          type="text"
+          placeholder="Telefono"
+          value={input.phone}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="email"
+          key="campoMail"
+          type="text"
+          placeholder="E-mail"
+          value={input.email}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="password"
+          key="campoPass"
+          type="text"
+          placeholder="Contraseña"
+          errors={errors}
+          value={input.password}
+          onChange={(e) => handleChange(e.target)}
+        />
 
         <div className={classes.action}>
           <button disabled={disable} id="crear-Usuario">
@@ -242,5 +184,16 @@ function NewUserForm() {
     </CardForm>
   );
 }
-
-export default NewUserForm;
+function Input(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.field}>
+      <input {...props} autoComplete="none" />
+      {errors[name] && (
+        <div className={classes.failAlert}>
+          <p>{errors[name]}</p>
+        </div>
+      )}
+    </div>
+  );
+}

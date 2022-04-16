@@ -94,3 +94,7 @@ h1{
     background-color: pink;
     text-align: center;
 }
+
+.failAlert p{
+    margin: 0%;
+}
