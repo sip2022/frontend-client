@@ -2,7 +2,7 @@ import classes from "./NewUserForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CardForm from "../ui/CardForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { registrarUsuario } from "../../store/slices/userData";
 
 // import { register } from "../../actions/auth";
@@ -99,7 +99,7 @@ export default function NewUserForm() {
         console.log("Registro exitoso");
         navigate("/activacion", { replace: true });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }

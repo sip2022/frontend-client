@@ -6,23 +6,23 @@ const initialState = {
   tokenJWT: "",
 };
 
-const API_URL = "https://sip-api-dev.herokuapp.com"
+const API_URL = "https://sip-api-dev.herokuapp.com";
 
 const headers = {
-    'Content-Type': 'application/json'
-    // 'Access-Control-Allow-Origin': '*'
-}
+  "Content-Type": "application/json",
+  // 'Access-Control-Allow-Origin': '*'
+};
 
 export const userDataSlice = createSlice({
   name: "userData",
   initialState,
   reducers: {
-    // (state, action) -> state: el estado actual, 'initialState' / action: 
+    // (state, action) -> state: el estado actual, 'initialState' / action:
     setUsername: (state, action) => {
-      state.username = action.payload
+      state.username = action.payload;
     },
     setJWT: (state, action) => {
-      state.tokenJWT = action.payload
+      state.tokenJWT = action.payload;
     },
   },
 });
@@ -31,22 +31,41 @@ export default userDataSlice.reducer;
 export const { setUsername, setJWT } = userDataSlice.actions;
 
 // Esta funcion la usran los componentes para registrar un usuario
-export const registrarUsuario = (firstName, lastName, dni, email, age, phone, password) => (dispatch) => {
-  return axios.post(API_URL + "/register", JSON.stringify({
-      dni: dni,
-      password: password,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      age: age,
-      // phone: JSON.stringify(phone),
-      phone: parseInt(phone),
-      "rolesNames": ["USER"]
-    }), {
-        headers: headers
-    })
-}
+export const registrarUsuario =
+  (firstName, lastName, dni, email, age, phone, password) => (dispatch) => {
+    return axios.post(
+      API_URL + "/register",
+      JSON.stringify({
+        dni: dni,
+        password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        // phone: JSON.stringify(phone),
+        phone: parseInt(phone),
+        rolesNames: ["USER"],
+      }),
+      {
+        headers: headers,
+      }
+    );
+  };
 
-export const loginUser = (username, password) => (dispatch) => {
-  return axios.post(API_URL + "/login")
-}
+export const loginUsuario = (email, password) => (dispatch) => {
+  return axios
+    .post(
+      API_URL + "/login",
+      JSON.stringify({
+        email: email,
+        password: password,
+      }),
+      {
+        headers: headers,
+      }
+    )
+    .then((response) => {
+      console.log("Logueado!")
+      console.log(response)
+    });
+};

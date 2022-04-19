@@ -1,78 +1,132 @@
-import classes from './LoginForm.module.css';
-import { useNavigate } from 'react-router-dom';
+import classes from "./LoginForm.module.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import CardForm from '../ui/CardForm';
-import { useRef } from 'react';
-
+import CardForm from "../ui/CardForm";
+import { loginUsuario } from "../../store/slices/userData";
 
 // import { login } from "../../actions/auth";
 // import { useDispatch } from 'react-redux';
 
+export default function LoginForm(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-function LoginForm(props) {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [disable, setDisable] = useState(true);
 
-    // const dispatch = useDispatch()
+  function handleChange({ value, name }) {
+    var error = validate(value, name);
+    if (!error) {
+      Object.values(input).filter((e) => e === "").length
+        ? setDisable(true)
+        : setDisable(false);
+    } else {
+        setDisable(true);
+    }
+  }
+  function validate(value, name) {
+    let ob = {};
 
-    const navigate = useNavigate();
-
-    const nameInputRef = useRef();
-
-    const state = {
-        email: "",
-        password: "",
+    setInput((prev) => ({ ...prev, [name]: value }));
+    switch (name) {
+      case "email":
+        var emailPattern = /\S+@\S+\.\S+/;
+        if (!emailPattern.test(value))
+          ob[name] = "El mail introducido no es valido.";
+        break;
+      case "password":
+        if (value.length < 8)
+          ob[name] = "La contraseña debe tener minimo 8 caracteres.";
+        break;
+      default:
+        break;
     }
 
-    function onChangeEmail(e) {
-        state.email = e
+    setErrors(ob);
+    if (Object.keys(ob).length > 0) {
+      return true;
+    } else {
+      return false;
     }
-    function onChangePassword(e) {
-        state.password = e
-    }
-    
-    function submitHandler(event) {
-        event.preventDefault();
-        state.loading = true;
+  }
 
-        // validates data
-        // if(validado){}
+  function submitHandler(event) {
+    event.preventDefault();
+    dispatch(loginUsuario(input.email, input.password))
+      .then(() => {
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-        // dispatch(login(state.email, state.password))
-        //     .then( () => {
-        //         navigate('/', {replace: true});
-        //     })
-        //     .catch( (error) => {
-        //         console.log("Error al loguearse")
-        //         console.log(error)
-        //         // TODO mostrar mensaje de error
-        //     })
-    }
+  function goNewUser(event) {
+    event.preventDefault();
+    navigate("/newUser", { replace: true });
+  }
 
-    function goNewUser(event) {
-        event.preventDefault();
-        navigate('/newUser', {replace: true});
-    }
-
-    return(
-        <CardForm >
-            <form className={classes.form} onSubmit={submitHandler}>
-                <img className={classes.iconoUser} src="../../../images/userIcono.png" alt="" />
-                <h1>Bienvenido</h1>
-                <div className={classes.field}>
-                    <input id="email-Usuario" type="email" placeholder="Ingrese E-mail" ref={nameInputRef} onChange={onChangeEmail} required />
-                </div>
-                <div className={classes.field}>
-                    <input id="contra-Usuario" type="password" placeholder="Ingrese Contraseña" onChange={onChangePassword} required />
-                </div>
-                <a className={classes.link} id="olvContraLogin" href="/">¿Olvidaste la contraseña?</a>
-                <div className={classes.action}>
-                    <button  id="ingresar-Usuario">Ingresar</button>
-                </div>
-                <div className={classes.action}>
-                    <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>Crear nuevo usuario</a>
-                </div>
-            </form>
-        </CardForm>
-    );
+  return (
+    <CardForm>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <img
+          className={classes.iconoUser}
+          src="../../../images/userIcono.png"
+          alt=""
+        />
+        <h1>Bienvenido</h1>
+        <Input
+          name="email"
+          key="email"
+          type="email"
+          placeholder="Ingrese E-mail"
+          value={input.email}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <Input
+          name="password"
+          key="password"
+          type="password"
+          placeholder="Ingrese Contraseña"
+          value={input.password}
+          errors={errors}
+          onChange={(e) => handleChange(e.target)}
+        />
+        <a className={classes.link} id="olvContraLogin" href="/">
+          ¿Olvidaste la contraseña?
+        </a>
+        <div className={classes.action}>
+          <button id="ingresar-Usuario" disabled={disable}>
+            Ingresar
+          </button>
+        </div>
+        <div className={classes.action}>
+          <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>
+            Crear nuevo usuario
+          </a>
+        </div>
+      </form>
+    </CardForm>
+  );
 }
 
-export default LoginForm;
+function Input(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.field}>
+      <input {...props} autoComplete="none" />
+      {errors[name] && (
+        <div className={classes.failAlert}>
+          <p>{errors[name]}</p>
+        </div>
+      )}
+    </div>
+  );
+}
