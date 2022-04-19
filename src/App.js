@@ -18,7 +18,7 @@ function App() {
     <div>
       <Layout>
         <Routes>
-          <Route path='/' element={<InicioPage />} />
+          <Route exact path='/' element={<InicioPage />} />
           <Route path='/actividades' element={<ActividadesPage />} />
           <Route path='/planes' element={<PlanesPage />} />
           <Route path='/contactos' element={<ContactosPage />} />

@@ -5,13 +5,13 @@ import CardForm from '../ui/CardForm';
 import { useRef } from 'react';
 
 
-import { login } from "../../actions/auth";
-import { useDispatch } from 'react-redux';
+// import { login } from "../../actions/auth";
+// import { useDispatch } from 'react-redux';
 
 
 function LoginForm(props) {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const navigate = useNavigate();
 
@@ -36,15 +36,15 @@ function LoginForm(props) {
         // validates data
         // if(validado){}
 
-        dispatch(login(state.email, state.password))
-            .then( () => {
-                navigate('/', {replace: true});
-            })
-            .catch( (error) => {
-                console.log("Error al loguearse")
-                console.log(error)
-                // TODO mostrar mensaje de error
-            })
+        // dispatch(login(state.email, state.password))
+        //     .then( () => {
+        //         navigate('/', {replace: true});
+        //     })
+        //     .catch( (error) => {
+        //         console.log("Error al loguearse")
+        //         console.log(error)
+        //         // TODO mostrar mensaje de error
+        //     })
     }
 
     function goNewUser(event) {

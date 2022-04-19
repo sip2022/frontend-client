@@ -5,9 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 
-// Redux 
+// Redux - Pasa el store a todos los compoenentes de la aplicacion
 import { Provider } from 'react-redux'
-import store from './store'
+import { store } from './app/store/store'
 
 
 ReactDOM.render(

@@ -80,7 +80,21 @@ h1{
     border-color: #5b9e96;
 }
 
+.action button:disabled{
+    cursor: no-drop;
+}
+
 .action a:hover, .action a:active {
     background-color: #5b9e96;
     border-color: #5b9e96;
+}
+
+.failAlert{
+    color: red;
+    background-color: pink;
+    text-align: center;
+}
+
+.failAlert p{
+    margin: 0%;
 }
