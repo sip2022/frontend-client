@@ -2,13 +2,15 @@ import classes from "./NewUserForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CardForm from "../ui/CardForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { registrarUsuario } from "../../store/slices/userData";
 
 // import { register } from "../../actions/auth";
 
 export default function NewUserForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [input, setInput] = useState({
     firstName: "",
     lastName: "",
@@ -19,9 +21,8 @@ export default function NewUserForm() {
     age: "",
   });
   const [errors, setErrors] = useState({});
-  const [{ disable, loading }, setFlag] = useState({
+  const [{ disable }, setFlag] = useState({
     disable: true,
-    loading: false,
   });
 
   function handleChange({ value, name }) {
@@ -41,28 +42,26 @@ export default function NewUserForm() {
     setInput((prev) => ({ ...prev, [name]: value }));
     switch (name) {
       case "firstName":
-        if (value.length < 3) 
+        if (value.length < 3)
           ob[name] = "El Nombre debe tener minimo 3 caracteres.";
         break;
       case "lastName":
-        if (value.length < 3) 
+        if (value.length < 3)
           ob[name] = "El Apellido debe tener minimo 3 caracteres.";
         break;
       case "age":
-        if (value > 100) 
-          ob[name] = " - ";
+        if (value > 100) ob[name] = " - ";
         break;
       case "phone":
-        if (value.length < 3 || value.length > 10) 
-          ob[name] = " - ";
+        if (value.length < 3 || value.length > 10) ob[name] = " - ";
         break;
       case "dni":
-        if (value.length !== 8) 
+        if (value.length !== 8)
           ob[name] = "El DNI debe ser de 8 numero exactos.";
         break;
       case "email":
         var emailPattern = /\S+@\S+\.\S+/;
-        if (!emailPattern.test(value)) 
+        if (!emailPattern.test(value))
           ob[name] = "El mail introducido no es valido.";
         break;
       case "password":
@@ -83,16 +82,26 @@ export default function NewUserForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-    // dispatch(register(input))
-    //   .then(() => {
-    //     navigate("/activacion", { replace: true });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     // TODO mostrar mensaje de error
-    //   });
 
-    console.log("no validado");
+    // (firstName, lastName, dni, email, age, phone, password)
+    dispatch(
+      registrarUsuario(
+        input.firstName,
+        input.lastName,
+        input.dni,
+        input.email,
+        input.age,
+        input.phone,
+        input.password
+      )
+    )
+      .then(() => {
+        console.log("Registro exitoso");
+        navigate("/activacion", { replace: true });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   function goLoginUser(event) {
@@ -162,7 +171,7 @@ export default function NewUserForm() {
         <Input
           name="password"
           key="campoPass"
-          type="text"
+          type="password"
           placeholder="Contraseña"
           errors={errors}
           value={input.password}
@@ -184,6 +193,7 @@ export default function NewUserForm() {
     </CardForm>
   );
 }
+
 function Input(props) {
   const { errors, name } = props;
   return (
