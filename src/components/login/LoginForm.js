@@ -6,9 +6,6 @@ import { useDispatch } from "react-redux";
 import CardForm from "../ui/CardForm";
 import { loginUsuario } from "../../store/slices/userData";
 
-// import { login } from "../../actions/auth";
-// import { useDispatch } from 'react-redux';
-
 export default function LoginForm(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,9 +24,10 @@ export default function LoginForm(props) {
         ? setDisable(true)
         : setDisable(false);
     } else {
-        setDisable(true);
+      setDisable(true);
     }
   }
+
   function validate(value, name) {
     let ob = {};
 
@@ -58,13 +56,12 @@ export default function LoginForm(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    dispatch(loginUsuario(input.email, input.password))
-      .then(() => {
-        navigate("/", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log("Input a enviar")
+    console.log(input)
+    dispatch(loginUsuario(input.email, input.password)).then(function (data) {
+      // if (data.status === "200") console.log("Paso");
+      // navigate("/", { replace: true });
+    });
   }
 
   function goNewUser(event) {

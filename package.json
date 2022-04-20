@@ -8,6 +8,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "axios-debug-log": "^0.8.4",
     "cors": "^2.8.5",
     "http-proxy-middleware": "^2.0.4",
     "js-cookie": "^3.0.1",
@@ -47,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "axios-logger": "^2.6.0",
     "redux-devtools-extension": "^2.13.9"
   }
 }

@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+axios.interceptors.request.use(request => {
+  console.log(request);
+  return request
+})
+
 const initialState = {
   username: "",
   tokenJWT: "",
@@ -32,7 +37,7 @@ export const { setUsername, setJWT } = userDataSlice.actions;
 
 // Esta funcion la usran los componentes para registrar un usuario
 export const registrarUsuario =
-  (firstName, lastName, dni, email, age, phone, password) => (dispatch) => {
+  (firstName, lastName, dni, email, age, phone, password) => () => {
     return axios.post(
       API_URL + "/register",
       JSON.stringify({
@@ -52,7 +57,7 @@ export const registrarUsuario =
     );
   };
 
-export const loginUsuario = (email, password) => (dispatch) => {
+export const loginUsuario = (email, password) => () => {
   return axios
     .post(
       API_URL + "/login",
@@ -65,7 +70,21 @@ export const loginUsuario = (email, password) => (dispatch) => {
       }
     )
     .then((response) => {
-      console.log("Logueado!")
-      console.log(response)
+      // if (response.data.accessToken) {
+      //   console.log(response.headers.get('Authorization'));
+      //   const jwt = response.headers.get('Authorization')
+      //   localStorage.setItem("user", jwt)
+      // }
+    })
+    .catch((error) => {
+      console.log(error);
     });
+};
+
+export const logout = () => {
+  localStorage.removeItem("user");
+};
+
+export const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("user"));
 };
