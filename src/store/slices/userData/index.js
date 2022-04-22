@@ -58,34 +58,36 @@ export const registrarUsuario =
   };
 
 // TODO ARREGLAR CONEXION CON EL BACK ---> AXIOS DEVOLVIA 403 (el navegador lo indica como 200 pero sigue yendo al catch)
-// export const loginUsuario = (email, password) => () => {
-//   return axios
-//     .post(
-//       API_URL + "/login",
-//       JSON.stringify({
-//         email: email,
-//         password: password,
-//       }),
-//       {
-//         headers: headers,
-//       }
-//     )
-//     .then((response) => {
-//       // if (response.data.accessToken) {
-//       //   console.log(response.headers.get('Authorization'));
-//       //   const jwt = response.headers.get('Authorization')
-//       //   localStorage.setItem("user", jwt)
-//       // }
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
+export const loginUsuario = (email, password) => () => {
+  return axios
+    .post(
+      API_URL + "/login",
+      JSON.stringify({
+        email: email,
+        password: password,
+      }),
+      {
+        headers: headers,
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+      if (response.data.accessToken) {
+        // localStorage.setItem("user", JSON.stringify(response.data));
+        // const jwt = response.headers.get('Authorization')
+        // localStorage.setItem("user", jwt)
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      return Promise.reject
+    });
+};
 
 // MOCK de la funcionalidad de logueo
-export const loginUsuario = (name, password) => (dispatch) => {
-  dispatch(setUsername("<" + name + ">"))
-};
+// export const loginUsuario = (name, password) => (dispatch) => {
+//   dispatch(setUsername("<" + name + ">"))
+// };
 
 export const logout = () => {
   localStorage.removeItem("user");

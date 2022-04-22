@@ -3,7 +3,6 @@ import authHeader from './auth-Header';
 
 const API_URL = 'https://sip-api-dev.herokuapp.com';
 
-
 class UserService {
 
     /*
@@ -11,20 +10,8 @@ class UserService {
     */
 
     getUserList() {
-        return axios.get(API_URL + '/all', {headers: authHeader() });
+        return axios.get(API_URL + '/user/all', {headers: authHeader() });
     }
-
-    // getUserBoard() {
-    //     return axios.get(API_URL + 'user', { headers: authHeader() });
-    // }
-
-    // getModeratorBoard() {
-    //     return axios.get(API_URL + 'mod', { headers: authHeader() });
-    // }
-
-    // getAdminBoard() {
-    //     return axios.get(API_URL + 'admin', { headers: authHeader() });
-    // }
 
 }
 

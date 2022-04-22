@@ -57,11 +57,15 @@ export default function LoginForm(props) {
   function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
-    // dispatch(loginUsuario(input.email, input.password)).then(function (data) {
-    //   // if (data.status === "200") console.log("Paso");
-    //   // navigate("/", { replace: true });
-    // });
-    dispatch(loginUsuario("Logueado"))
+    dispatch(loginUsuario(input.email, input.password)).then(function (data) {
+      console.log("Data:")
+      console.log(data)
+      // if (data.status === "200") console.log("Paso");
+      // navigate("/", { replace: true });
+    }).catch((error)=>{
+      console.log(error)
+    });
+    // dispatch(loginUsuario("Logueado"))
   }
 
   function goNewUser(event) {

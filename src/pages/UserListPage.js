@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CardUserList from "../components/ui/CardUserList";
 import userService from "../services/user.service";
 
-const users = [
+function UserListPage() {
+  const navigate = useNavigate();
+  const userList = [];
+  const [isAdmin, setIsAdmin] = useState(false);
+  // const users = [];
+  const users = [
     {
         dni: 12345678,
         firstName: 'seba',
@@ -27,37 +33,66 @@ const users = [
             'Profesor'
         ]
     }
-]
+];
 
+  useEffect(() => {
+    // Gets all users. If 403 forbidden, show "not allowed" sign
+    // userService
+    //   .getUserList()
+    //   .then((response) => {
+    //     console.log(response);
+    //     setIsAdmin(true);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setIsAdmin(false);
+    //   });
+        setIsAdmin(true);
+  }, []);
 
-
-function UserListPage() {
-
-    const isAdmin = false;
-    const userList = users;
-
-    // useEffect( () => {
-    //     // Gets all users. If 403 forbidden, show "not allowed" sign
-    //     userService.getUserList()
-    //         .then()
-    //         .catch((error) => {
-
-    //         });
-    // }, []);
-
-    return (
-        <section>
-            <h1>Lista de Usuarios</h1>
-            {/* <CardUserList users={userList}/> */}
-            <section>
-                <ul>
-                {userList.map((user) => {
-                    return <CardUserList user={user}/>;
-                })}
-                </ul>
-            </section>
-        </section>
-    );
+  return (
+    <section>
+      {isAdmin ? (
+        <UserList users={users} />
+      ) : (
+        <NotAdminMessage navigate={navigate} />
+      )}
+    </section>
+  );
 }
 
 export default UserListPage;
+
+function NotAdminMessage(props) {
+  function goHome(event) {
+    event.preventDefault();
+    props.navigate("/", { replace: true });
+  }
+
+  return (
+    <section>
+      <p>¡No tienes permiso de ver esta página!</p>
+      <section>
+        <a id="volver-home" href="/home.html" onClick={goHome}>
+          Volver al home
+        </a>
+      </section>
+    </section>
+  );
+}
+
+function UserList(props) {
+  // Devuelve lista de usuarios
+  // props.users
+
+  return (
+    <section>
+      <h1>Lista de Usuarios</h1>
+      <ul>
+        {props.users.map((user, index) => {
+          return <CardUserList user={user} key={index} />;
+        })}
+      </ul>
+    </section>
+  );
+}
