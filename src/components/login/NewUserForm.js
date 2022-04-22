@@ -1,4 +1,4 @@
-import classes from "./NewUserForm.module.css";
+import classes from "./Form.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CardForm from "../ui/CardForm";

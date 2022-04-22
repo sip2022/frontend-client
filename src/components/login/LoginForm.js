@@ -1,4 +1,4 @@
-import classes from "./LoginForm.module.css";
+import classes from "./Form.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -56,12 +56,12 @@ export default function LoginForm(props) {
 
   function submitHandler(event) {
     event.preventDefault();
-    console.log("Input a enviar")
-    console.log(input)
-    dispatch(loginUsuario(input.email, input.password)).then(function (data) {
-      // if (data.status === "200") console.log("Paso");
-      // navigate("/", { replace: true });
-    });
+    // TODO ARREGLAR CONEXION CON EL BACKEND
+    // dispatch(loginUsuario(input.email, input.password)).then(function (data) {
+    //   // if (data.status === "200") console.log("Paso");
+    //   // navigate("/", { replace: true });
+    // });
+    dispatch(loginUsuario("Logueado"))
   }
 
   function goNewUser(event) {

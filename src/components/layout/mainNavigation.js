@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
 
 import classes from './mainNavigation.module.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function MainNavigation() {
-    // NEED REDUX HERE
+    const username = useSelector((state) => state.user.username)
+
+    useEffect(() => {
+        // TODO
+        // Ver si el user está seteado. Esto setea automaticamente "usernae" en store
+        // Recuperar store
+    },[])
 
     return(
         <header className={classes.header}>
@@ -21,8 +28,8 @@ function MainNavigation() {
                         <Link to='/contactos'>Contactos</Link>
                     </li>
 
-                    {/* {authCtx.isLogged ? <LoggedSection userName={''} /> : <NotLoggedSection />}                 */}
-                    <NotLoggedSection />
+                    {username ? <LoggedSection userName={username} /> : <NotLoggedSection />}                
+                    {/* <NotLoggedSection /> */}
                 </ul>
             </nav>
         </header>
