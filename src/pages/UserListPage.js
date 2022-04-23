@@ -10,30 +10,24 @@ function UserListPage() {
   // const users = [];
   const users = [
     {
-        dni: 12345678,
-        firstName: 'seba',
-        lastName: 'marchetti',
-        age: 23,
-        mail: 'fakemail@mail.com',
-        phone: '2323-123456',
-        roles: [
-            'Admin',
-            'Profesor'
-        ]
+      dni: 12345678,
+      firstName: "seba",
+      lastName: "marchetti",
+      age: 23,
+      mail: "fakemail@mail.com",
+      phone: "2323-123456",
+      roles: ["Admin"],
     },
     {
-        dni: 12345678,
-        firstName: 'angel',
-        lastName: 'Luis',
-        age: 23,
-        mail: 'fakemail@mail.com',
-        phone: '2323-123456',
-        roles: [
-            'Admin',
-            'Profesor'
-        ]
-    }
-];
+      dni: 12345678,
+      firstName: "angel",
+      lastName: "Luis",
+      age: 23,
+      mail: "fakemail@mail.com",
+      phone: "2323-123456",
+      roles: ["Admin", "Profesor"],
+    },
+  ];
 
   useEffect(() => {
     // Gets all users. If 403 forbidden, show "not allowed" sign
@@ -47,7 +41,7 @@ function UserListPage() {
     //     console.log(error);
     //     setIsAdmin(false);
     //   });
-        setIsAdmin(true);
+    setIsAdmin(true);
   }, []);
 
   return (
@@ -90,7 +84,7 @@ function UserList(props) {
       <h1>Lista de Usuarios</h1>
       <ul>
         {props.users.map((user, index) => {
-          return <CardUserList user={user} key={index} />;
+          return <CardUserList user={user} userKey={index} />;
         })}
       </ul>
     </section>

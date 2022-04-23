@@ -78,8 +78,8 @@ export default function LoginForm(props) {
       <form className={classes.form} onSubmit={submitHandler}>
         <img
           className={classes.iconoUser}
-          src="../../../images/userIcono.png"
-          alt=""
+          src="/images/userIcono.png"
+          alt="Login User Icon"
         />
         <h1>Bienvenido</h1>
         <Input
