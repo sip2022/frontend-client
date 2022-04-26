@@ -5,7 +5,6 @@ export default function authHeader() {
   
   console.log(user);
   if (user && user.accessToken) {
-
     return { Authorization: "Bearer " + user.accessToken };
   } else {
     console.log("false header");

@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { loginUsuario } from "../../store/slices/userData";
+import { login } from "../../store/slices/userData";
 
-export default function LoginForm(props) {
+export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   const [input, setInput] = useState({
     email: "",
@@ -57,7 +58,7 @@ export default function LoginForm(props) {
   function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
-    dispatch(loginUsuario(input.email, input.password)).then(function (data) {
+    dispatch(login(input)).then(function (data) {
       console.log("Data:")
       console.log(data)
       // if (data.status === "200") console.log("Paso");

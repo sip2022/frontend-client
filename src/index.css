@@ -4,9 +4,23 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-image: url('../public/images/fondonaranja.png');
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('../public/images/fondo.jpg');
   background-size: cover;
+  background-position: 'center';
+  background-Size: 'cover';
+  background-Repeat: 'no-repeat'
+}
+
+.fondoCliente{
+}
+
+.fondoProfesor{
+
+}
+
+.fondoAdmin{
+
 }
 
 code {

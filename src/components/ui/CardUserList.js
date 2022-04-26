@@ -7,14 +7,19 @@ function UserRoles(props) {
   return (
     <section className={classes.userRoles}>
       <h2>Roles: </h2>
-      <ul>{userRoles}</ul>
+      {/* <ul>{userRoles}</ul> */}
+      <ul>{
+        props.roles.map((rol, index) => {
+          return <li key={index}>{rol}</li>
+        })  
+      }</ul>
     </section>
   );
 }
 
 function CardUserList(props) {
   // props.user --> nombre, apellido, edad, DNI, mail, telefono, roles[], foto perfil?
-  //  props.key --> index del map
+  //  props.userKey --> index del map
 
   const user = props.user;
 

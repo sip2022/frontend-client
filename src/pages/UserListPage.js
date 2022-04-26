@@ -8,7 +8,7 @@ function UserListPage() {
   const userList = [];
   const [isAdmin, setIsAdmin] = useState(false);
   // const users = [];
-  const users = [
+  const DUMMY_DATA = [
     {
       dni: 12345678,
       firstName: "seba",
@@ -47,7 +47,7 @@ function UserListPage() {
   return (
     <section>
       {isAdmin ? (
-        <UserList users={users} />
+        <UserList users={DUMMY_DATA} />
       ) : (
         <NotAdminMessage navigate={navigate} />
       )}

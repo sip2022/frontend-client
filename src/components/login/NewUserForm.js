@@ -82,19 +82,8 @@ export default function NewUserForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-
     // (firstName, lastName, dni, email, age, phone, password)
-    dispatch(
-      registrarUsuario(
-        input.firstName,
-        input.lastName,
-        input.dni,
-        input.email,
-        input.age,
-        input.phone,
-        input.password
-      )
-    )
+    dispatch(registrarUsuario(input))
       .then(() => {
         console.log("Registro exitoso");
         navigate("/activacion", { replace: true });
