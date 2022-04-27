@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { login } from "../../store/slices/userData";
+import { login } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
   const dispatch = useDispatch();

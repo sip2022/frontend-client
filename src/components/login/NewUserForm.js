@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CardForm from "../ui/CardForm";
 import { useDispatch } from "react-redux";
-import { registrarUsuario } from "../../store/slices/userData";
+import { registrar } from "../../store/slices/userData/userDataSlice";
 
 // import { register } from "../../actions/auth";
 

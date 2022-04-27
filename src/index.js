@@ -7,7 +7,7 @@ import App from './App';
 
 // Redux - Pasa el store a todos los compoenentes de la aplicacion
 import { Provider } from 'react-redux'
-import { store } from './app/store/store'
+import { store } from './store/store'
 
 ReactDOM.render(
   <Provider store={store}>
