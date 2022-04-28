@@ -83,7 +83,7 @@ export default function NewUserForm() {
   function submitHandler(event) {
     event.preventDefault();
     // (firstName, lastName, dni, email, age, phone, password)
-    dispatch(registrarUsuario(input))
+    dispatch(registrar(input))
       .then(() => {
         console.log("Registro exitoso");
         navigate("/activacion", { replace: true });
@@ -99,87 +99,89 @@ export default function NewUserForm() {
   }
 
   return (
-    <CardForm>
-      <form className={classes.form} onSubmit={submitHandler}>
-        <h1>BIENVENIDO</h1>
-        <Input
-          name="firstName"
-          key="campoNombre"
-          type="text"
-          placeholder="Nombre"
-          value={input.firstName}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="lastName"
-          key="campoApellido"
-          type="text"
-          placeholder="Apellido"
-          value={input.lastName}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          type="text"
-          name="dni"
-          key="campoDNI"
-          placeholder="DNI"
-          value={input.dni}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="age"
-          key="campoEdad"
-          type="number"
-          placeholder="Edad"
-          value={input.age}
-          min={15}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="phone"
-          key="campoTel"
-          type="text"
-          placeholder="Telefono"
-          value={input.phone}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="email"
-          key="campoMail"
-          type="text"
-          placeholder="E-mail"
-          value={input.email}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="password"
-          key="campoPass"
-          type="password"
-          placeholder="Contraseña"
-          errors={errors}
-          value={input.password}
-          onChange={(e) => handleChange(e.target)}
-        />
+    <section className={classes.sectionForm}>
+      <CardForm>
+        <form className={classes.form} onSubmit={submitHandler}>
+          <h1>BIENVENIDO</h1>
+          <Input
+            name="firstName"
+            key="campoNombre"
+            type="text"
+            placeholder="Nombre"
+            value={input.firstName}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="lastName"
+            key="campoApellido"
+            type="text"
+            placeholder="Apellido"
+            value={input.lastName}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            type="text"
+            name="dni"
+            key="campoDNI"
+            placeholder="DNI"
+            value={input.dni}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="age"
+            key="campoEdad"
+            type="number"
+            placeholder="Edad"
+            value={input.age}
+            min={15}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="phone"
+            key="campoTel"
+            type="text"
+            placeholder="Telefono"
+            value={input.phone}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="email"
+            key="campoMail"
+            type="text"
+            placeholder="E-mail"
+            value={input.email}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="password"
+            key="campoPass"
+            type="password"
+            placeholder="Contraseña"
+            errors={errors}
+            value={input.password}
+            onChange={(e) => handleChange(e.target)}
+          />
 
-        <div className={classes.action}>
-          <button disabled={disable} id="crear-Usuario">
-            ¡Registrate!
-          </button>
-        </div>
+          <div className={classes.action}>
+            <button disabled={disable} id="crear-Usuario">
+              ¡Registrate!
+            </button>
+          </div>
 
-        <div className={classes.action}>
-          <a id="login-Usuario" href="login.html" onClick={goLoginUser}>
-            ¿Ya tienes una cuenta?
-          </a>
-        </div>
-      </form>
-    </CardForm>
+          <div className={classes.action}>
+            <a id="login-Usuario" href="login.html" onClick={goLoginUser}>
+              ¿Ya tienes una cuenta?
+            </a>
+          </div>
+        </form>
+      </CardForm>
+    </section>
   );
 }
 

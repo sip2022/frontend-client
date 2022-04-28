@@ -10,7 +10,6 @@ export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -58,14 +57,16 @@ export default function LoginForm() {
   function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
-    dispatch(login(input)).then(function (data) {
-      console.log("Data:")
-      console.log(data)
-      // if (data.status === "200") console.log("Paso");
-      // navigate("/", { replace: true });
-    }).catch((error)=>{
-      console.log(error)
-    });
+    dispatch(login(input))
+      .then(function (data) {
+        console.log("Data:");
+        console.log(data);
+        // if (data.status === "200") console.log("Paso");
+        // navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // dispatch(loginUsuario("Logueado"))
   }
 
@@ -75,47 +76,49 @@ export default function LoginForm() {
   }
 
   return (
-    <CardForm>
-      <form className={classes.form} onSubmit={submitHandler}>
-        <img
-          className={classes.iconoUser}
-          src="/images/userIcono.png"
-          alt="Login User Icon"
-        />
-        <h1>Bienvenido</h1>
-        <Input
-          name="email"
-          key="email"
-          type="email"
-          placeholder="Ingrese E-mail"
-          value={input.email}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <Input
-          name="password"
-          key="password"
-          type="password"
-          placeholder="Ingrese Contraseña"
-          value={input.password}
-          errors={errors}
-          onChange={(e) => handleChange(e.target)}
-        />
-        <a className={classes.link} id="olvContraLogin" href="/">
-          ¿Olvidaste la contraseña?
-        </a>
-        <div className={classes.action}>
-          <button id="ingresar-Usuario" disabled={disable}>
-            Ingresar
-          </button>
-        </div>
-        <div className={classes.action}>
-          <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>
-            Crear nuevo usuario
+    <section className={classes.sectionForm}>
+      <CardForm>
+        <form className={classes.form} onSubmit={submitHandler}>
+          <img
+            className={classes.iconoUser}
+            src="/images/userIcono.png"
+            alt="Login User Icon"
+          />
+          <h1>Bienvenido</h1>
+          <Input
+            name="email"
+            key="email"
+            type="email"
+            placeholder="Ingrese E-mail"
+            value={input.email}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="password"
+            key="password"
+            type="password"
+            placeholder="Ingrese Contraseña"
+            value={input.password}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <a className={classes.link} id="olvContraLogin" href="/">
+            ¿Olvidaste la contraseña?
           </a>
-        </div>
-      </form>
-    </CardForm>
+          <div className={classes.action}>
+            <button id="ingresar-Usuario" disabled={disable}>
+              Ingresar
+            </button>
+          </div>
+          <div className={classes.action}>
+            <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>
+              Crear nuevo usuario
+            </a>
+          </div>
+        </form>
+      </CardForm>
+    </section>
   );
 }
 

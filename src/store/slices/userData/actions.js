@@ -8,23 +8,22 @@ export function registrarUsuario(state, {payload}) {
   });
 }
 
-export function loginUsuario(state, {payload}) {
-  return axios
-    .post(process.env.API_URL + "/login", {
-      payload,
-    })
-    .then((response) => {
-      console.log(response);
-      const { accesToken, nombre } = response.data;
-      // seteo todo el estado
-      state.nombre = nombre;
-      // TODO demas campos del estado se actualizan...
-      localStorage.setItem("user", accesToken);
-    })
-    .catch((error) => {
-      console.log(error);
-      return new Error(error);
-    });
+export async function loginUsuario(state, {payload}) {
+  try {
+    const response = await axios
+      .post(process.env.API_URL + "/login", {
+        payload,
+      });
+    console.log(response);
+    const { accesToken, nombre } = response.data;
+    // seteo todo el estado
+    state.nombre = nombre;
+    // TODO demas campos del estado se actualizan...
+    localStorage.setItem("user", accesToken);
+  } catch (error) {
+    console.log(error);
+    return new Error(error);
+  }
 }
 
 

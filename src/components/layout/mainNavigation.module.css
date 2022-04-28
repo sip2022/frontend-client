@@ -19,6 +19,7 @@
     font-size: 2rem;
     color: #484747;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .header ul {

@@ -30,7 +30,7 @@ function UserListPage() {
   ];
 
   useEffect(() => {
-    // Gets all users. If 403 forbidden, show "not allowed" sign
+    //TODO Gets all users. If 403 forbidden, show "not allowed" sign
     // userService
     //   .getUserList()
     //   .then((response) => {

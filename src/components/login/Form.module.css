@@ -1,3 +1,7 @@
+.sectionForm{
+  max-width: 40rem;
+}
+
 .form {
   padding: 1rem;
   display: flex;

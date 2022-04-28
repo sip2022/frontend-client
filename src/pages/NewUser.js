@@ -1,11 +1,7 @@
 import NewUserForm from "../components/login/NewUserForm";
 
 function NewUserPage() {
-    return(
-        <section>
-            <NewUserForm />
-        </section>
-    );
+  return <NewUserForm />;
 }
 
 export default NewUserPage;
