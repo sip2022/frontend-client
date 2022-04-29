@@ -7,9 +7,7 @@ function InicioPage() {
   return (
     <section>
       <PresentationImage />
-      {/* TODO <Actividades /> */}
       <Actividades />
-      {/* TODO <Planes /> */}
       <Planes />
     </section>
   );
