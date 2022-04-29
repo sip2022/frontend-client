@@ -1,0 +1,39 @@
+.planes_section{
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;    
+  background-color: #EDEDED;
+  border-radius: 15px;
+}
+
+.planes_text{
+  display: flex;
+  flex-direction: column;
+}
+
+.plan{
+  display: flex;
+  align-items: center;
+  background-color: #E8A94A;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+}
+
+.image{
+  background-color: white;
+}
+
+p{
+  margin: 0%;
+}
+
+h3{
+  margin: 0%;
+  margin-left: 1em;
+  margin-right: 1em;
+}
