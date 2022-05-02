@@ -1,4 +1,4 @@
-import ActividadesList from "../actividadesPage/ActividadesList";
+import ActividadesList from "../components/actividadesPage/ActividadesList";
 
 function ActividadesPage() {
   return (

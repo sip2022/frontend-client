@@ -1,4 +1,4 @@
-import ActividadCard from "../components/ui/ActividadCard";
+import ActividadCard from "../ui/ActividadCard";
 import classes from "./ActividadesList.module.css";
 
 const DUMMY_DATA = [
