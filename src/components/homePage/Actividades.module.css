@@ -13,20 +13,14 @@
   margin: 0.5rem;
 }
 
-.actividades_section img{
-  border-radius: 15px;
-}
-
 .actividades_list{
   display: flex;
   align-items: center;
   padding: 0.5rem;
 }
 
-.actividad{
-  padding: 0.5rem;
-  margin-right: 0.5rem;
-  background-color: #BFE0DC;
-  border-radius: 15px;
+.card_verMas{
+  cursor: pointer;
+  padding: 1em;
+  border: 1px black solid;
 }
-
