@@ -9,6 +9,7 @@ import {Routes, Route} from 'react-router-dom';
 import NewUserPage from './pages/NewUser';
 import UserListPage from './pages/UserListPage';
 import ActivacionPage from './pages/ActivacionPage';
+import Actividad from './components/actividadesPage/Actividad';
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<InicioPage />} />
           <Route path='/actividades' element={<ActividadesPage />} />
+          <Route path='/actividad/:id' element={<Actividad />} />
           <Route path='/planes' element={<PlanesPage />} />
           <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />

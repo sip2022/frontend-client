@@ -1,17 +1,28 @@
+import { useNavigate } from "react-router-dom";
 import classes from "./ActividadCard.module.css";
 
 function ActividadCard({ actividad }) {
-  // actividad = { texto, imagen }
+  const { id, texto, imagen, key } = actividad;
+
+  const navigate = useNavigate();
+
+  function clickHandler(event) {
+    event.preventDefault();
+    navigate("/actividad/" + id, { replace: true });
+  }
+
   return (
-    <section className={classes.actividad} key={actividad.key}>
+    <section className={classes.actividad} key={key}>
       <img
         className={classes.actividad_image}
-        src={actividad.imagen}
+        src={imagen}
         alt="logo actividad"
       />
       <section>
-        <p>{actividad.texto}</p>
-        <button className={classes.boton_verMas}>Ver Mas</button>
+        <p>{texto}</p>
+        <button className={classes.boton_verMas} onClick={clickHandler}>
+          Ver Mas
+        </button>
       </section>
     </section>
   );

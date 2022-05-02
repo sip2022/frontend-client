@@ -3,22 +3,27 @@ import classes from "./ActividadesList.module.css";
 
 const DUMMY_DATA = [
   {
+    id: 1,
     texto: "Actividad",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
+    id: 2,
     texto: "Actividad",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
+    id: 3,
     texto: "Actividad",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
+    id: 4,
     texto: "Actividad",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
+    id: 5,
     texto: "Actividad",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },

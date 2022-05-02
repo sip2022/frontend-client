@@ -2,23 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // Para traer las acciones del slice
 // const { loginUsuario, registrarUsuario } = require("./actions");
-import { loginUsuario, registrarUsuario } from "./actions"
+import { loginUsuario, registrarUsuario } from "./actions";
 
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
-    nombre: "",
-    avatarURL: "",
-    apellido: "",
-    telefono: "",
+    firstName: "",
+    lastName: "",
     dni: "",
+    phone: "",
     email: "",
+    age: "",
+    avatarURL: "",
+    roles: [],
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
     // desde loginForm login(input) ---> reducer hace loginUsuario(sate, payload = input)
     login: loginUsuario,
-    registrar: registrarUsuario
+    registrar: registrarUsuario,
   },
 });
 
@@ -31,7 +33,6 @@ axios.interceptors.request.use((request) => {
   console.log(request);
   return request;
 });
-
 
 // TODO ARREGLAR CONEXION CON EL BACK ---> AXIOS DEVOLVIA 403 (el navegador lo indica como 200 pero sigue yendo al catch)
 
@@ -54,8 +55,6 @@ axios.interceptors.request.use((request) => {
 //   console.log(error)
 //   return error
 // }
-
-
 
 // MOCK de la funcionalidad de logueo
 // export const loginUsuario = (name, password) => (dispatch) => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function registrarUsuario(state, {payload}) {
+export function registrarUsuario(state, { payload }) {
   return axios.post(process.env.API_URL + "/register", {
     ...payload,
     phone: parseInt(payload.phone),
@@ -8,24 +8,31 @@ export function registrarUsuario(state, {payload}) {
   });
 }
 
-export async function loginUsuario(state, {payload}) {
+export async function loginUsuario(state, { payload }) {
   try {
-    const response = await axios
-      .post(process.env.API_URL + "/login", {
-        payload,
-      });
+    const response = await axios.post(process.env.API_URL + "/login", {
+      payload,
+    });
     console.log(response);
-    const { accesToken, nombre } = response.data;
+    const { accesToken, firstName, lastName, email, dni, phone, age, roles } =
+      response.data;
+
     // seteo todo el estado
-    state.nombre = nombre;
     // TODO demas campos del estado se actualizan...
+    state.firstName = firstName;
+    state.lastName = lastName;
+    state.email = email;
+    state.dni = dni;
+    state.phone = phone;
+    state.age = age;
+    state.roles = roles;
+
     localStorage.setItem("user", accesToken);
   } catch (error) {
     console.log(error);
     return new Error(error);
   }
 }
-
 
 // estas acciones las llama el slice, para añadirlas a su recurder
 // module.exports = {
