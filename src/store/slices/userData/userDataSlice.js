@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // Para traer las acciones del slice
-// const { loginUsuario, registrarUsuario } = require("./actions");
 import { loginUsuario, registrarUsuario } from "./actions";
 
 export const userDataSlice = createSlice({
