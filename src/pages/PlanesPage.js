@@ -1,6 +1,12 @@
+import PlanList from "../components/planPage/PlanList";
+
 function PlanesPage() {
-  return <h1>Encontra el plan para voz!</h1>
-  
+  return (
+    <section>
+      <h1>Encontra el plan para voz!</h1>
+      <PlanList />
+    </section>
+  );
 }
 
 export default PlanesPage;
