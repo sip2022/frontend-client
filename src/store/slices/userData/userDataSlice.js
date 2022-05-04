@@ -14,6 +14,7 @@ export const userDataSlice = createSlice({
     age: "",
     avatarURL: "",
     roles: [],
+    turnos: [],
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload

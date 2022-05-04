@@ -20,6 +20,7 @@ function App() {
       <Layout>
         <Routes>
           <Route exact path='/' element={<InicioPage />} />
+          <Route path='/user' element={<UserPage />} />
           <Route path='/actividades' element={<ActividadesPage />} />
           <Route path='/actividad/:id' element={<Actividad />} />
           <Route path='/planes' element={<PlanesPage />} />

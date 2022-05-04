@@ -14,7 +14,7 @@ export async function loginUsuario(state, { payload }) {
       payload,
     });
     console.log(response);
-    const { accesToken, firstName, lastName, email, dni, phone, age, roles } =
+    const { accesToken, firstName, lastName, email, dni, phone, age, roles, turnos } =
       response.data;
 
     // seteo todo el estado
@@ -26,6 +26,7 @@ export async function loginUsuario(state, { payload }) {
     state.phone = phone;
     state.age = age;
     state.roles = roles;
+    state.turnos = turnos;
 
     localStorage.setItem("user", accesToken);
   } catch (error) {

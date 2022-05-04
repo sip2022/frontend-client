@@ -9,22 +9,22 @@ const DUMMY_DATA = [
   },
   {
     id: 2,
-    texto: "Actividad",
+    texto: "Boxeo",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
     id: 3,
-    texto: "Actividad",
+    texto: "Stretching",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
     id: 4,
-    texto: "Actividad",
+    texto: "Natacion",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
   {
     id: 5,
-    texto: "Actividad",
+    texto: "Zumba",
     imagen: "/images/actividades_images/activityCardImage.jpg"
   },
 ]
