@@ -1,4 +1,4 @@
-import PlanList from "../components/planPage/PlanList";
+import PlanList from "../components/planes/PlanList";
 
 function PlanesPage() {
   return (

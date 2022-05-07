@@ -1,0 +1,32 @@
+.userSection{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.userImage{
+  width: 20%;
+}
+
+.userImage img{
+  border-radius: 86px;
+}
+
+.userInfo{
+  width: 80%;
+}
+
+.userInfo h1{
+  width: 70%;
+}
+
+.userInfo section{
+  background-color: #BFE0DC;
+  width: 70%;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.userEdit{
+  width: 100%;
+}
