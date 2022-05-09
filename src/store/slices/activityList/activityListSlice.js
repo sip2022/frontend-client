@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// Para traer las acciones del slice
 import { getActivityList } from "./actions";
 
 export const activityListSlice = createSlice({

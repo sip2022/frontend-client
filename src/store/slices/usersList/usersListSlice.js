@@ -1,7 +1,7 @@
 // redux estado sobre lista de usuarios
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios"; 
-import { chargeUserList } from "./actions"
+import { loadUserList } from "./actions"
 
 export const usersListSlice = createSlice({
   name: "userList",
@@ -9,11 +9,11 @@ export const usersListSlice = createSlice({
     usersList: []
   },
   reducers: {
-    chargeUserList: chargeUserList
+    loadUserList: loadUserList
   },
 });
 
 export default usersListSlice.reducer;
-export const { getUserList } = usersListSlice.actions;
+export const { chargeUserList } = usersListSlice.actions;
 
 // ---------- End createSlice ----------
