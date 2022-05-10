@@ -10,25 +10,27 @@ export function registrarUsuario(state, { payload }) {
 
 export async function loginUsuario(state, { payload }) {
   try {
-    const response = await axios.post(process.env.API_URL + "/login", {
-      payload,
-    });
-    console.log(response);
-    const { accesToken, firstName, lastName, email, dni, phone, age, roles, turnos } =
-      response.data;
+    console.log("user");
+    console.log(state);
+    // const response = await axios.post(process.env.API_URL + "/login", {
+    //   payload,
+    // });
+    // console.log(response);
+    // const { accesToken, firstName, lastName, email, dni, phone, age, roles, turnos } =
+    //   response.data;
 
-    // seteo todo el estado
-    // TODO demas campos del estado se actualizan...
-    state.firstName = firstName;
-    state.lastName = lastName;
-    state.email = email;
-    state.dni = dni;
-    state.phone = phone;
-    state.age = age;
-    state.roles = roles;
-    state.turnos = turnos;
+    // // seteo todo el estado
+    // // TODO demas campos del estado se actualizan...
+    // state.firstName = firstName;
+    // state.lastName = lastName;
+    // state.email = email;
+    // state.dni = dni;
+    // state.phone = phone;
+    // state.age = age;
+    // state.roles = roles;
+    // state.turnos = turnos;
 
-    localStorage.setItem("user", accesToken);
+    // localStorage.setItem("user", accesToken);
   } catch (error) {
     console.log(error);
     return new Error(error);

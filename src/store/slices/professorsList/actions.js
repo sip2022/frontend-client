@@ -29,27 +29,3 @@ export function loadProfessorsList(state) {
     ]
   }
 }
-
-
-
-
-// UNA ACTIVIDAD
-// {
-//   id: 1,
-//   name: "Actividad X",
-//   basePrice: 3.00,
-//   professor: "Sindy Nero",
-//   atendeesLimit: 10,
-//   appointments: [
-//     {
-//       startTime: {
-//         hour: 13,
-//         minute: 30
-//       },
-//       endTime: {
-//         hour: 14,
-//         minute: 30
-//       }
-//     }
-//   ]
-// }

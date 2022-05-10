@@ -14,6 +14,5 @@ export const usersListSlice = createSlice({
 });
 
 export default usersListSlice.reducer;
-export const { chargeUserList } = usersListSlice.actions;
 
 // ---------- End createSlice ----------

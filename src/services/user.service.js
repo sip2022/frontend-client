@@ -6,7 +6,7 @@ const API_URL = 'https://sip-api-dev.herokuapp.com';
 class UserService {
 
     /*
-        TODO PONER AQUI TODOS LOS SERVICIOS A PEDIR DEL BACK
+        TODO BORRAR
     */
 
     getUserList() {

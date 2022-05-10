@@ -13,6 +13,5 @@ export const professorsListSlice = createSlice({
 });
 
 export default professorsListSlice.reducer;
-export const { getProfessorsList } = professorsListSlice.actions;
 
 // ---------- End createSlice ----------

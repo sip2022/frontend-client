@@ -5,7 +5,7 @@ import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function MainNavigation() {
-  const username = useSelector((state) => state.user.username);
+  const username = useSelector(state => state.user.username);
   const navigate = useNavigate();
 
   useEffect(() => {
