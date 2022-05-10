@@ -1,20 +1,38 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadActivityLista } from "../../../store/slices/activityList/activityListSlice";
+import classes from "./ActividadesLista.module.css";
 
 function NotAdminMessage(props) {
   return (
     <section>
-      <h1>Usted no es admin! Sample</h1>
+      <h1>Usted no es admin! Sample Text</h1>
     </section>
   );
 }
 
-function actividadItem(props) {
-  
-  return <section>
-    
-  </section>
+function ActividadItem({ actividad }) {
+  function editarHandler() {
+    alert("Editar " + actividad.name);
+  }
+
+  function eliminarHandler() {
+    alert("Eliminando " + actividad.name);
+  }
+
+  return (
+    <section className={classes.actividadItem}>
+      <h2>{actividad.name}</h2>
+      <section>
+        <button className={classes.editarButton} onClick={editarHandler}>
+          Editar
+        </button>
+        <button className={classes.eliminarButton} onClick={eliminarHandler}>
+          Eliminar
+        </button>
+      </section>
+    </section>
+  );
 }
 
 function ActividadesLista(props) {
@@ -39,18 +57,24 @@ function ActividadesLista(props) {
 
   return (
     <section>
+      <button onClick={clickHandler}>Ver lista</button>
       {!isAdmin ? (
         <NotAdminMessage />
       ) : (
         <section>
           <h1>Actividades</h1>
           <section>
-            <section>
-              <button onClick={altaClickHandler}>Agregar Actividad</button>
+            <section className={classes.agregarSection}>
+              <button
+                className={classes.agregarButton}
+                onClick={altaClickHandler}
+              >
+                Agregar Actividad
+              </button>
             </section>
             <section>
-              {actividades.map((actividad, index) => {
-
+              {actividades.map((actividad) => {
+                return <ActividadItem actividad={actividad} />;
               })}
             </section>
           </section>

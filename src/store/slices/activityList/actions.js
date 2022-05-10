@@ -34,7 +34,7 @@ export function loadActivityList(state) {
         // Actividad Mock
         {
           id: 1,
-          name: "Actividad X",
+          name: "Actividad 2",
           basePrice: 3.0,
           professor: "Sindy Nero",
           atendeesLimit: 10,

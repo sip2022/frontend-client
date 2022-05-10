@@ -1,0 +1,38 @@
+.agregarSection{
+  text-align: end;
+}
+
+.actividadItem{
+  background-color: #CFCFCF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  border-radius: 15px;
+}
+
+button{
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+  border-color: unset;
+  font-weight: bold;
+  margin-right: 2rem;
+}
+
+.editarButton{
+  background-color: #EDEDED;
+}
+
+.agregarButton{
+  background-color: #7AD0C6;
+}
+
+.eliminarButton{
+  background-color: #DF6C6C;
+}
+
+.actividadItem h2{
+  margin-left: 1rem;
+}
