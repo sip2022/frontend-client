@@ -13,6 +13,8 @@ import ActivacionPage from './pages/ActivacionPage';
 import Actividad from './components/actividadesPage/Actividad';
 import UserInfo from './components/user/UserInfo';
 import UserEditInfo from './components/user/UserEdit/UserEditInfo';
+import ActividadesLista from './components/admin/actividades/ActividadesLista';
+import NewActividadForm from './components/admin/actividades/NewActividad';
 
 
 
@@ -22,6 +24,7 @@ function App() {
     <div>
       <Layout>
         <Routes>
+          {/* TODO REFACTOR separar en distintos componentes las rutas de clientes y admin */}
           {/* User Routes */}
           <Route exact path='/' element={<InicioPage />} />
           <Route path='/user' element={<UserPage />} />
@@ -41,6 +44,10 @@ function App() {
           <Route path='/newUser' element={<NewUserPage />} />
           <Route path='/activacion' element={<ActivacionPage />} />
           <Route path='/userList' element={<UserListPage />} />
+
+          {/* Admin Routes */}
+          <Route path='/admin/actividades' element={<ActividadesLista />} />
+          <Route path='/admin/actividad/new' element={<NewActividadForm />} />
         </Routes>
       </Layout>
     </div>
