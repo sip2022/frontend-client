@@ -4,7 +4,7 @@ import { loadActivityList } from "./actions";
 export const activityListSlice = createSlice({
   name: "activityList",
   initialState: {
-    activityList: [],
+    activityList: null,
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload

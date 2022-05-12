@@ -14,6 +14,7 @@ import Actividad from './components/actividadesPage/Actividad';
 import UserInfo from './components/user/UserInfo';
 import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
+import NewActividadForm from './components/admin/actividades/NewActividad';
 
 
 
@@ -46,6 +47,7 @@ function App() {
 
           {/* Admin Routes */}
           <Route path='/admin/actividades' element={<ActividadesLista />} />
+          <Route path='/admin/actividad/new' element={<NewActividadForm />} />
         </Routes>
       </Layout>
     </div>

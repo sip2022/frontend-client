@@ -2,7 +2,7 @@ import axios from "axios";
 
 export function loadActivityList(state) {
   try {
-    if (state.activityList) {
+    if (!state.activityList) {
       // // TODO endpoint para obtener todas las listas
       // const response = await axios.get(process.env.API_URL + "/activityList");
       // console.log(response);

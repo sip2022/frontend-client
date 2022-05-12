@@ -5,13 +5,14 @@ import { loadProfessorsList } from "./actions";
 export const professorsListSlice = createSlice({
   name: "professorsList",
   initialState: {
-    professorsList: [],
+    professorsList: null,
   },
   reducers: {
-    loadProfessorsList: loadProfessorsList,
+    loadProfessors: loadProfessorsList,
   },
 });
 
 export default professorsListSlice.reducer;
+export const { loadProfessors } = professorsListSlice.actions 
 
 // ---------- End createSlice ----------

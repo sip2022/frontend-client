@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loadActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import classes from "./ActividadesLista.module.css";
 
@@ -40,6 +41,7 @@ function ActividadesLista(props) {
   const actividades = useSelector((state) => state.activityList.activityList);
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
@@ -52,12 +54,12 @@ function ActividadesLista(props) {
   }
 
   function altaClickHandler() {
-    alert("Alta de actividad");
+    navigate("/admin/actividad/new", { replace: true });
   }
 
   return (
     <section>
-      <button onClick={clickHandler}>Ver lista</button>
+      <button onClick={clickHandler}>Boton Auxiliar (mostrar lista en consola)</button>
       {!isAdmin ? (
         <NotAdminMessage />
       ) : (
