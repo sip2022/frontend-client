@@ -1,9 +1,11 @@
 import classes from "./Form.module.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useRoutes } from "react-router-dom";
+import { useHistory } from "react-router";
+import { useEffect, useState } from "react";
 import CardForm from "../ui/CardForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registrar } from "../../store/slices/userData/userDataSlice";
+import { register } from "../../utils/crud";
 
 // import { register } from "../../actions/auth";
 
@@ -56,7 +58,7 @@ export default function NewUserForm() {
         if (value.length < 3 || value.length > 10) ob[name] = " - ";
         break;
       case "dni":
-        if (value.length !== 8)
+        if (value.length !== 5)
           ob[name] = "El DNI debe ser de 8 numero exactos.";
         break;
       case "email":
@@ -80,9 +82,9 @@ export default function NewUserForm() {
     }
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
-    dispatch(registrar(input));
+    await register(input) && navigate("/activacion", { replace: true });
   }
 
   function goLoginUser(event) {
@@ -90,11 +92,16 @@ export default function NewUserForm() {
     navigate("/login", { replace: true });
   }
 
+  function testHandler(params) {
+
+    // dispatch(registrar(input));
+  }
+
   return (
     <section className={classes.sectionForm}>
       <CardForm>
         <form className={classes.form} onSubmit={submitHandler}>
-          <h1>BIENVENIDO</h1>
+          <h1 onClick={testHandler}>BIENVENIDO</h1>
           <Input
             name="firstName"
             key="campoNombre"

@@ -1,58 +1,65 @@
 import axios from "axios";
+// Funciones actions de redux SOLO APRA MODIFICAR EL ESTADO DIRECTAMENTE
 
-export async function registrarUsuario(state, { payload }) {
-  return await axios
-    .post(process.env.REACT_APP_API_URL + "/register", {
-      ...payload,
-      dni: parseInt(payload.dni),
-      age: parseInt(payload.age),
-      phone: parseInt(payload.phone),
-      rolesNames: ["USER"],
-    })
-    .then((data) => {
-      console.log("Llego bien");
-    })
-    .catch((error) => {
-      console.log("No llego");
-    });
+export function registrarUsuario(state, { payload }) {
+  
 }
 
-export async function loginUsuario(state, payload) {
-  return await axios
-    .post(process.env.REACT_APP_API_URL + "/login", {
-      payload,
-    })
-    .then((response) => {
-      console.log(response);
-      const {
-        accesToken,
-        firstName,
-        lastName,
-        email,
-        dni,
-        phone,
-        age,
-        roles,
-        turnos,
-      } = response.data;
+// export function registrarUsuario(state, payload ) {
+//   const flag = false;
+//   axios
+//     .post(process.env.REACT_APP_API_URL + "/register", {
+//       ...payload,
+//       dni: parseInt(payload.dni),
+//       age: parseInt(payload.age),
+//       phone: parseInt(payload.phone),
+//       // rolesNames: ["USER"],
+//     })
+//     .then((data) => {
+//       console.log("Llego bien");
+//       flag = true;
+//     })
+//     .catch((error) => {
+//       console.log("No llego");
+//     });
+//   return flag;
+// }
 
-      // // seteo todo el estado
-      // // TODO demas campos del estado se actualizan...
-      // state.firstName = firstName;
-      // state.lastName = lastName;
-      // state.email = email;
-      // state.dni = dni;
-      // state.phone = phone;
-      // state.age = age;
-      // state.roles = roles;
-      // state.turnos = turnos;
-
-      // localStorage.setItem("user", accesToken);
-      alert("Logueado");
-    })
-    .catch((error) => {
-      alert("No logueado");
-    });
+// TODO ARREGLAR LOGIN
+export function loginUsuario(state, payload) {
+  //   return await axios
+  //     .post(process.env.REACT_APP_API_URL + "/login", {
+  //       payload,
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //       const {
+  //         accesToken,
+  //         firstName,
+  //         lastName,
+  //         email,
+  //         dni,
+  //         phone,
+  //         age,
+  //         roles,
+  //         turnos,
+  //       } = response.data;
+  //       // // seteo todo el estado
+  //       // // TODO demas campos del estado se actualizan...
+  //       // state.firstName = firstName;
+  //       // state.lastName = lastName;
+  //       // state.email = email;
+  //       // state.dni = dni;
+  //       // state.phone = phone;
+  //       // state.age = age;
+  //       // state.roles = roles;
+  //       // state.turnos = turnos;
+  //       // localStorage.setItem("user", accesToken);
+  //       alert("Logueado");
+  //     })
+  //     .catch((error) => {
+  //       alert("No logueado");
+  //     });
 }
 
 // estas acciones las llama el slice, para añadirlas a su recurder
