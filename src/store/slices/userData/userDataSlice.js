@@ -29,10 +29,10 @@ export const { login, registrar } = userDataSlice.actions;
 
 // ---------- End createSlice ----------
 
-axios.interceptors.request.use((request) => {
-  console.log(request);
-  return request;
-});
+// axios.interceptors.request.use((request) => {
+//   console.log(request);
+//   return request;
+// });
 
 // TODO ARREGLAR CONEXION CON EL BACK ---> AXIOS DEVOLVIA 403 (el navegador lo indica como 200 pero sigue yendo al catch)
 

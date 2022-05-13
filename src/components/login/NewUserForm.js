@@ -82,15 +82,7 @@ export default function NewUserForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-    // (firstName, lastName, dni, email, age, phone, password)
-    dispatch(registrar(input))
-      .then(() => {
-        console.log("Registro exitoso");
-        navigate("/activacion", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(registrar(input));
   }
 
   function goLoginUser(event) {
@@ -122,7 +114,7 @@ export default function NewUserForm() {
             onChange={(e) => handleChange(e.target)}
           />
           <Input
-            type="text"
+            type="number"
             name="dni"
             key="campoDNI"
             placeholder="DNI"

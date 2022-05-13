@@ -57,16 +57,16 @@ export default function LoginForm() {
   function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
-    dispatch(login(input))
-      .then(function (data) {
-        console.log("Data:");
-        console.log(data);
-        // if (data.status === "200") console.log("Paso");
-        // navigate("/", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(login(input));
+      // .then(function (data) {
+      //   console.log("Data:");
+      //   console.log(data);
+      //   // if (data.status === "200") console.log("Paso");
+      //   // navigate("/", { replace: true });
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
     // dispatch(loginUsuario("Logueado"))
   }
 

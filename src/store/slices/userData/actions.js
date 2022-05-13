@@ -1,40 +1,58 @@
 import axios from "axios";
 
-export function registrarUsuario(state, { payload }) {
-  return axios.post(process.env.API_URL + "/register", {
-    ...payload,
-    phone: parseInt(payload.phone),
-    rolesNames: ["USER"],
-  });
+export async function registrarUsuario(state, { payload }) {
+  return await axios
+    .post(process.env.REACT_APP_API_URL + "/register", {
+      ...payload,
+      dni: parseInt(payload.dni),
+      age: parseInt(payload.age),
+      phone: parseInt(payload.phone),
+      rolesNames: ["USER"],
+    })
+    .then((data) => {
+      console.log("Llego bien");
+    })
+    .catch((error) => {
+      console.log("No llego");
+    });
 }
 
-export async function loginUsuario(state, { payload }) {
-  try {
-    console.log("user");
-    console.log(state);
-    // const response = await axios.post(process.env.API_URL + "/login", {
-    //   payload,
-    // });
-    // console.log(response);
-    // const { accesToken, firstName, lastName, email, dni, phone, age, roles, turnos } =
-    //   response.data;
+export async function loginUsuario(state, payload) {
+  return await axios
+    .post(process.env.REACT_APP_API_URL + "/login", {
+      payload,
+    })
+    .then((response) => {
+      console.log(response);
+      const {
+        accesToken,
+        firstName,
+        lastName,
+        email,
+        dni,
+        phone,
+        age,
+        roles,
+        turnos,
+      } = response.data;
 
-    // // seteo todo el estado
-    // // TODO demas campos del estado se actualizan...
-    // state.firstName = firstName;
-    // state.lastName = lastName;
-    // state.email = email;
-    // state.dni = dni;
-    // state.phone = phone;
-    // state.age = age;
-    // state.roles = roles;
-    // state.turnos = turnos;
+      // // seteo todo el estado
+      // // TODO demas campos del estado se actualizan...
+      // state.firstName = firstName;
+      // state.lastName = lastName;
+      // state.email = email;
+      // state.dni = dni;
+      // state.phone = phone;
+      // state.age = age;
+      // state.roles = roles;
+      // state.turnos = turnos;
 
-    // localStorage.setItem("user", accesToken);
-  } catch (error) {
-    console.log(error);
-    return new Error(error);
-  }
+      // localStorage.setItem("user", accesToken);
+      alert("Logueado");
+    })
+    .catch((error) => {
+      alert("No logueado");
+    });
 }
 
 // estas acciones las llama el slice, para añadirlas a su recurder
