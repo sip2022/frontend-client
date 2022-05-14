@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // Para traer las acciones del slice
-import { loginUsuario, registrarUsuario } from "./actions";
+import { setState } from "./actions";
 
 export const userDataSlice = createSlice({
   name: "userData",
@@ -12,19 +12,21 @@ export const userDataSlice = createSlice({
     phone: "",
     email: "",
     age: "",
-    avatarURL: "",
     roles: [],
     turnos: [],
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
     // desde loginForm login(input) ---> reducer hace loginUsuario(sate, payload = input)
-    login: loginUsuario,
-    registrar: registrarUsuario,
+    setearEstado: setState
   },
 });
 
 export default userDataSlice.reducer;
-export const { login, registrar } = userDataSlice.actions;
+export const { setearEstado } = userDataSlice.actions;
 
 // ---------- End createSlice ----------
+axios.interceptors.request.use((request) => {
+  console.log(request);
+  return request;
+});
