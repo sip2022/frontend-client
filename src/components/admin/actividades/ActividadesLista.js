@@ -63,7 +63,7 @@ function ActividadesLista(props) {
       {!isAdmin ? (
         <NotAdminMessage />
       ) : (
-        <section>
+        <section className={classes.actividadesLista}>
           <h1>Actividades</h1>
           <section>
             <section className={classes.agregarSection}>

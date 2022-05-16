@@ -12,6 +12,11 @@ function MainNavigation() {
     // TODO
     // Ver si el user está seteado. Esto setea automaticamente "usernae" en store
     // Recuperar store
+    const token = localStorage.getItem("accessToken");
+    if(token){
+      // Hace la llamada al back para obtener los datos del usuario correspondiente
+
+    }
   }, []);
 
   function logoClickHandler(){

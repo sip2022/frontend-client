@@ -1,24 +1,30 @@
 import classes from "./Form.module.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useRoutes } from "react-router-dom";
+import { useEffect, useState } from "react";
 import CardForm from "../ui/CardForm";
-import { useDispatch } from "react-redux";
-import { registrar } from "../../store/slices/userData/userDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../utils/crud";
 
 // import { register } from "../../actions/auth";
 
 export default function NewUserForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    dni: "",
-    phone: "",
-    age: "",
+    // firstName: "",
+    // lastName: "",
+    // email: "",
+    // password: "",
+    // dni: "",
+    // phone: "",
+    // age: "",
+    firstName: "Seba1",
+    lastName: "March1",
+    email: "seba1@gmail.com",
+    password: "contraseña",
+    dni: "11111111",
+    phone: "2323",
+    age: "23",
   });
   const [errors, setErrors] = useState({});
   const [{ disable }, setFlag] = useState({
@@ -80,17 +86,15 @@ export default function NewUserForm() {
     }
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
-    // (firstName, lastName, dni, email, age, phone, password)
-    dispatch(registrar(input))
-      .then(() => {
-        console.log("Registro exitoso");
-        navigate("/activacion", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const result = await register(input);
+    !result.message
+      ? navigate("/activacion", { replace: true })
+      : setErrors({
+          globalError:
+            result.message,
+        });
   }
 
   function goLoginUser(event) {
@@ -98,11 +102,15 @@ export default function NewUserForm() {
     navigate("/login", { replace: true });
   }
 
+  function testHandler(params) {
+    // dispatch(registrar(input));
+  }
+
   return (
     <section className={classes.sectionForm}>
       <CardForm>
         <form className={classes.form} onSubmit={submitHandler}>
-          <h1>BIENVENIDO</h1>
+          <h1 onClick={testHandler}>BIENVENIDO</h1>
           <Input
             name="firstName"
             key="campoNombre"
@@ -122,7 +130,7 @@ export default function NewUserForm() {
             onChange={(e) => handleChange(e.target)}
           />
           <Input
-            type="text"
+            type="number"
             name="dni"
             key="campoDNI"
             placeholder="DNI"
@@ -168,6 +176,8 @@ export default function NewUserForm() {
             onChange={(e) => handleChange(e.target)}
           />
 
+          <ErrorMessage errors={errors} name={"globalError"} />
+
           <div className={classes.action}>
             <button disabled={disable} id="crear-Usuario">
               ¡Registrate!
@@ -190,11 +200,16 @@ function Input(props) {
   return (
     <div className={classes.field}>
       <input {...props} autoComplete="none" />
-      {errors[name] && (
-        <div className={classes.failAlert}>
-          <p>{errors[name]}</p>
-        </div>
-      )}
+      {errors[name] && <ErrorMessage errors={errors} name={name} />}
+    </div>
+  );
+}
+
+function ErrorMessage(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.failAlert}>
+      <p>{errors[name]}</p>
     </div>
   );
 }
