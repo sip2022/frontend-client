@@ -1,45 +1,53 @@
-import classes from './CardUserList.module.css'
+import classes from "./CardUserList.module.css";
 
-// WRAP component
-
-const UserRoles = ({roles}) => {
-    const userRoles = roles.map(rol => {
-        <li>{rol}</li>
-    })
-
-    return(
-        <section className='user-roles'>
-            <h2>Roles: </h2>
-            <ul>
-                {userRoles}
-            </ul>
-        </section>
-    )
+function UserRoles(props) {
+  const userRoles = props.roles.map((rol, index) => {
+    <li key={index}>{rol}</li>;
+  });
+  return (
+    <section className={classes.userRoles}>
+      <h2>Roles: </h2>
+      {/* <ul>{userRoles}</ul> */}
+      <ul>{
+        props.roles.map((rol, index) => {
+          return <li key={index}>{rol}</li>
+        })  
+      }</ul>
+    </section>
+  );
 }
 
-
 function CardUserList(props) {
-    // props.user --> nombre, apellido, edad, DNI, mail, telefono, roles[], foto perfil?
+  // props.user --> nombre, apellido, edad, DNI, mail, telefono, roles[], foto perfil?
+  //  props.userKey --> index del map
 
-    const user = props.user;
+  const user = props.user;
 
-    return(
-        <li className={classes.cardUserList}>
-            {/* <img src={user.img} /> */}
-            <h2>{user.firstName} {user.lastName}</h2>
-            <section className='user-datos'>
-                <p>Edad: {user.age}</p>
-                <p>DNI: {user.dni}</p>
-                <p>E-mail: {user.mail}</p>
-                <p>Telefono: {user.phone}</p>
-            </section>
-            <UserRoles roles={user.roles}/>
-            <section className='section-buttons'>
-                <button className='button-float' id="cambiar-roles">Modificar Roles</button>
-                <button className='button-float' id="eliminar-user">Dar de Baja</button>
-            </section>
-        </li>
-    );
+  return (
+    <li className={classes.cardUserList} key={props.userKey}>
+      {/* <div className={classes.userImg}>
+        <img src={user.img} />
+      </div> */}
+      <h2 className={classes.userName}>
+        {user.firstName} {user.lastName}
+      </h2>
+      <section className={classes.userInfo}>
+        <p>Edad: {user.age}</p>
+        <p>DNI: {user.dni}</p>
+        <p>E-mail: {user.mail}</p>
+        <p>Telefono: {user.phone}</p>
+      </section>
+      <UserRoles roles={user.roles} />
+      <section className={classes.section_buttons}>
+        <button className="button-float" id="cambiar-roles">
+          Modificar Roles
+        </button>
+        <button className="button-float" id="eliminar-user">
+          Dar de Baja
+        </button>
+      </section>
+    </li>
+  );
 }
 
 export default CardUserList;

@@ -1,74 +1,137 @@
-import classes from './LoginForm.module.css';
-import { useNavigate } from 'react-router-dom';
+import classes from "./Form.module.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import CardForm from '../ui/CardForm';
-import { useContext, useRef } from 'react';
+import CardForm from "../ui/CardForm";
+import { login } from "../../store/slices/userData/userDataSlice";
 
+export default function LoginForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-import {login} from "../../actions/auth";
-import { useDispatch } from 'react-redux';
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [disable, setDisable] = useState(true);
 
+  function handleChange({ value, name }) {
+    var error = validate(value, name);
+    if (!error) {
+      Object.values(input).filter((e) => e === "").length
+        ? setDisable(true)
+        : setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }
 
-function LoginForm(props) {
+  function validate(value, name) {
+    let ob = {};
 
-    const dispatch = useDispatch()
-
-    const navigate = useNavigate();
-
-    const nameInputRef = useRef();
-
-    const state = {
-        username: "",
-        password: "",
+    setInput((prev) => ({ ...prev, [name]: value }));
+    switch (name) {
+      case "email":
+        var emailPattern = /\S+@\S+\.\S+/;
+        if (!emailPattern.test(value))
+          ob[name] = "El mail introducido no es valido.";
+        break;
+      case "password":
+        if (value.length < 8)
+          ob[name] = "La contraseña debe tener minimo 8 caracteres.";
+        break;
+      default:
+        break;
     }
 
-    function onChangeUsername(e) {
-        state.username = e
+    setErrors(ob);
+    if (Object.keys(ob).length > 0) {
+      return true;
+    } else {
+      return false;
     }
-    function onChangePassword(e) {
-        state.password = e
-    }
-    
-    function submitHandler(event) {
-        event.preventDefault();
-        state.loading = true;
-        // validates data
-        // if(validado){}
-        dispatch(login(state.username, state.password))
-            .then( () => {
-                navigate('/', {replace: true});
-            })
-            .catch( (error) => {
-                console.log(error)
-            })
-    }
+  }
 
-    function goNewUser(event) {
-        event.preventDefault();
-        navigate('/newUser', {replace: true});
-    }
+  function submitHandler(event) {
+    event.preventDefault();
+    // TODO ARREGLAR CONEXION CON EL BACKEND
+    dispatch(login(input))
+      .then(function (data) {
+        console.log("Data:");
+        console.log(data);
+        // if (data.status === "200") console.log("Paso");
+        // navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // dispatch(loginUsuario("Logueado"))
+  }
 
-    return(
-        <CardForm >
-            <form className={classes.form} onSubmit={submitHandler}>
-                <img className={classes.iconoUser} src="../../../images/userIcono.png" alt="" />
-                <h1>Bienvenido</h1>
-                <div className={classes.field}>
-                    <input id="nombre-Usuario" type="text" placeholder="Ingrese Usuario" ref={nameInputRef} required />
-                </div>
-                <div className={classes.field}>
-                    <input id="contra-Usuario" type="password" placeholder="Ingrese Contraseña" required />
-                </div>
-                <a className={classes.link} id="olvContraLogin" href="/">¿Olvidaste la contraseña?</a>
-                <div className={classes.action}>
-                    <button  id="ingresar-Usuario">Ingresar</button>
-                </div>
-                <div className={classes.action}>
-                    <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>Crear nuevo usuario</a>
-                </div>
-            </form>
-        </CardForm>
-    );
+  function goNewUser(event) {
+    event.preventDefault();
+    navigate("/newUser", { replace: true });
+  }
+
+  return (
+    <section className={classes.sectionForm}>
+      <CardForm>
+        <form className={classes.form} onSubmit={submitHandler}>
+          <img
+            className={classes.iconoUser}
+            src="/images/userIcono.png"
+            alt="Login User Icon"
+          />
+          <h1>Bienvenido</h1>
+          <Input
+            name="email"
+            key="email"
+            type="email"
+            placeholder="Ingrese E-mail"
+            value={input.email}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <Input
+            name="password"
+            key="password"
+            type="password"
+            placeholder="Ingrese Contraseña"
+            value={input.password}
+            errors={errors}
+            onChange={(e) => handleChange(e.target)}
+          />
+          <a className={classes.link} id="olvContraLogin" href="/">
+            ¿Olvidaste la contraseña?
+          </a>
+          <div className={classes.action}>
+            <button id="ingresar-Usuario" disabled={disable}>
+              Ingresar
+            </button>
+          </div>
+          <div className={classes.action}>
+            <a id="crear-Usuario" href="nuevoUsuario.html" onClick={goNewUser}>
+              Crear nuevo usuario
+            </a>
+          </div>
+        </form>
+      </CardForm>
+    </section>
+  );
 }
 
-export default LoginForm;
+function Input(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.field}>
+      <input {...props} autoComplete="none" />
+      {errors[name] && (
+        <div className={classes.failAlert}>
+          <p>{errors[name]}</p>
+        </div>
+      )}
+    </div>
+  );
+}

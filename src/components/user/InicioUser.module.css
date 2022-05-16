@@ -1,0 +1,25 @@
+.sectionCards{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.itemCard{
+  background-color: #BFE0DC;
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  padding: 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.itemCard img{
+  width: 30%;
+}
+
+.itemCard h3{
+  width: 60%;
+}

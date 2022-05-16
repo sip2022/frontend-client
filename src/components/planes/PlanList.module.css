@@ -1,0 +1,21 @@
+.planes{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.singlePlan{
+  background-color: #F8B551;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 45%;
+  margin-top: 1rem;
+  border-radius: 15px;
+}
+
+.plan_image{
+  background-color: wheat;
+  border-radius: 15px;
+}

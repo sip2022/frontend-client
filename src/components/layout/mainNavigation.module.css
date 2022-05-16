@@ -12,12 +12,14 @@
     /* padding: 0 10%; */
     position: sticky;
     top: 0;
+    z-index: 10;
 }
 
 .logo{
     font-size: 2rem;
     color: #484747;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .header ul {

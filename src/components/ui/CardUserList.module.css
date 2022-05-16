@@ -3,5 +3,70 @@
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 1em;
+    position: relative;
+
+    margin-bottom: 3em;
 }
 
+h1{
+    text-align: center;
+}
+    
+/* .userImg { grid-area: 2 / 1 / 6 / 2; }
+.userName { grid-area: 1 / 1 / 2 / 6; }
+.userInfo { grid-area: 2 / 2 / 6 / 4; }
+.userRoles { grid-area: 2 / 4 / 6 / 5; } */
+/* .div5 { grid-area: 2 / 5 / 6 / 6; } */
+.userImg { 
+
+}
+
+.userInfo { 
+    font-weight: bold;
+    width: 45%;
+}
+
+.userRoles { 
+    width: 45%;
+
+}
+
+.userName { 
+    width: 100%;
+    text-align: center;
+}
+
+.section_buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    float: left;
+    position: absolute;
+    top: 0;
+    right: 1em;
+}
+
+.section_buttons button{
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    font: inherit;
+    cursor: pointer;
+    background-color: #7AD0C6;
+    padding: 0.5rem 1.5rem;
+    border-radius: 15px;
+    border-color: unset;
+    font-weight: bold;
+}
+
+
+.section_buttons button:hover, .section_buttons button:active {
+    background-color: #5b9e96;
+    border-color: #5b9e96;
+  }

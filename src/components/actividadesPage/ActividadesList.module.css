@@ -1,0 +1,22 @@
+.section_actividades{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 2rem;
+}
+
+.section_actividades > section{
+  margin-top: 2rem;
+  flex: 0 0 25%;
+}
+
+.section_actividades > section img{
+  height: 10rem;
+}
+
+h1{
+  background-color: #FFCC81;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 15px;
+}
