@@ -71,11 +71,11 @@ export default function LoginForm() {
       roles: ["USER"],
       accessToken: "token",
     };
-    (await login(input))
-      ? dispatch(setearEstado(DUMMY_DATA))
+    const result = await login(input);
+    !result.message
+      ? console.log(result)
       : setErrors({
-          globalError:
-            "Hubo un problema con el Login. Revise los campos y vuelva a intentar.",
+          globalError: result.message,
         });
 
     // Y localstore el jwt

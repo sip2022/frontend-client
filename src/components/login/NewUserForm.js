@@ -88,12 +88,12 @@ export default function NewUserForm() {
 
   async function submitHandler(event) {
     event.preventDefault();
-
-    (await register(input))
+    const result = await register(input);
+    !result.message
       ? navigate("/activacion", { replace: true })
       : setErrors({
           globalError:
-            "Hubo un problema con el registro. Revise los campos y vuelva a intentar.",
+            result.message,
         });
   }
 
