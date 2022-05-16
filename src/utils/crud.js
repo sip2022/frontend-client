@@ -19,9 +19,8 @@ export async function register(input) {
       result.message = error.response.data.message;
     } else {
       result.message =
-        "Hubo un problema con el registro. Revise los campos y vuelva a intentar.";
+        "Hubo un problema con el Registro. Vuelva a intentarlo más tarde.";
     }
-    // result.message = error.response.data.message;
   }
   return result;
 }
