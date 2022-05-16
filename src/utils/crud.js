@@ -47,7 +47,7 @@ export async function login(input) {
       result.message = error.response.data.message;
     } else {
       result.message =
-        "Hubo un problema con el Login. Revise los campos y vuelva a intentar.";
+        "Hubo un problema con el Login. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
