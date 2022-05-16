@@ -14,8 +14,8 @@ function MainNavigation() {
     // Recuperar store
     const token = localStorage.getItem("accessToken");
     if(token){
-      // Mira el token
-      
+      // Hace la llamada al back para obtener los datos del usuario correspondiente
+
     }
   }, []);
 

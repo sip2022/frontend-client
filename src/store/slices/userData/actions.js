@@ -18,14 +18,4 @@ export function setState(state, {payload}) {
   state.email = email;
   state.age = age;
   state.roles = roles;
-  // const {
-  //   accesToken,
-  //   firstName,
-  //   lastName,
-  //   email,
-  //   dni,
-  //   phone,
-  //   age,
-  //   roles,
-  // } = payload;
 }

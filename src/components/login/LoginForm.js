@@ -69,7 +69,7 @@ export default function LoginForm() {
       phone: 2323,
       age: 23,
       roles: ["USER"],
-      accessToken: "token"
+      accessToken: "token",
     };
     (await login(input))
       ? dispatch(setearEstado(DUMMY_DATA))
@@ -77,6 +77,9 @@ export default function LoginForm() {
           globalError:
             "Hubo un problema con el Login. Revise los campos y vuelva a intentar.",
         });
+
+    // Y localstore el jwt
+    localStorage.setItem("accessToken", DUMMY_DATA.accessToken);
   }
 
   function goNewUser(event) {

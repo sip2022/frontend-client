@@ -1,5 +1,6 @@
 // FUNCIONES AXIOS
 import axios from "axios";
+import authHeader from "../services/auth-Header";
 
 export async function register(input) {
   try {
@@ -26,19 +27,6 @@ export async function login(input) {
       .then((response) => {
         console.log(response);
         // TODO seteo todo el estado
-        // const {
-        //   accesToken,
-        //   firstName,
-        //   lastName,
-        //   email,
-        //   dni,
-        //   phone,
-        //   age,
-        //   roles,
-        // } = response.data;
-        // setState(data);
-        // Y localstore el jwt
-        // localStorage.setItem("accessToken", accessToken);
         console.log("Logueado");
       });
   } catch (error) {
