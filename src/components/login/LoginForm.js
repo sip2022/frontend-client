@@ -4,15 +4,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { login } from "../../store/slices/userData/userDataSlice";
+import { login } from "../../utils/crud";
+import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    email: "seba1@gmail.com",
+    password: "contraseña",
+    // email: "",
+    // password: "",
   });
   const [errors, setErrors] = useState({});
   const [disable, setDisable] = useState(true);
@@ -54,20 +57,29 @@ export default function LoginForm() {
     }
   }
 
-  function submitHandler(event) {
+  async function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
-    dispatch(login(input))
-      .then(function (data) {
-        console.log("Data:");
-        console.log(data);
-        // if (data.status === "200") console.log("Paso");
-        // navigate("/", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // dispatch(loginUsuario("Logueado"))
+    const DUMMY_DATA = {
+      accesToken: "jwt",
+      firstName: "seba1",
+      lastName: "march1",
+      email: "seba1@gmail.com",
+      dni: 12345678,
+      phone: 2323,
+      age: 23,
+      roles: ["USER"],
+      accessToken: "token",
+    };
+    const result = await login(input);
+    !result.message
+      ? console.log(result)
+      : setErrors({
+          globalError: result.message,
+        });
+
+    // Y localstore el jwt
+    localStorage.setItem("accessToken", DUMMY_DATA.accessToken);
   }
 
   function goNewUser(event) {
@@ -85,6 +97,7 @@ export default function LoginForm() {
             alt="Login User Icon"
           />
           <h1>Bienvenido</h1>
+
           <Input
             name="email"
             key="email"
@@ -94,6 +107,7 @@ export default function LoginForm() {
             errors={errors}
             onChange={(e) => handleChange(e.target)}
           />
+
           <Input
             name="password"
             key="password"
@@ -103,6 +117,9 @@ export default function LoginForm() {
             errors={errors}
             onChange={(e) => handleChange(e.target)}
           />
+
+          <ErrorMessage errors={errors} name={"globalError"} />
+
           <a className={classes.link} id="olvContraLogin" href="/">
             ¿Olvidaste la contraseña?
           </a>
@@ -127,11 +144,16 @@ function Input(props) {
   return (
     <div className={classes.field}>
       <input {...props} autoComplete="none" />
-      {errors[name] && (
-        <div className={classes.failAlert}>
-          <p>{errors[name]}</p>
-        </div>
-      )}
+      {errors[name] && <ErrorMessage errors={errors} name={name} />}
+    </div>
+  );
+}
+
+function ErrorMessage(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.failAlert}>
+      <p>{errors[name]}</p>
     </div>
   );
 }

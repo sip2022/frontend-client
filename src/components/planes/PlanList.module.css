@@ -18,4 +18,10 @@
 .plan_image{
   background-color: wheat;
   border-radius: 15px;
+  margin-left: 1rem;
+}
+
+.plan_image img{
+  width: 4rem;
+  min-width: 4rem;
 }
