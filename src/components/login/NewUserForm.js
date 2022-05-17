@@ -102,15 +102,11 @@ export default function NewUserForm() {
     navigate("/login", { replace: true });
   }
 
-  function testHandler(params) {
-    // dispatch(registrar(input));
-  }
-
   return (
     <section className={classes.sectionForm}>
       <CardForm>
         <form className={classes.form} onSubmit={submitHandler}>
-          <h1 onClick={testHandler}>BIENVENIDO</h1>
+          <h1>BIENVENIDO</h1>
           <Input
             name="firstName"
             key="campoNombre"

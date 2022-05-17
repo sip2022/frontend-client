@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadActivityLista } from "../../../store/slices/activityList/activityListSlice";
+import {
+  loadActivityLista,
+  setActivityLista,
+} from "../../../store/slices/activityList/activityListSlice";
+import { loadActivityList } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
 
 function NotAdminMessage(props) {
@@ -45,21 +49,21 @@ function ActividadesLista(props) {
 
   useEffect(() => {
     // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
-    dispatch(loadActivityLista());
+    async function loadActividades() {
+      if (!actividades) {
+        const lista = await loadActivityList();
+        dispatch(setActivityLista(lista));
+      } 
+    }
+    loadActividades();
     setIsAdmin(true);
   }, []);
-
-  function clickHandler(params) {
-    console.log(actividades);
-  }
-
   function altaClickHandler() {
     navigate("/admin/actividad/new", { replace: true });
   }
 
   return (
     <section>
-      <button onClick={clickHandler}>Boton Auxiliar (mostrar lista en consola)</button>
       {!isAdmin ? (
         <NotAdminMessage />
       ) : (
@@ -75,9 +79,13 @@ function ActividadesLista(props) {
               </button>
             </section>
             <section>
-              {actividades.map((actividad) => {
-                return <ActividadItem actividad={actividad} />;
-              })}
+              {actividades ? (
+                actividades.map((actividad) => {
+                  return <ActividadItem actividad={actividad} />;
+                })
+              ) : (
+                <h1>No hay actividades subidas!</h1>
+              )}
             </section>
           </section>
         </section>
