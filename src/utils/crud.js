@@ -109,31 +109,64 @@ export async function loadActivityList() {
   return DUMMY_DATA;
 }
 
+export async function agregarActividad(actividad) {
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios
+      .post(process.env.REACT_APP_API_URL + "/activity", {
+        ...actividad,
+      })
+      .then((response) => {
+        console.log(response.log);
+        result = { ...result, ...response.data };
+      });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
 // -------------------- END Actividades --------------------
 
 // -------------------- Timeslots --------------------
 
 export async function getTimeslotList() {
   console.log("Loading timeslots...");
-  const DUMMY_DATA = [
-    // Timeslot Mock
-    {
-      dayOfWeek: "Monday",
-      startTime: {
-        hour: 13,
-        minute: 30,
+  var result = [];
+  try {
+    const response = axios
+      .get(process.env.REACT_APP_API_URL + "/login")
+      .then((response) => {
+        console.log(response.data);
+        // result = data;
+      });
+
+    result = [
+      // Timeslot Mock
+      {
+        dayOfWeek: "Monday",
+        startTime: {
+          hour: 13,
+          minute: 30,
+        },
+        endTime: {
+          hour: 14,
+          minute: 30,
+        },
       },
-      endTime: {
-        hour: 14,
-        minute: 30,
-      },
-    },
-  ];
-  return DUMMY_DATA;
+    ];
+  } catch (error) {}
+
+  return result;
 }
 
 // -------------------- END Timeslots --------------------
-
 
 // -------------------- Profesores --------------------
 export async function getProfesoresList() {
@@ -154,8 +187,8 @@ export async function getProfesoresList() {
       email: "profesor2@gmail.com",
       dni: 12345679,
       phone: 2324,
-      firstName: "Josue",
-      lastName: "Yrion",
+      firstName: "Profe",
+      lastName: "X",
       age: 35,
     },
   ];
