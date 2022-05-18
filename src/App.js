@@ -48,6 +48,7 @@ function App() {
           {/* Admin Routes */}
           <Route path='/admin/actividades' element={<ActividadesLista />} />
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
+          <Route path='/admin/actividad/edit/:id' element={<input />} />
         </Routes>
       </Layout>
     </div>

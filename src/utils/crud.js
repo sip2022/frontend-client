@@ -84,7 +84,7 @@ export async function loadActivityList() {
     },
     // Actividad Mock
     {
-      id: 1,
+      id: 2,
       name: "Actividad 2",
       basePrice: 3.0,
       professor: "Sindy Nero",
@@ -130,6 +130,10 @@ export async function agregarActividad(actividad) {
     }
   }
   return result;
+}
+
+export async function eliminarActividad(params) {
+  console.log(params);
 }
 
 // -------------------- END Actividades --------------------

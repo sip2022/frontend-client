@@ -5,7 +5,7 @@ import {
   loadActivityLista,
   setActivityLista,
 } from "../../../store/slices/activityList/activityListSlice";
-import { loadActivityList } from "../../../utils/crud";
+import { eliminarActividad, loadActivityList } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
 
 function NotAdminMessage(props) {
@@ -17,22 +17,30 @@ function NotAdminMessage(props) {
 }
 
 function ActividadItem({ actividad }) {
-  function editarHandler() {
-    alert("Editar " + actividad.name);
+  function editarHandler(params) {
+    // navigate("/admin/actividad/edit/" + actividadID);
+    console.log("Editar " + params);
   }
 
-  function eliminarHandler() {
-    alert("Eliminando " + actividad.name);
+  async function eliminarHandler(params) {
+    // await eliminarActividad(actividadID);
+    console.log("Eliminar " + params);
   }
 
   return (
     <section className={classes.actividadItem}>
       <h2>{actividad.name}</h2>
       <section>
-        <button className={classes.editarButton} onClick={editarHandler}>
+        <button
+          onClick={editarHandler(actividad.id)}
+          className={classes.editarButton}
+        >
           Editar
         </button>
-        <button className={classes.eliminarButton} onClick={eliminarHandler}>
+        <button
+          // onClick={eliminarHandler(actividad.id)}
+          className={classes.eliminarButton}
+        >
           Eliminar
         </button>
       </section>
@@ -53,11 +61,12 @@ function ActividadesLista(props) {
       if (!actividades) {
         const lista = await loadActivityList();
         dispatch(setActivityLista(lista));
-      } 
+      }
     }
     loadActividades();
     setIsAdmin(true);
   }, []);
+
   function altaClickHandler() {
     navigate("/admin/actividad/new", { replace: true });
   }
@@ -81,7 +90,9 @@ function ActividadesLista(props) {
             <section>
               {actividades ? (
                 actividades.map((actividad) => {
-                  return <ActividadItem actividad={actividad} />;
+                  return (
+                    <ActividadItem actividad={actividad} key={actividad.id} />
+                  );
                 })
               ) : (
                 <h1>No hay actividades subidas!</h1>
