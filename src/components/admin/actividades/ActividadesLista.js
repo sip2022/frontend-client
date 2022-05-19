@@ -17,14 +17,15 @@ function NotAdminMessage(props) {
 }
 
 function ActividadItem({ actividad }) {
+
+  const navigate = useNavigate();
+
   function editarHandler(params) {
-    // navigate("/admin/actividad/edit/" + actividadID);
-    console.log("Editar " + params);
+    navigate("/admin/actividad/edit/" + params, {replace: true})
   }
 
   async function eliminarHandler(params) {
-    // await eliminarActividad(actividadID);
-    console.log("Eliminar " + params);
+    const result = await eliminarActividad(params);
   }
 
   return (
@@ -32,13 +33,13 @@ function ActividadItem({ actividad }) {
       <h2>{actividad.name}</h2>
       <section>
         <button
-          onClick={editarHandler(actividad.id)}
+          onClick={() => editarHandler(actividad.id)}
           className={classes.editarButton}
         >
           Editar
         </button>
         <button
-          // onClick={eliminarHandler(actividad.id)}
+          onClick={() => eliminarHandler(actividad.id)}
           className={classes.eliminarButton}
         >
           Eliminar

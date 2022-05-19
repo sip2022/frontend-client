@@ -8,7 +8,8 @@ export async function register(input) {
   };
   try {
     const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/register",
+      // process.env.REACT_APP_API_URL + "/register",
+      "http://34.75.33.30:80/register",
       {
         ...input,
       }
@@ -134,6 +135,47 @@ export async function agregarActividad(actividad) {
 
 export async function eliminarActividad(params) {
   console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/activity/" + params,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function actualizarActividad(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.put(
+      process.env.REACT_APP_API_URL + "/activity/" + params,
+      {
+        headers: authHeader(),
+        body: params,
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
 }
 
 // -------------------- END Actividades --------------------
