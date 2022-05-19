@@ -8,7 +8,6 @@ import { login } from "../../utils/crud";
 import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
