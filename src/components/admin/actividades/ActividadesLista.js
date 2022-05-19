@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadActivityLista } from "../../../store/slices/activityList/activityListSlice";
+import {
+  loadActivityLista,
+  setActivityLista,
+} from "../../../store/slices/activityList/activityListSlice";
+import { eliminarActividad, loadActivityList } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
 
 function NotAdminMessage(props) {
@@ -13,22 +17,31 @@ function NotAdminMessage(props) {
 }
 
 function ActividadItem({ actividad }) {
-  function editarHandler() {
-    alert("Editar " + actividad.name);
+
+  const navigate = useNavigate();
+
+  function editarHandler(params) {
+    navigate("/admin/actividad/edit/" + params, {replace: true})
   }
 
-  function eliminarHandler() {
-    alert("Eliminando " + actividad.name);
+  async function eliminarHandler(params) {
+    const result = await eliminarActividad(params);
   }
 
   return (
     <section className={classes.actividadItem}>
       <h2>{actividad.name}</h2>
       <section>
-        <button className={classes.editarButton} onClick={editarHandler}>
+        <button
+          onClick={() => editarHandler(actividad.id)}
+          className={classes.editarButton}
+        >
           Editar
         </button>
-        <button className={classes.eliminarButton} onClick={eliminarHandler}>
+        <button
+          onClick={() => eliminarHandler(actividad.id)}
+          className={classes.eliminarButton}
+        >
           Eliminar
         </button>
       </section>
@@ -45,13 +58,15 @@ function ActividadesLista(props) {
 
   useEffect(() => {
     // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
-    dispatch(loadActivityLista());
+    async function loadActividades() {
+      if (!actividades) {
+        const lista = await loadActivityList();
+        dispatch(setActivityLista(lista));
+      }
+    }
+    loadActividades();
     setIsAdmin(true);
   }, []);
-
-  function clickHandler(params) {
-    console.log(actividades);
-  }
 
   function altaClickHandler() {
     navigate("/admin/actividad/new", { replace: true });
@@ -59,7 +74,6 @@ function ActividadesLista(props) {
 
   return (
     <section>
-      <button onClick={clickHandler}>Boton Auxiliar (mostrar lista en consola)</button>
       {!isAdmin ? (
         <NotAdminMessage />
       ) : (
@@ -75,9 +89,15 @@ function ActividadesLista(props) {
               </button>
             </section>
             <section>
-              {actividades.map((actividad) => {
-                return <ActividadItem actividad={actividad} />;
-              })}
+              {actividades ? (
+                actividades.map((actividad) => {
+                  return (
+                    <ActividadItem actividad={actividad} key={actividad.id} />
+                  );
+                })
+              ) : (
+                <h1>No hay actividades subidas!</h1>
+              )}
             </section>
           </section>
         </section>

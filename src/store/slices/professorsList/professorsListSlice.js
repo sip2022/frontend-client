@@ -1,6 +1,6 @@
 // redux estado sobre lista de usuarios
 import { createSlice } from "@reduxjs/toolkit";
-import { loadProfessorsList } from "./actions";
+import { setProfessorsList } from "./actions";
 
 export const professorsListSlice = createSlice({
   name: "professorsList",
@@ -8,11 +8,11 @@ export const professorsListSlice = createSlice({
     professorsList: null,
   },
   reducers: {
-    loadProfessors: loadProfessorsList,
+    setProfessors: setProfessorsList,
   },
 });
 
 export default professorsListSlice.reducer;
-export const { loadProfessors } = professorsListSlice.actions 
+export const { setProfessors } = professorsListSlice.actions 
 
 // ---------- End createSlice ----------

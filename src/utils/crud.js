@@ -8,7 +8,8 @@ export async function register(input) {
   };
   try {
     const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/register",
+      // process.env.REACT_APP_API_URL + "/register",
+      "http://34.75.33.30:80/register",
       {
         ...input,
       }
@@ -56,3 +57,187 @@ export async function getUser(token) {
   // TODO necesito el endpoint
   const response = await axios.get(process.env.REACT_APP_API_URL + "/", {});
 }
+
+// -------------------- Actividades --------------------
+export async function loadActivityList() {
+  console.log("Loading actividades...");
+  const DUMMY_DATA = [
+    // Actividad Mock
+    {
+      id: 1,
+      name: "Actividad X",
+      basePrice: 3.0,
+      professor: "Sindy Nero",
+      atendeesLimit: 10,
+      appointments: [
+        // Timeslots
+        {
+          startTime: {
+            hour: 13,
+            minute: 30,
+          },
+          endTime: {
+            hour: 14,
+            minute: 30,
+          },
+        },
+      ],
+    },
+    // Actividad Mock
+    {
+      id: 2,
+      name: "Actividad 2",
+      basePrice: 3.0,
+      professor: "Sindy Nero",
+      atendeesLimit: 10,
+      appointments: [
+        {
+          dayOfWeek: "Monday",
+          startTime: {
+            hour: 13,
+            minute: 30,
+          },
+          endTime: {
+            hour: 14,
+            minute: 30,
+          },
+        },
+      ],
+    },
+  ];
+  // TODO Axios para recuperar lista de actividades, con authHeader
+
+  return DUMMY_DATA;
+}
+
+export async function agregarActividad(actividad) {
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios
+      .post(process.env.REACT_APP_API_URL + "/activity", {
+        ...actividad,
+      })
+      .then((response) => {
+        console.log(response.log);
+        result = { ...result, ...response.data };
+      });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function eliminarActividad(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/activity/" + params,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function actualizarActividad(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.put(
+      process.env.REACT_APP_API_URL + "/activity/" + params,
+      {
+        headers: authHeader(),
+        body: params,
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+// -------------------- END Actividades --------------------
+
+// -------------------- Timeslots --------------------
+
+export async function getTimeslotList() {
+  console.log("Loading timeslots...");
+  var result = [];
+  try {
+    const response = axios
+      .get(process.env.REACT_APP_API_URL + "/login")
+      .then((response) => {
+        console.log(response.data);
+        // result = data;
+      });
+
+    result = [
+      // Timeslot Mock
+      {
+        dayOfWeek: "Monday",
+        startTime: {
+          hour: 13,
+          minute: 30,
+        },
+        endTime: {
+          hour: 14,
+          minute: 30,
+        },
+      },
+    ];
+  } catch (error) {}
+
+  return result;
+}
+
+// -------------------- END Timeslots --------------------
+
+// -------------------- Profesores --------------------
+export async function getProfesoresList() {
+  console.log("Loading Profesores...");
+  const DUMMY_DATA = [
+    // Profesor Mock
+    {
+      id: 1,
+      email: "profesor@gmail.com",
+      dni: 12345678,
+      phone: 2323,
+      firstName: "Sindy",
+      lastName: "Nero",
+      age: 28,
+    },
+    {
+      id: 2,
+      email: "profesor2@gmail.com",
+      dni: 12345679,
+      phone: 2324,
+      firstName: "Profe",
+      lastName: "X",
+      age: 35,
+    },
+  ];
+  return DUMMY_DATA;
+}
+// -------------------- END Porfesores --------------------
