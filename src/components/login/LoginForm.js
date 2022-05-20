@@ -9,6 +9,7 @@ import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     email: "seba1@gmail.com",
@@ -58,24 +59,24 @@ export default function LoginForm() {
 
   function loadLogin(params) {
     console.log(params);
-
+    // TODO ARREGLAR CONEXION CON EL BACKEND
+    // const DUMMY_DATA = {
+    //   firstName: "seba1",
+    //   lastName: "march1",
+    //   email: "seba1@gmail.com",
+    //   dni: 12345678,
+    //   phone: 2323,
+    //   age: 23,
+    //   roles: ["USER"],
+    //   accessToken: "token",
+    // };
+    // dispatch(setearEstado(DUMMY_DATA));
     // Y localstore el jwt
     localStorage.setItem("accessToken", params.accessToken);
   }
 
   async function submitHandler(event) {
     event.preventDefault();
-    // TODO ARREGLAR CONEXION CON EL BACKEND
-    const DUMMY_DATA = {
-      firstName: "seba1",
-      lastName: "march1",
-      email: "seba1@gmail.com",
-      dni: 12345678,
-      phone: 2323,
-      age: 23,
-      roles: ["USER"],
-      accessToken: "token",
-    };
     const result = await login(input);
     !result.message
       ? loadLogin(result)

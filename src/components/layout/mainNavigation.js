@@ -5,19 +5,20 @@ import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function MainNavigation() {
-  const username = useSelector(state => state.user.username);
+  const firstName = useSelector(state => state.user.firstName);
   const navigate = useNavigate();
 
   useEffect(() => {
     // TODO
     // Ver si el user está seteado. Esto setea automaticamente "usernae" en store
     // Recuperar store
-    const token = localStorage.getItem("accessToken");
-    if(token){
-      // Hace la llamada al back para obtener los datos del usuario correspondiente
+    // const token = localStorage.getItem("accessToken");
+    // if(token){
+    //   // Hace la llamada al back para obtener los datos del usuario correspondiente
 
-    }
-  }, []);
+    // }
+    console.log("Logued head changed!");
+  }, [firstName]);
 
   function logoClickHandler(){
     navigate("/", { replace: true });
@@ -38,8 +39,8 @@ function MainNavigation() {
             <Link to="/contactos">Contactos</Link>
           </li>
 
-          {username ? (
-            <LoggedSection userName={username} />
+          {firstName ? (
+            <LoggedSection firstName={firstName} />
           ) : (
             <NotLoggedSection />
           )}
@@ -54,7 +55,7 @@ function LoggedSection(props) {
   // TODO cmopletar para que muestre el nombre y la imagen del usuario
   return (
     <li>
-      <Link to="/login">{props.userName}</Link>
+      <Link to="/login">{props.firstName}</Link>
     </li>
   );
 }

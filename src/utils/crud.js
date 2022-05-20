@@ -36,10 +36,7 @@ export async function login(input) {
         ...input,
       })
       .then((response) => {
-        console.log(response.data);
-        console.log(response.headers);
-        console.log("Logueado");
-        result = { ...result, ...response.data };
+        result = { ...result, accessToken: response.headers.authorization };
       });
   } catch (error) {
     if (error.response) {
