@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import { agregarActividad, getProfesoresList, getTimeslotList } from "../../../utils/crud";
+import { actualizarActividad, getProfesoresList } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
-// ---------- Formulario Nueva actividad ----------
-function NewActividadForm() {
+function ActividadEditForm() {
+  const { id } = useParams();
   const profesores = useSelector(
     (state) => state.professorsList.professorsList
   );
@@ -16,7 +15,6 @@ function NewActividadForm() {
   const [numberHor, setNumberHor] = useState(1);
 
   useEffect(() => {
-    // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
     async function loadProfesores() {
       var lista = [];
       try {
@@ -28,29 +26,22 @@ function NewActividadForm() {
       }
       return lista;
     }
-
     loadProfesores().then((data) => {
-      console.log(data);
       dispatch(setProfessors(data));
     });
   }, []);
 
-  function agregarHorario(event) {
-    event.preventDefault(event);
-    
-  }
-
   async function submitHandler(event) {
     event.preventDefault(event);
     const prof_select = document.getElementById("input-profesor");
-    const prof_seleccionado = prof_select.options[prof_select.selectedIndex].getAttribute("id_prof")
-    const newAct = {
+    const prof_seleccionado = prof_select.options[prof_select.selectedIndex];    
+    const act = {
       name: document.getElementById("input-name").value,
       basePrice: document.getElementById("input-precio").value,
       atendeesLimit: document.getElementById("input-asistencia").value,
       profesor: prof_seleccionado,
     };
-    const result = await agregarActividad(newAct);
+    const result = await actualizarActividad(act);
   }
 
   function cancelarHandler(event) {
@@ -82,21 +73,21 @@ function NewActividadForm() {
           <InputItem nombre="Precio Base:">
             <input id="input-precio" type="text" />
           </InputItem>
-
         </section>
       </section>
       <section className={classes.nuevaActividad_botones}>
         <button onClick={cancelarHandler}>Cancelar</button>
-        <button onClick={submitHandler}>Crear Actviidad</button>
+        <button onClick={submitHandler}>Actualizar Actividad</button>
       </section>
       <section className={classes.buttons}></section>
     </section>
   );
 }
 
-export default NewActividadForm;
-// ---------- END Formulario Nueva actividad ----------
+export default ActividadEditForm;
+// ---------- END Formulario Editar actividad ----------
 
+// ---------- Formulario Nueva actividad ----------
 function DropdownProf({ profesores }) {
   return (
     profesores && (
@@ -117,6 +108,7 @@ function DropdownProf({ profesores }) {
   );
 }
 
+// ---------- Inputs del fomulario ----------
 function InputItem(props) {
   // nombre, input en si (children),
   return (
@@ -126,3 +118,4 @@ function InputItem(props) {
     </section>
   );
 }
+// ---------- END Inputs del fomulario ----------

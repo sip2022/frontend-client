@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadActivityList } from "./actions";
+import { setActivityList } from "./actions";
 
 export const activityListSlice = createSlice({
   name: "activityList",
@@ -8,11 +8,11 @@ export const activityListSlice = createSlice({
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
-    loadActivityLista: loadActivityList
+    setActivityLista: setActivityList
   },
 });
 
 export default activityListSlice.reducer;
-export const { loadActivityLista } = activityListSlice.actions;
+export const { setActivityLista } = activityListSlice.actions;
 
 // ---------- End createSlice ----------

@@ -4,15 +4,18 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { login } from "../../store/slices/userData/userDataSlice";
+import { getUser, login } from "../../utils/crud";
+import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    email: "seba1@gmail.com",
+    password: "contraseña",
+    // email: "",
+    // password: "",
   });
   const [errors, setErrors] = useState({});
   const [disable, setDisable] = useState(true);
@@ -54,20 +57,28 @@ export default function LoginForm() {
     }
   }
 
-  function submitHandler(event) {
-    event.preventDefault();
-    // TODO ARREGLAR CONEXION CON EL BACKEND
-    dispatch(login(input))
-      .then(function (data) {
-        console.log("Data:");
-        console.log(data);
-        // if (data.status === "200") console.log("Paso");
-        // navigate("/", { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
+  async function loadLogin(params) {
+    localStorage.setItem("accessToken", params.accessToken);
+    const result = await getUser(input.email);
+    if (!result.message) {
+      // dispatch(setearEstado(DUMMY_DATA));
+      console.log("Exito");
+    } else {
+      setErrors({
+        globalError: result.message,
       });
-    // dispatch(loginUsuario("Logueado"))
+      console.log("Fracaso");
+    }
+  }
+
+  async function submitHandler(event) {
+    event.preventDefault();
+    const result = await login(input);
+    !result.message
+      ? loadLogin(result)
+      : setErrors({
+          globalError: result.message,
+        });
   }
 
   function goNewUser(event) {
@@ -85,6 +96,7 @@ export default function LoginForm() {
             alt="Login User Icon"
           />
           <h1>Bienvenido</h1>
+
           <Input
             name="email"
             key="email"
@@ -94,6 +106,7 @@ export default function LoginForm() {
             errors={errors}
             onChange={(e) => handleChange(e.target)}
           />
+
           <Input
             name="password"
             key="password"
@@ -103,6 +116,9 @@ export default function LoginForm() {
             errors={errors}
             onChange={(e) => handleChange(e.target)}
           />
+
+          <ErrorMessage errors={errors} name={"globalError"} />
+
           <a className={classes.link} id="olvContraLogin" href="/">
             ¿Olvidaste la contraseña?
           </a>
@@ -127,11 +143,16 @@ function Input(props) {
   return (
     <div className={classes.field}>
       <input {...props} autoComplete="none" />
-      {errors[name] && (
-        <div className={classes.failAlert}>
-          <p>{errors[name]}</p>
-        </div>
-      )}
+      {errors[name] && <ErrorMessage errors={errors} name={name} />}
+    </div>
+  );
+}
+
+function ErrorMessage(props) {
+  const { errors, name } = props;
+  return (
+    <div className={classes.failAlert}>
+      <p>{errors[name]}</p>
     </div>
   );
 }
