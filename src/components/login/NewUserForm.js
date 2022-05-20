@@ -17,14 +17,14 @@ export default function NewUserForm() {
     // password: "",
     // dni: "",
     // phone: "",
-    // age: "",
+    // birthDate: "",
     firstName: "Seba1",
     lastName: "March1",
     email: "seba1@gmail.com",
     password: "contraseña",
     dni: "11111111",
     phone: "2323",
-    age: "23",
+    birthDate: "2000-01-01",
   });
   const [errors, setErrors] = useState({});
   const [{ disable }, setFlag] = useState({
@@ -55,11 +55,11 @@ export default function NewUserForm() {
         if (value.length < 3)
           ob[name] = "El Apellido debe tener minimo 3 caracteres.";
         break;
-      case "age":
-        if (value > 100) ob[name] = " - ";
+      case "birthDate":
+        if (value == null) ob[name] = " Fecha de nacimiento invalida ";
         break;
       case "phone":
-        if (value.length < 3 || value.length > 10) ob[name] = " - ";
+        if (value.length < 3 || value.length > 10) ob[name] = " Telefono invalido ";
         break;
       case "dni":
         if (value.length !== 8)
@@ -135,11 +135,12 @@ export default function NewUserForm() {
             onChange={(e) => handleChange(e.target)}
           />
           <Input
-            name="age"
+            name="birthDate"
             key="campoEdad"
-            type="number"
-            placeholder="Edad"
-            value={input.age}
+            // type="number"
+            // placeholder="Edad"
+            type="date"
+            value={input.birthDate}
             min={15}
             errors={errors}
             onChange={(e) => handleChange(e.target)}
