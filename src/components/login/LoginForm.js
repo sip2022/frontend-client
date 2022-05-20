@@ -56,11 +56,17 @@ export default function LoginForm() {
     }
   }
 
+  function loadLogin(params) {
+    console.log(params);
+
+    // Y localstore el jwt
+    localStorage.setItem("accessToken", params.accessToken);
+  }
+
   async function submitHandler(event) {
     event.preventDefault();
     // TODO ARREGLAR CONEXION CON EL BACKEND
     const DUMMY_DATA = {
-      accesToken: "jwt",
       firstName: "seba1",
       lastName: "march1",
       email: "seba1@gmail.com",
@@ -72,13 +78,10 @@ export default function LoginForm() {
     };
     const result = await login(input);
     !result.message
-      ? console.log(result)
+      ? loadLogin(result)
       : setErrors({
           globalError: result.message,
         });
-
-    // Y localstore el jwt
-    localStorage.setItem("accessToken", DUMMY_DATA.accessToken);
   }
 
   function goNewUser(event) {
