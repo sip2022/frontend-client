@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { login } from "../../utils/crud";
+import { getUser, login } from "../../utils/crud";
 import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
@@ -57,22 +57,17 @@ export default function LoginForm() {
     }
   }
 
-  function loadLogin(params) {
+  async function loadLogin(params) {
     console.log(params);
-    // TODO ARREGLAR CONEXION CON EL BACKEND
-    // const DUMMY_DATA = {
-    //   firstName: "seba1",
-    //   lastName: "march1",
-    //   email: "seba1@gmail.com",
-    //   dni: 12345678,
-    //   phone: 2323,
-    //   age: 23,
-    //   roles: ["USER"],
-    //   accessToken: "token",
-    // };
-    // dispatch(setearEstado(DUMMY_DATA));
-    // Y localstore el jwt
     localStorage.setItem("accessToken", params.accessToken);
+    const result = await getUser(params);
+    if (!result.message) {
+      // dispatch(setearEstado(DUMMY_DATA));
+    } else {
+      setErrors({
+        globalError: result.message,
+      });
+    }
   }
 
   async function submitHandler(event) {
