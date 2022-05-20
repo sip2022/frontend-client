@@ -58,15 +58,16 @@ export default function LoginForm() {
   }
 
   async function loadLogin(params) {
-    console.log(params);
     localStorage.setItem("accessToken", params.accessToken);
-    const result = await getUser(params);
+    const result = await getUser(input.email);
     if (!result.message) {
       // dispatch(setearEstado(DUMMY_DATA));
+      console.log("Exito");
     } else {
       setErrors({
         globalError: result.message,
       });
+      console.log("Fracaso");
     }
   }
 
