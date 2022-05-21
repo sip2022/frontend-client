@@ -9,7 +9,7 @@ export async function register(input) {
   try {
     const response = await axios.post(
       // process.env.REACT_APP_API_URL + "/register",
-      "http://34.75.33.30:80/register",
+      process.env.REACT_APP_API_URL + "/register",
       {
         ...input,
       }
@@ -209,6 +209,31 @@ export async function getTimeslotList() {
     ];
   } catch (error) {}
 
+  return result;
+}
+
+export async function agregarTimeslot(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = axios
+      .post(process.env.REACT_APP_API_URL + "/timeslot", {
+        // headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  } catch (error) {
+    if (error.response) {
+      console.log("Error response");
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
   return result;
 }
 

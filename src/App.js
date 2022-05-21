@@ -16,6 +16,7 @@ import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
+import NewTimeslotForm from './components/admin/timeslots/NewTimeslotForm';
 
 
 
@@ -50,6 +51,8 @@ function App() {
           <Route path='/admin/actividades' element={<ActividadesLista />} />
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
+
+          <Route path='/admin/timeslot/new' element={<NewTimeslotForm />} />
         </Routes>
       </Layout>
     </div>
