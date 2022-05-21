@@ -60,54 +60,18 @@ export async function getUser(token) {
 
 // -------------------- Actividades --------------------
 export async function loadActivityList() {
-  console.log("Loading actividades...");
-  const DUMMY_DATA = [
-    // Actividad Mock
-    {
-      id: 1,
-      name: "Actividad X",
-      basePrice: 3.0,
-      professor: "Sindy Nero",
-      atendeesLimit: 10,
-      appointments: [
-        // Timeslots
-        {
-          startTime: {
-            hour: 13,
-            minute: 30,
-          },
-          endTime: {
-            hour: 14,
-            minute: 30,
-          },
-        },
-      ],
-    },
-    // Actividad Mock
-    {
-      id: 2,
-      name: "Actividad 2",
-      basePrice: 3.0,
-      professor: "Sindy Nero",
-      atendeesLimit: 10,
-      appointments: [
-        {
-          dayOfWeek: "Monday",
-          startTime: {
-            hour: 13,
-            minute: 30,
-          },
-          endTime: {
-            hour: 14,
-            minute: 30,
-          },
-        },
-      ],
-    },
-  ];
-  // TODO Axios para recuperar lista de actividades, con authHeader
-
-  return DUMMY_DATA;
+  var result = [];
+  try {
+    const response = await axios
+      .get(process.env.REACT_APP_API_URL + "/activity/all")
+      .then((response) => {
+        result = response.data;
+      });
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(result);
+  return result;
 }
 
 export async function agregarActividad(actividad) {
@@ -183,32 +147,16 @@ export async function actualizarActividad(params) {
 // -------------------- Timeslots --------------------
 
 export async function getTimeslotList() {
-  console.log("Loading timeslots...");
   var result = [];
   try {
-    const response = axios
-      .get(process.env.REACT_APP_API_URL + "/login")
+    const response = await axios
+      .get(process.env.REACT_APP_API_URL + "/timeslot/all")
       .then((response) => {
-        console.log(response.data);
-        // result = data;
+        result = response.data;
       });
-
-    result = [
-      // Timeslot Mock
-      {
-        dayOfWeek: "Monday",
-        startTime: {
-          hour: 13,
-          minute: 30,
-        },
-        endTime: {
-          hour: 14,
-          minute: 30,
-        },
-      },
-    ];
-  } catch (error) {}
-
+  } catch (error) {
+    console.log(error);
+  }
   return result;
 }
 
@@ -255,18 +203,34 @@ export async function getProfesoresList() {
       status: "ACTIVE",
       roles: ["ROLE_PROFESSOR"],
     },
-    // {
-    //   id: 1,
-    //   email: "profesor@gmail.com",
-    //   dni: 12345678,
-    //   phone: 2323,
-    //   firstName: "Sindy",
-    //   lastName: "Nero",
-    //   birthDate: "2000-01-01",
-    //   status: "ACTIVE",
-    //   roles: ["ROLE_PROFESSOR"],
-    // },
   ];
   return DUMMY_DATA;
 }
 // -------------------- END Porfesores --------------------
+
+// -------------------- Clases --------------------
+export async function agregarClase(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = axios
+      .post(process.env.REACT_APP_API_URL + "/available-class", {
+        // headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  } catch (error) {
+    if (error.response) {
+      console.log("Error response");
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+// -------------------- END Clases --------------------

@@ -35,10 +35,13 @@ function NewTimeslotForm(params) {
   async function saveHandler(event) {
     // TODO avisar si hubo un problema
     event.preventDefault(event);
+
     const day_select = document.getElementById("input-day");
     const day = day_select.options[day_select.selectedIndex].value;
+
     const startInput = document.querySelector("#start-Time");
     const endInput = document.querySelector("#end-Time");
+
     const newTime = {
       startTime: [
         parseInt(startInput.value.substr(0, 2)),
@@ -50,8 +53,8 @@ function NewTimeslotForm(params) {
       ],
       dayOfWeek: day,
     };
+
     const result = await agregarTimeslot(newTime);
-    console.log(result);
   }
 
   function cancelarHandler(event) {
@@ -66,10 +69,14 @@ function NewTimeslotForm(params) {
       <section>
         <DropDownDays />
         <section>
-          <label>Hora de Inicio</label>
-          <input id="start-Time" type="time" />
-          <label>Hora de Finalización</label>
-          <input id="end-Time" type="time" />
+          <section>
+            <label>Hora de Inicio</label>
+            <input id="start-Time" type="time" />
+          </section>
+          <section>
+            <label>Hora de Finalización</label>
+            <input id="end-Time" type="time" />
+          </section>
           <section>
             <button onClick={cancelarHandler}>Cancelar</button>
             <button onClick={saveHandler}>Guardar Timeslot</button>
