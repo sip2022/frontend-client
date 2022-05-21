@@ -220,23 +220,27 @@ export async function getProfesoresList() {
   const DUMMY_DATA = [
     // Profesor Mock
     {
-      id: 1,
-      email: "profesor@gmail.com",
-      dni: 12345678,
-      phone: 2323,
-      firstName: "Sindy",
-      lastName: "Nero",
-      age: 28,
+      id: "8e7b5a76-0ee6-4645-9f19-76eb4e7b4c2a",
+      dni: 123987,
+      email: "professor@mail.com",
+      firstName: null,
+      lastName: null,
+      birthDate: null,
+      phone: null,
+      status: "ACTIVE",
+      roles: ["ROLE_PROFESSOR"],
     },
-    {
-      id: 2,
-      email: "profesor2@gmail.com",
-      dni: 12345679,
-      phone: 2324,
-      firstName: "Profe",
-      lastName: "X",
-      age: 35,
-    },
+    // {
+    //   id: 1,
+    //   email: "profesor@gmail.com",
+    //   dni: 12345678,
+    //   phone: 2323,
+    //   firstName: "Sindy",
+    //   lastName: "Nero",
+    //   birthDate: "2000-01-01",
+    //   status: "ACTIVE",
+    //   roles: ["ROLE_PROFESSOR"],
+    // },
   ];
   return DUMMY_DATA;
 }
