@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import { agregarActividad, getProfesoresList, getTimeslotList } from "../../../utils/crud";
+import { agregarActividad, getProfesoresList } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
 // ---------- Formulario Nueva actividad ----------
@@ -13,7 +12,11 @@ function NewActividadForm() {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [numberHor, setNumberHor] = useState(1);
+  const [input, setInput] = useState({
+    basePrice: 10,
+    name: "Actividad X",
+    attendeesLimit: 2,
+  });
 
   useEffect(() => {
     // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
@@ -30,33 +33,38 @@ function NewActividadForm() {
     }
 
     loadProfesores().then((data) => {
-      console.log(data);
       dispatch(setProfessors(data));
     });
   }, []);
 
-  function agregarHorario(event) {
-    event.preventDefault(event);
-    
-  }
-
   async function submitHandler(event) {
     event.preventDefault(event);
     const prof_select = document.getElementById("input-profesor");
-    const prof_seleccionado = prof_select.options[prof_select.selectedIndex].getAttribute("id_prof")
+    const id_prof_select =
+      prof_select.options[prof_select.selectedIndex].getAttribute("id_prof");
+    const prof = profesores.find((profe) => {
+      return profe.id == id_prof_select;
+    });
     const newAct = {
-      name: document.getElementById("input-name").value,
-      basePrice: document.getElementById("input-precio").value,
-      atendeesLimit: document.getElementById("input-asistencia").value,
-      profesor: prof_seleccionado,
+      ...input,
+      professor: {
+        id: prof.id,
+        email: prof.email,
+        firstName: prof.firstName,
+        lastName: prof.lastName,
+      },
     };
+    console.log(newAct);
     const result = await agregarActividad(newAct);
+    // TODO Marcar que la actividad se creo con o sin exito
   }
 
   function cancelarHandler(event) {
     event.preventDefault(event);
     navigate("/admin/actividades", { replace: true });
   }
+
+  function handleChange({ value, name }) {}
 
   return (
     <section>
@@ -68,6 +76,8 @@ function NewActividadForm() {
               id="input-name"
               type="text"
               placeholder="Nombre de la actividad"
+              value={input.name}
+              onChange={(e) => handleChange(e.target)}
             />
           </InputItem>
 
@@ -76,13 +86,22 @@ function NewActividadForm() {
           </InputItem>
 
           <InputItem nombre="Limite de asistencia:">
-            <input id="input-asistencia" type="number" />
+            <input
+              id="input-asistencia"
+              type="number"
+              value={input.attendeesLimit}
+              onChange={(e) => handleChange(e.target)}
+            />
           </InputItem>
 
           <InputItem nombre="Precio Base:">
-            <input id="input-precio" type="text" />
+            <input
+              id="input-precio"
+              type="text"
+              value={input.basePrice}
+              onChange={(e) => handleChange(e.target)}
+            />
           </InputItem>
-
         </section>
       </section>
       <section className={classes.nuevaActividad_botones}>

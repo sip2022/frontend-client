@@ -82,54 +82,18 @@ export async function getUser(email) {
 
 // -------------------- Actividades --------------------
 export async function loadActivityList() {
-  console.log("Loading actividades...");
-  const DUMMY_DATA = [
-    // Actividad Mock
-    {
-      id: 1,
-      name: "Actividad X",
-      basePrice: 3.0,
-      professor: "Sindy Nero",
-      atendeesLimit: 10,
-      appointments: [
-        // Timeslots
-        {
-          startTime: {
-            hour: 13,
-            minute: 30,
-          },
-          endTime: {
-            hour: 14,
-            minute: 30,
-          },
-        },
-      ],
-    },
-    // Actividad Mock
-    {
-      id: 2,
-      name: "Actividad 2",
-      basePrice: 3.0,
-      professor: "Sindy Nero",
-      atendeesLimit: 10,
-      appointments: [
-        {
-          dayOfWeek: "Monday",
-          startTime: {
-            hour: 13,
-            minute: 30,
-          },
-          endTime: {
-            hour: 14,
-            minute: 30,
-          },
-        },
-      ],
-    },
-  ];
-  // TODO Axios para recuperar lista de actividades, con authHeader
-
-  return DUMMY_DATA;
+  var result = [];
+  try {
+    const response = await axios
+      .get(process.env.REACT_APP_API_URL + "/activity/all")
+      .then((response) => {
+        result = response.data;
+      });
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(result);
+  return result;
 }
 
 export async function agregarActividad(actividad) {
@@ -205,32 +169,41 @@ export async function actualizarActividad(params) {
 // -------------------- Timeslots --------------------
 
 export async function getTimeslotList() {
-  console.log("Loading timeslots...");
   var result = [];
   try {
-    const response = axios
-      .get(process.env.REACT_APP_API_URL + "/login")
+    const response = await axios
+      .get(process.env.REACT_APP_API_URL + "/timeslot/all")
       .then((response) => {
-        console.log(response.data);
-        // result = data;
+        result = response.data;
       });
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
+}
 
-    result = [
-      // Timeslot Mock
-      {
-        dayOfWeek: "Monday",
-        startTime: {
-          hour: 13,
-          minute: 30,
-        },
-        endTime: {
-          hour: 14,
-          minute: 30,
-        },
-      },
-    ];
-  } catch (error) {}
-
+export async function agregarTimeslot(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = axios
+      .post(process.env.REACT_APP_API_URL + "/timeslot", {
+        // headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  } catch (error) {
+    if (error.response) {
+      console.log("Error response");
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
   return result;
 }
 
@@ -242,24 +215,44 @@ export async function getProfesoresList() {
   const DUMMY_DATA = [
     // Profesor Mock
     {
-      id: 1,
-      email: "profesor@gmail.com",
-      dni: 12345678,
-      phone: 2323,
-      firstName: "Sindy",
-      lastName: "Nero",
-      age: 28,
-    },
-    {
-      id: 2,
-      email: "profesor2@gmail.com",
-      dni: 12345679,
-      phone: 2324,
-      firstName: "Profe",
-      lastName: "X",
-      age: 35,
+      id: "8e7b5a76-0ee6-4645-9f19-76eb4e7b4c2a",
+      dni: 123987,
+      email: "professor@mail.com",
+      firstName: null,
+      lastName: null,
+      birthDate: null,
+      phone: null,
+      status: "ACTIVE",
+      roles: ["ROLE_PROFESSOR"],
     },
   ];
   return DUMMY_DATA;
 }
 // -------------------- END Porfesores --------------------
+
+// -------------------- Clases --------------------
+export async function agregarClase(params) {
+  console.log(params);
+  var result = {
+    message: "",
+  };
+  try {
+    const response = axios
+      .post(process.env.REACT_APP_API_URL + "/available-class", {
+        // headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  } catch (error) {
+    if (error.response) {
+      console.log("Error response");
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+// -------------------- END Clases --------------------
