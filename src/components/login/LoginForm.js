@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import CardForm from "../ui/CardForm";
-import { login } from "../../utils/crud";
+import { getUser, login } from "../../utils/crud";
 import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 export default function LoginForm() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     email: "seba1@gmail.com",
@@ -57,29 +57,28 @@ export default function LoginForm() {
     }
   }
 
+  async function loadLogin(params) {
+    localStorage.setItem("accessToken", params.accessToken);
+    const result = await getUser(input.email);
+    if (!result.message) {
+      // dispatch(setearEstado(DUMMY_DATA));
+      console.log("Exito");
+    } else {
+      setErrors({
+        globalError: result.message,
+      });
+      console.log("Fracaso");
+    }
+  }
+
   async function submitHandler(event) {
     event.preventDefault();
-    // TODO ARREGLAR CONEXION CON EL BACKEND
-    const DUMMY_DATA = {
-      accesToken: "jwt",
-      firstName: "seba1",
-      lastName: "march1",
-      email: "seba1@gmail.com",
-      dni: 12345678,
-      phone: 2323,
-      age: 23,
-      roles: ["USER"],
-      accessToken: "token",
-    };
     const result = await login(input);
     !result.message
-      ? console.log(result)
+      ? loadLogin(result)
       : setErrors({
           globalError: result.message,
         });
-
-    // Y localstore el jwt
-    localStorage.setItem("accessToken", DUMMY_DATA.accessToken);
   }
 
   function goNewUser(event) {
