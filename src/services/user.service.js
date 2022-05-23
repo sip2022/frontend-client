@@ -19,7 +19,7 @@ class UserService {
   }
 
   getTimeslotList(){
-    return axios.get(process.env.REACT_APP_API_URL + "/timeslot/all")
+    return axios.get(process.env.REACT_APP_API_URL + "/timeslot/available-and-ordered")
   }
 
   getProfessorList(){
