@@ -14,21 +14,6 @@ const days = [
 
 function NewTimeslotForm(params) {
   const navigate = useNavigate();
-  const [input, setInput] = useState({
-    startTime: {
-      hour: 0,
-      minute: 0,
-      second: 0,
-      nano: 0,
-    },
-    endTime: {
-      hour: 0,
-      minute: 0,
-      second: 0,
-      nano: 0,
-    },
-    dayOfWeek: "",
-  });
 
   function changeHandler({ value, name }) {}
 

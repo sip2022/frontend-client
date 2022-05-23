@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { agregarActividad, getProfesoresList } from "../../../utils/crud";
+import { agregarActividad, loadProfessors } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
 // ---------- Formulario Nueva actividad ----------
@@ -13,27 +13,29 @@ function NewActividadForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    basePrice: 10,
-    name: "Actividad X",
-    attendeesLimit: 2,
+    basePrice: 0,
+    name: "",
+    attendeesLimit: 0,
   });
 
   useEffect(() => {
     // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
     async function loadProfesores() {
-      var lista = [];
       try {
         if (!profesores) {
-          lista = await getProfesoresList();
+          var lista = await loadProfessors();
+          return lista;
+        }else{
+          throw "Exception"
         }
       } catch (error) {
-        console.log(error);
+        throw new Error('Profesores already loaded');
       }
-      return lista;
     }
-
     loadProfesores().then((data) => {
       dispatch(setProfessors(data));
+    }).catch((eror) => {
+      // Nothing
     });
   }, []);
 
@@ -64,7 +66,9 @@ function NewActividadForm() {
     navigate("/admin/actividades", { replace: true });
   }
 
-  function handleChange({ value, name }) {}
+  function handleChange({ value, name }) {
+    setInput((prev) => ({ ...prev, [name]: value }));
+  }
 
   return (
     <section>
@@ -77,6 +81,7 @@ function NewActividadForm() {
               type="text"
               placeholder="Nombre de la actividad"
               value={input.name}
+              name="name"
               onChange={(e) => handleChange(e.target)}
             />
           </InputItem>
@@ -90,6 +95,7 @@ function NewActividadForm() {
               id="input-asistencia"
               type="number"
               value={input.attendeesLimit}
+              name="attendeesLimit"
               onChange={(e) => handleChange(e.target)}
             />
           </InputItem>
@@ -99,6 +105,7 @@ function NewActividadForm() {
               id="input-precio"
               type="text"
               value={input.basePrice}
+              name="basePrice"
               onChange={(e) => handleChange(e.target)}
             />
           </InputItem>

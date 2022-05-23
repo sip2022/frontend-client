@@ -1,6 +1,7 @@
 // FUNCIONES AXIOS
 import axios from "axios";
 import authHeader from "../services/auth-Header";
+import userService from "../services/user.service";
 
 // -------------------- Usuario --------------------
 export async function register(input) {
@@ -59,7 +60,7 @@ export async function getUser(email) {
     const response = await axios
       .get(process.env.REACT_APP_API_URL + "/user/email", {
         params: {
-          email: email
+          email: email,
         },
         headers: authHeader(),
       })
@@ -84,15 +85,12 @@ export async function getUser(email) {
 export async function loadActivityList() {
   var result = [];
   try {
-    const response = await axios
-      .get(process.env.REACT_APP_API_URL + "/activity/all")
-      .then((response) => {
-        result = response.data;
-      });
+    const response = await userService.getActivityList().then((response) => {
+      result = response.data;
+    });
   } catch (error) {
     console.log(error);
   }
-  console.log(result);
   return result;
 }
 
@@ -168,14 +166,12 @@ export async function actualizarActividad(params) {
 
 // -------------------- Timeslots --------------------
 
-export async function getTimeslotList() {
+export async function loadTimeslotList() {
   var result = [];
   try {
-    const response = await axios
-      .get(process.env.REACT_APP_API_URL + "/timeslot/all")
-      .then((response) => {
-        result = response.data;
-      });
+    const response = await userService.getTimeslotList().then((response) => {
+      result = response.data;
+    });
   } catch (error) {
     console.log(error);
   }
@@ -183,7 +179,6 @@ export async function getTimeslotList() {
 }
 
 export async function agregarTimeslot(params) {
-  console.log(params);
   var result = {
     message: "",
   };
@@ -210,23 +205,17 @@ export async function agregarTimeslot(params) {
 // -------------------- END Timeslots --------------------
 
 // -------------------- Profesores --------------------
-export async function getProfesoresList() {
-  console.log("Loading Profesores...");
-  const DUMMY_DATA = [
-    // Profesor Mock
-    {
-      id: "8e7b5a76-0ee6-4645-9f19-76eb4e7b4c2a",
-      dni: 123987,
-      email: "professor@mail.com",
-      firstName: null,
-      lastName: null,
-      birthDate: null,
-      phone: null,
-      status: "ACTIVE",
-      roles: ["ROLE_PROFESSOR"],
-    },
-  ];
-  return DUMMY_DATA;
+export async function loadProfessors() {
+  // var result = [];
+  // try {
+  //   const response = await userService.getProfessorList().then((response) => {
+  //     result = response.data;
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  // return result;
+  return userService.getProfessorList();
 }
 // -------------------- END Porfesores --------------------
 

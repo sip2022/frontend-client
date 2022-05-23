@@ -17,7 +17,6 @@ function MainNavigation() {
     //   // Hace la llamada al back para obtener los datos del usuario correspondiente
 
     // }
-    console.log("Logued head changed!");
   }, [firstName]);
 
   function logoClickHandler(){
