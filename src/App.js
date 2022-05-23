@@ -16,7 +16,7 @@ import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
-import NewTimeslotForm from './components/admin/timeslots/NewTimeslotForm';
+import NewTimeslotForm from './components/admin/timeslots/New_Timeslot';
 import NewClassForm from './components/admin/availableClasses/NewClassForm';
 
 

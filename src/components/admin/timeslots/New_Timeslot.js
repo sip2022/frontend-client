@@ -1,21 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { agregarTimeslot } from "../../../utils/crud";
+import daysList from "./daysList";
 
-const days = [
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-  "SUNDAY",
-];
+
+const days = daysList;
 
 function NewTimeslotForm(params) {
   const navigate = useNavigate();
-
-  function changeHandler({ value, name }) {}
 
   async function saveHandler(event) {
     // TODO avisar si hubo un problema
