@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { agregarTimeslot } from "../../../utils/crud";
 import daysList from "./daysList";
