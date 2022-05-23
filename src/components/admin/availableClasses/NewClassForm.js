@@ -5,8 +5,8 @@ import { setActivityLista } from "../../../store/slices/activityList/activityLis
 import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import {
   agregarClase,
-  getTimeslotList,
   loadActivityList,
+  loadTimeslotList,
 } from "../../../utils/crud";
 
 function NewClassForm(params) {
@@ -16,40 +16,48 @@ function NewClassForm(params) {
 
   useEffect(async () => {
     // TODO esto va en UserService
+
     async function loadTimeslots() {
-      var lista = [];
       try {
         if (!timeslots) {
-          lista = await getTimeslotList();
+          var lista = await loadTimeslotList();
+          return lista;
+        } else {
+          throw "Exception";
         }
       } catch (error) {
-        console.log(error);
+        throw new Error("Timeslots already loaded");
       }
-      return lista;
     }
 
-    // TODO esto va en UserService
     async function loadActividades() {
-      var lista = [];
       try {
-        if (!activities) {
-          lista = await loadActivityList();
+        if (!timeslots) {
+          var lista = await loadActivityList();
+          return lista;
+        } else {
+          throw "Exception";
         }
       } catch (error) {
-        console.log(error);
+        throw new Error("Actividades already loaded");
       }
-      return lista;
     }
 
-    await loadActividades().then((data) => {
-      console.log(data);
-      dispatch(setActivityLista(data));
-    });
+    loadActividades()
+      .then((data) => {
+        dispatch(setActivityLista(data));
+      })
+      .catch((error) => {
+        // Nothing
+      });
 
-    await loadTimeslots().then((data) => {
-      console.log(data);
-      dispatch(setTimeLista(data));
-    });
+    loadTimeslots()
+      .then((data) => {
+        dispatch(setTimeLista(data));
+      })
+      .catch((error) => {
+        // Nothing
+      });
   }, []);
 
   function cancelHandler(event) {

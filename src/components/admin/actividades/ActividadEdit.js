@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { actualizarActividad, getProfesoresList } from "../../../utils/crud";
+import { actualizarActividad, loadProfessors } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
 function ActividadEditForm() {
@@ -12,22 +12,24 @@ function ActividadEditForm() {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [numberHor, setNumberHor] = useState(1);
 
   useEffect(() => {
     async function loadProfesores() {
-      var lista = [];
       try {
         if (!profesores) {
-          lista = await getProfesoresList();
+          var lista = await loadProfessors();
+          return lista;
+        }else{
+          throw "Exception"
         }
       } catch (error) {
-        console.log(error);
+        throw new Error('Profesores already loaded');
       }
-      return lista;
     }
     loadProfesores().then((data) => {
       dispatch(setProfessors(data));
+    }).catch((eror) => {
+      // Nothing
     });
   }, []);
 

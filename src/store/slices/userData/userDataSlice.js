@@ -26,7 +26,7 @@ export default userDataSlice.reducer;
 export const { setearEstado } = userDataSlice.actions;
 
 // ---------- End createSlice ----------
-axios.interceptors.request.use((request) => {
-  console.log(request);
-  return request;
-});
+// axios.interceptors.request.use((request) => {
+//   console.log(request);
+//   return request;
+// });
