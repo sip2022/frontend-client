@@ -202,6 +202,27 @@ export async function agregarTimeslot(params) {
   return result;
 }
 
+export async function eliminarTimeslot(params) {
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/timeslot/" + params,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
 // -------------------- END Timeslots --------------------
 
 // -------------------- Profesores --------------------

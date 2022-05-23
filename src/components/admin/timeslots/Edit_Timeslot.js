@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import { loadTimeslotList } from "../../../utils/crud";
+import { eliminarTimeslot, loadTimeslotList } from "../../../utils/crud";
 
 function Edit_TimeSlot(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [error, setError] = useState({
+    flag: false,
+    message: "",
+  });
 
   useEffect(() => {
     async function loadTimeslots() {
@@ -25,7 +30,6 @@ function Edit_TimeSlot(params) {
 
     loadTimeslots()
       .then((data) => {
-        console.log(data);
         dispatch(setTimeLista(data));
       })
       .catch((error) => {
@@ -34,7 +38,7 @@ function Edit_TimeSlot(params) {
   }, []);
 
   function altaClickHandler() {
-    navigate("/admin/actividad/new", { replace: true });
+    navigate("/admin/timeslot/new", { replace: true });
   }
 
   function editarHandler(params) {
@@ -43,10 +47,13 @@ function Edit_TimeSlot(params) {
   }
 
   async function eliminarHandler(params) {
-    console.log(params);
-    // const result = await eliminarActividad(params);
+    setError({ flag: false });
+    const result = await eliminarTimeslot(params);
+    if (result.message) {
+      console.log(result.message);
+      setError({ flag: true, message: result.message });
+    }
   }
-
 
   return (
     <section>
@@ -56,15 +63,37 @@ function Edit_TimeSlot(params) {
           <button onClick={altaClickHandler}>Agregar Horario</button>
         </section>
         <section>
-          {timeslots && timeslots.map((time, index) => {
-            return <section key={index}>
-              <p>{time.dayOfWeek+": "+time.startTime[0]+":"+time.startTime[1]+" - "+time.endTime[0]+":"+time.endTime[1]} </p>
-              <section>
-                <button onClick={() => editarHandler(time.id)}>Editar</button>
-                <button onClick={() => eliminarHandler(time.id)}>Eliminar</button>
-              </section>
-            </section>
-          })}
+          {timeslots &&
+            timeslots.map((time, index) => {
+              return (
+                <section key={index}>
+                  <p>
+                    {time.dayOfWeek +
+                      ": " +
+                      time.startTime[0] +
+                      ":" +
+                      time.startTime[1] +
+                      " - " +
+                      time.endTime[0] +
+                      ":" +
+                      time.endTime[1]}{" "}
+                  </p>
+                  {error.flag && (
+                    <section>
+                      <p>{error.message}</p>
+                    </section>
+                  )}
+                  <section>
+                    <button onClick={() => editarHandler(time.id)}>
+                      Editar
+                    </button>
+                    <button onClick={() => eliminarHandler(time.id)}>
+                      Eliminar
+                    </button>
+                  </section>
+                </section>
+              );
+            })}
         </section>
       </section>
     </section>
