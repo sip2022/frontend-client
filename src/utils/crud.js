@@ -181,15 +181,17 @@ export async function loadTimeslotList() {
 export async function agregarTimeslot(params) {
   var result = {
     message: "",
+    timeslot: {}
   };
   try {
-    const response = axios
+    const response = await axios
       .post(process.env.REACT_APP_API_URL + "/timeslot", {
         // headers: authHeader(),
         ...params,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
+        result.timeslot = response.data;
       });
   } catch (error) {
     if (error.response) {
@@ -199,6 +201,7 @@ export async function agregarTimeslot(params) {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
     }
   }
+  console.log("que será");
   return result;
 }
 

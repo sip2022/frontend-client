@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setTimeslotList } from "./actions.js";
+import { addTimeslot, setTimeslotList } from "./actions.js";
 
 export const timeslotListSlice = createSlice({
   name: "timeslotList",
@@ -8,11 +8,12 @@ export const timeslotListSlice = createSlice({
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
-    setTimeLista: setTimeslotList
+    setTimeLista: setTimeslotList,
+    add_Timeslot: addTimeslot
   },
 });
 
 export default timeslotListSlice.reducer;
-export const { setTimeLista } = timeslotListSlice.actions;
+export const { setTimeLista, add_Timeslot } = timeslotListSlice.actions;
 
 // ---------- End createSlice ----------

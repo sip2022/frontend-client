@@ -1,4 +1,7 @@
 export function setTimeslotList(state, {payload}) {
-  console.log(payload);
   state.timeslotList = payload;
+}
+
+export function addTimeslot(state, {payload}) {
+  state.timeslotList.push(payload);
 }

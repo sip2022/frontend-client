@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { eliminarTimeslot, loadTimeslotList } from "../../../utils/crud";
 
-function Edit_TimeSlot(params) {
+function List_TimeSlot(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function Edit_TimeSlot(params) {
 
   function editarHandler(params) {
     console.log(params);
-    // navigate("/admin/timeslot/edit/" + params, {replace: true})
+    navigate("/admin/timeslot/edit/" + params, {replace: true})
   }
 
   async function eliminarHandler(params) {
@@ -100,4 +100,4 @@ function Edit_TimeSlot(params) {
   );
 }
 
-export default Edit_TimeSlot;
+export default List_TimeSlot;
