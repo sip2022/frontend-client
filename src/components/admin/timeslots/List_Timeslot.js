@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setTimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
+import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { eliminarTimeslot, loadTimeslotList } from "../../../utils/crud";
 
 function List_TimeSlot(params) {
@@ -30,7 +30,7 @@ function List_TimeSlot(params) {
 
     loadTimeslots()
       .then((data) => {
-        dispatch(setTimeLista(data));
+        dispatch(set_TimeLista(data));
       })
       .catch((error) => {
         // Nothing
