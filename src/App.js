@@ -16,8 +16,10 @@ import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
-import NewTimeslotForm from './components/admin/timeslots/NewTimeslotForm';
 import NewClassForm from './components/admin/availableClasses/NewClassForm';
+import New_Timeslot from './components/admin/timeslots/New_Timeslot';
+import List_TimeSlot from './components/admin/timeslots/List_Timeslot';
+import Edit_Timeslot from './components/admin/timeslots/Edit_Timeslot';
 
 
 
@@ -53,7 +55,9 @@ function App() {
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
 
-          <Route path='/admin/timeslot/new' element={<NewTimeslotForm />} />
+          <Route path='/admin/timeslot' element={<List_TimeSlot />} />
+          <Route path='/admin/timeslot/new' element={<New_Timeslot />} />
+          <Route path='/admin/timeslot/edit/:id' element={<Edit_Timeslot />} />
           
           <Route path='/admin/classes/new' element={<NewClassForm />} />
         </Routes>

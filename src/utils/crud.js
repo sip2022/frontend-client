@@ -181,15 +181,17 @@ export async function loadTimeslotList() {
 export async function agregarTimeslot(params) {
   var result = {
     message: "",
+    timeslot: {}
   };
   try {
-    const response = axios
+    const response = await axios
       .post(process.env.REACT_APP_API_URL + "/timeslot", {
         // headers: authHeader(),
         ...params,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
+        result.timeslot = response.data;
       });
   } catch (error) {
     if (error.response) {
@@ -197,6 +199,54 @@ export async function agregarTimeslot(params) {
       result.message = error.response.data.message;
     } else {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  console.log("que será");
+  return result;
+}
+
+export async function eliminarTimeslot(params) {
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/timeslot/" + params,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function updateTimeslot(params){
+  var result = {
+    message: "",
+    editedTime: null
+  };
+  try {
+    const response = await axios.put(
+      process.env.REACT_APP_API_URL + "/timeslot/" + params.id,
+      {
+        headers: authHeader(),
+        ...params
+      }
+    ).then((response)=>{
+      result.editedTime = response.data;
+      console.log(result);
+    });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;

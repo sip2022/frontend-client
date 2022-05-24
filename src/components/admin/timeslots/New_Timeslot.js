@@ -1,21 +1,15 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { add_Timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { agregarTimeslot } from "../../../utils/crud";
+import daysList from "./daysList";
 
-const days = [
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-  "SUNDAY",
-];
+
+const days = daysList;
 
 function NewTimeslotForm(params) {
   const navigate = useNavigate();
-
-  function changeHandler({ value, name }) {}
+  const dispatch = useDispatch();
 
   async function saveHandler(event) {
     // TODO avisar si hubo un problema
@@ -39,13 +33,14 @@ function NewTimeslotForm(params) {
       dayOfWeek: day,
     };
 
-    const result = await agregarTimeslot(newTime);
+    const result = await agregarTimeslot(newTime).then((data) => {
+      dispatch(add_Timeslot(data.timeslot));
+    });
   }
 
   function cancelarHandler(event) {
     event.preventDefault(event);
-    alert("Cancelar");
-    // TODO ir a pantalla anterior (menu del admin?)
+    navigate("/admin/timeslot", { replace: true });
   }
 
   return (
