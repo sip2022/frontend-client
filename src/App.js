@@ -1,6 +1,6 @@
 import Layout from './components/layout/layout';
 import InicioPage from './pages/InicioPage'
-import ActividadesPage from './pages/ActividadesPage'
+import List_Actividades from "./components/actividadesPage/List_Actividades";
 import PlanesPage from './pages/PlanesPage'
 import ContactosPage from './pages/ContactosPage'
 import UserPage from './pages/UserPage'
@@ -38,8 +38,8 @@ function App() {
           {/* "/user/info/pass" */}
 
           {/* Actividades Routes */}
-          <Route path='/actividades' element={<ActividadesPage />} />
-          <Route path='/actividad/:id' element={<Actividad />} />
+          <Route path='/actividades' element={<List_Actividades />} />
+          <Route path='/actividad/:id_time' element={<Actividad />} />
 
           {/* Planes Routes */}
           <Route path='/planes' element={<PlanesPage />} />

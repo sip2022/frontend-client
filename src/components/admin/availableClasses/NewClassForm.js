@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userService from "../../../services/user.service";
-import { setActivityLista } from "../../../store/slices/activityList/activityListSlice";
+import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import {
   agregarClase,
@@ -45,7 +45,7 @@ function NewClassForm(params) {
 
     loadActividades()
       .then((data) => {
-        dispatch(setActivityLista(data));
+        dispatch(set_ActivityLista(data));
       })
       .catch((error) => {
         // Nothing

@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  loadActivityLista,
-  setActivityLista,
+  set_ActivityLista,
 } from "../../../store/slices/activityList/activityListSlice";
 import { eliminarActividad, loadActivityList } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
@@ -61,7 +60,7 @@ function ActividadesLista(props) {
     async function loadActividades() {
       if (!actividades) {
         const lista = await loadActivityList();
-        dispatch(setActivityLista(lista));
+        dispatch(set_ActivityLista(lista));
       }
     }
     loadActividades();

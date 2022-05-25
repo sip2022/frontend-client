@@ -8,11 +8,11 @@ export const activityListSlice = createSlice({
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
-    setActivityLista: setActivityList
+    set_ActivityLista: setActivityList
   },
 });
 
 export default activityListSlice.reducer;
-export const { setActivityLista } = activityListSlice.actions;
+export const { set_ActivityLista } = activityListSlice.actions;
 
 // ---------- End createSlice ----------

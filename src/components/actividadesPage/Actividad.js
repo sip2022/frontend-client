@@ -1,39 +1,57 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { set_ActivityLista } from "../../store/slices/activityList/activityListSlice";
+import { loadActivityList } from "../../utils/crud";
 import classes from "./Actividad.module.css";
 
-// TODO conseguir esta actividad con el id, con un ajax o buscandolo en el redux
-const DUMMY_DATA = {
-  nombre: "Zumba",
-  imagen: "/images/actividades_images/activityCardImage.jpg",
-  horarios: ["Horario 1", "Horario 2"],
-  precioBase: 0,
-  profesor: "",
-};
-
 function Actividad(props) {
-  const { id } = useParams();
-  const actividad = DUMMY_DATA;
-  const [{ nombre, horarios, precioBase, profesor, imagen }, setContenido] =
+  const { id_time } = useParams();
+  const dispatch = useDispatch();
+  const actividades = useSelector((state) => state.activityList.activityList);
+  const [{ id, name, horarios, profesor, attendeesLimit, basePrice }, setContenido] =
     useState({
-      nombre: "",
-      horarios: [],
-      precioBase: "",
-      profesor: "",
+      id: "",
+      name: "",
+      profesor: {},
+      attendeesLimit: "",
+      basePrice: 0
     });
 
   useEffect(() => {
-    // TODO ajax fetch to get actividad.id = id
-    // Alternativa .------> buscarlo en el redux de lista de actividades
-    // setContenido(...)
-    setContenido(DUMMY_DATA);
+    // TODO funcion loadActividades
+    async function loadActividades() {
+      try {
+        if (!actividades) {
+          var lista = await loadActivityList();
+          return lista;
+        } else {
+          throw "Exception";
+        }
+      } catch (error) {
+        throw new Error("Actividades already loaded");
+      }
+    }
+    loadActividades()
+      .then((data) => {
+        dispatch(set_ActivityLista(data));
+      })
+      .catch((error) => {
+        // Nothing
+      });
+
+    const act = actividades.find((act) => {
+      return act.id == id_time;
+    });
+    setContenido({...act});
   }, []);
 
   return (
     <section>
+      <p>{id}</p>
       <section className={classes.actividadDatos}>
         <section>
-          <h2>{nombre}</h2>
+          <h2>{name}</h2>
         </section>
         <section>
           {horarios
