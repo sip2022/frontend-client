@@ -24,8 +24,8 @@ class UserService {
     );
   }
 
-  getClassesList() {
-    return axios.get(process.env.REACT_APP_API_URL + "/available-class/all");
+  getClasses_ByActId(id) {
+    return axios.get(process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id);
   }
 
   getProfessorList() {
