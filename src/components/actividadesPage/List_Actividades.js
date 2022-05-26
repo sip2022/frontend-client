@@ -22,11 +22,12 @@ function List_Actividades(props) {
           throw "Exception";
         }
       } catch (error) {
-        throw new Error("Profesores already loaded");
+        throw new Error("Actividades already loaded");
       }
     }
     loadActividades()
       .then((data) => {
+        console.log(data);
         dispatch(set_ActivityLista(data));
       })
       .catch((error) => {
@@ -44,7 +45,6 @@ function List_Actividades(props) {
             })
           : null}
       </section>
-      ;
     </section>
   );
 }

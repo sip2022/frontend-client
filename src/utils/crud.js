@@ -181,7 +181,7 @@ export async function loadTimeslotList() {
 export async function agregarTimeslot(params) {
   var result = {
     message: "",
-    timeslot: {}
+    timeslot: {},
   };
   try {
     const response = await axios
@@ -220,33 +220,34 @@ export async function eliminarTimeslot(params) {
     if (error.response) {
       result.message = error.response.data.message;
     } else {
-      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
 }
 
-export async function updateTimeslot(params){
+export async function updateTimeslot(params) {
   var result = {
     message: "",
-    editedTime: null
+    editedTime: null,
   };
   try {
-    const response = await axios.put(
-      process.env.REACT_APP_API_URL + "/timeslot/" + params.id,
-      {
+    const response = await axios
+      .put(process.env.REACT_APP_API_URL + "/timeslot/" + params.id, {
         headers: authHeader(),
-        ...params
-      }
-    ).then((response)=>{
-      result.editedTime = response.data;
-      console.log(result);
-    });
+        ...params,
+      })
+      .then((response) => {
+        result.editedTime = response.data;
+        console.log(result);
+      });
   } catch (error) {
     if (error.response) {
       result.message = error.response.data.message;
     } else {
-      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
@@ -283,6 +284,27 @@ export async function agregarClase(params) {
       })
       .then((response) => {
         console.log(response);
+      });
+  } catch (error) {
+    if (error.response) {
+      console.log("Error response");
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function loadClassList() {
+  var result = {
+    message: "",
+    classes: [],
+  };
+  try {
+    const response = await userService.getClassesList()
+      .then((response) => {
+        result.classes = response.data;
       });
   } catch (error) {
     if (error.response) {

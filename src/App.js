@@ -39,7 +39,7 @@ function App() {
 
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />
-          <Route path='/actividad/:id_time' element={<Actividad />} />
+          <Route path='/actividad/:id_act' element={<Actividad />} />
 
           {/* Planes Routes */}
           <Route path='/planes' element={<PlanesPage />} />

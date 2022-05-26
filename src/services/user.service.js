@@ -11,18 +11,24 @@ class UserService {
   // Axios GET calls
 
   getUserList() {
-    return axios.get(API_URL + '/user/all', {headers: authHeader() });
+    return axios.get(API_URL + "/user/all", { headers: authHeader() });
   }
 
   getActivityList() {
     return axios.get(process.env.REACT_APP_API_URL + "/activity/all");
   }
 
-  getTimeslotList(){
-    return axios.get(process.env.REACT_APP_API_URL + "/timeslot/available-and-ordered")
+  getTimeslotList() {
+    return axios.get(
+      process.env.REACT_APP_API_URL + "/timeslot/available-and-ordered"
+    );
   }
 
-  getProfessorList(){
+  getClassesList() {
+    return axios.get(process.env.REACT_APP_API_URL + "/available-class/all");
+  }
+
+  getProfessorList() {
     const DUMMY_DATA = [
       // Profesor Mock
       {
@@ -39,7 +45,6 @@ class UserService {
     ];
     return DUMMY_DATA;
   }
-
 }
 
 export default new UserService();
