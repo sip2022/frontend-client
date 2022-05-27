@@ -16,10 +16,11 @@ import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
-import NewClassForm from './components/admin/availableClasses/NewClassForm';
+import New_Class from './components/admin/availableClasses/New_Class';
 import New_Timeslot from './components/admin/timeslots/New_Timeslot';
 import List_TimeSlot from './components/admin/timeslots/List_Timeslot';
 import Edit_Timeslot from './components/admin/timeslots/Edit_Timeslot';
+import AdminMenu from './components/admin';
 
 
 
@@ -51,6 +52,8 @@ function App() {
           <Route path='/userList' element={<UserListPage />} />
 
           {/* Admin Routes */}
+          <Route path='/admin' element={<AdminMenu />} />
+
           <Route path='/admin/actividades' element={<ActividadesLista />} />
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
@@ -59,7 +62,8 @@ function App() {
           <Route path='/admin/timeslot/new' element={<New_Timeslot />} />
           <Route path='/admin/timeslot/edit/:id' element={<Edit_Timeslot />} />
           
-          <Route path='/admin/classes/new' element={<NewClassForm />} />
+          <Route path='/admin/classes' element={<input />} />
+          <Route path='/admin/classes/new' element={<New_Class />} />
         </Routes>
       </Layout>
     </div>

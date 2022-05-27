@@ -211,7 +211,6 @@ export async function agregarTimeslot(params) {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
     }
   }
-  console.log("que será");
   return result;
 }
 

@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import { eliminarTimeslot, loadTimeslotList } from "../../../utils/crud";
-
-function List_TimeSlot(params) {
+function List_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +9,6 @@ function List_TimeSlot(params) {
   });
 
   useEffect(() => {
-    // TODO load lista de timeslots
     async function loadTimeslots() {
       try {
         if (!timeslots) {
@@ -108,4 +101,4 @@ function List_TimeSlot(params) {
   );
 }
 
-export default List_TimeSlot;
+export default List_Class;

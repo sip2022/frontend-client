@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  set_ActivityLista,
-} from "../../../store/slices/activityList/activityListSlice";
+import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import { eliminarActividad, loadActivityList } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
 
@@ -16,11 +14,10 @@ function NotAdminMessage(props) {
 }
 
 function ActividadItem({ actividad }) {
-
   const navigate = useNavigate();
 
   function editarHandler(params) {
-    navigate("/admin/actividad/edit/" + params, {replace: true})
+    navigate("/admin/actividad/edit/" + params, { replace: true });
   }
 
   async function eliminarHandler(params) {
@@ -71,6 +68,10 @@ function ActividadesLista(props) {
     navigate("/admin/actividad/new", { replace: true });
   }
 
+  function goBackHandler(params) {
+    navigate("/admin", { replace: true });
+  }
+
   return (
     <section>
       {!isAdmin ? (
@@ -98,6 +99,9 @@ function ActividadesLista(props) {
                 <h1>No hay actividades subidas!</h1>
               )}
             </section>
+          </section>
+          <section>
+            <button onClick={goBackHandler}>Volver</button>
           </section>
         </section>
       )}

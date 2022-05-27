@@ -175,14 +175,12 @@ function DisplayReserva({
       attendeesReserved: amountReserved,
     };
     setContenido(newContenido);
-    console.log(att_left);
     if (att_left > 0) setCanReserve(true);
   }, []);
 
   async function submitHandler() {
     try {
       if (canReserve) {
-        console.log("Reservando clase...");
         // TODO ID del usuario
         const userIdMOCK = "56e7435d-e82c-419b-b32c-e441f41d9e58";
         await reservar_Clase(id_clas, userIdMOCK);
@@ -190,7 +188,6 @@ function DisplayReserva({
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
     } catch (error) {
-      console.log(error);
       callbackSetError(
         "Hubo un problema al enviar su formulario de reserva. Vuelva a intentar mas tarde."
       );

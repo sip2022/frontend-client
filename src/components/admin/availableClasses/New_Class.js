@@ -9,14 +9,14 @@ import {
   loadTimeslotList,
 } from "../../../utils/crud";
 
-function NewClassForm(params) {
+function New_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const activities = useSelector((state) => state.activityList.activityList);
   const dispatch = useDispatch();
 
   useEffect(async () => {
-    // TODO esto va en UserService
 
+    // TODO esto va en UserService
     async function loadTimeslots() {
       try {
         if (!timeslots) {
@@ -29,27 +29,6 @@ function NewClassForm(params) {
         throw new Error("Timeslots already loaded");
       }
     }
-
-    async function loadActividades() {
-      try {
-        if (!timeslots) {
-          var lista = await loadActivityList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Actividades already loaded");
-      }
-    }
-
-    loadActividades()
-      .then((data) => {
-        dispatch(set_ActivityLista(data));
-      })
-      .catch((error) => {
-        // Nothing
-      });
 
     loadTimeslots()
       .then((data) => {
@@ -149,4 +128,4 @@ function DropDownActivity({ lista }) {
   );
 }
 
-export default NewClassForm;
+export default New_Class;
