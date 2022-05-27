@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { set_ClassLista } from "../../../store/slices/classesList/classesListSlice";
+import { eliminarClass, loadClassList } from "../../../utils/crud";
+
 function List_Class(params) {
-  const timeslots = useSelector((state) => state.timeslotList.timeslotList);
+  const classes = useSelector((state) => state.classList.classList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -9,22 +15,23 @@ function List_Class(params) {
   });
 
   useEffect(() => {
-    async function loadTimeslots() {
+    // TODO dispatch loadClassList
+    async function loadClasses() {
       try {
-        if (!timeslots) {
-          var lista = await loadTimeslotList();
+        if (!classes) {
+          var lista = await loadClassList();
           return lista;
         } else {
           throw "Exception";
         }
       } catch (error) {
-        throw new Error("Timeslots already loaded");
+        throw new Error("Clases already loaded");
       }
     }
 
-    loadTimeslots()
+    loadClasses()
       .then((data) => {
-        dispatch(set_TimeLista(data));
+        dispatch(set_ClassLista(data.classes));
       })
       .catch((error) => {
         // Nothing
@@ -32,17 +39,17 @@ function List_Class(params) {
   }, []);
 
   function altaClickHandler() {
-    navigate("/admin/timeslot/new", { replace: true });
+    navigate("/admin/classes/new", { replace: true });
   }
 
   function editarHandler(params) {
     console.log(params);
-    navigate("/admin/timeslot/edit/" + params, { replace: true });
+    // navigate("/admin/classes/edit/" + params, { replace: true });
   }
 
   async function eliminarHandler(params) {
     setError({ flag: false });
-    const result = await eliminarTimeslot(params);
+    const result = await eliminarClass(params);
     if (result.message) {
       console.log(result.message);
       setError({ flag: true, message: result.message });
@@ -55,37 +62,35 @@ function List_Class(params) {
 
   return (
     <section>
-      <h1>Lista de horarios disponibles</h1>
+      <h1>Lista de Clases</h1>
       <section>
         <section>
-          <button onClick={altaClickHandler}>Agregar Horario</button>
+          <button onClick={altaClickHandler}>Agregar Clase</button>
         </section>
         <section>
-          {timeslots &&
-            timeslots.map((time, index) => {
+          {classes &&
+            classes.map((clas, index) => {
               return (
                 <section key={index}>
                   <p>
-                    {time.dayOfWeek +
-                      ": " +
-                      time.startTime[0] +
-                      ":" +
-                      time.startTime[1] +
-                      " - " +
-                      time.endTime[0] +
-                      ":" +
-                      time.endTime[1]}{" "}
+                    {clas.activityDto.name + " - $" + clas.activityDto.basePrice} 
                   </p>
-                  {error.flag && (
-                    <section>
-                      <p>{error.message}</p>
-                    </section>
-                  )}
+                  <p>
+                    {clas.timeslotDto.dayOfWeek +
+                      ": " +
+                      clas.timeslotDto.startTime[0] +
+                      ":" +
+                      clas.timeslotDto.startTime[1] +
+                      " - " +
+                      clas.timeslotDto.endTime[0] +
+                      ":" +
+                      clas.timeslotDto.endTime[1]}
+                  </p>
                   <section>
-                    <button onClick={() => editarHandler(time.id)}>
+                    <button onClick={() => editarHandler(clas.id)}>
                       Editar
                     </button>
-                    <button onClick={() => eliminarHandler(time.id)}>
+                    <button onClick={() => eliminarHandler(clas.id)}>
                       Eliminar
                     </button>
                   </section>

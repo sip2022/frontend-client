@@ -311,15 +311,37 @@ export async function loadClassList() {
     classes: [],
   };
   try {
-    const response = await userService.getClassesList().then((response) => {
+    const response = await userService.get_ClassesList().then((response) => {
       result.classes = response.data;
+      console.log(response.data);
     });
   } catch (error) {
     if (error.response) {
-      console.log("Error response");
       result.message = error.response.data.message;
     } else {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function eliminarClass(id_clas) {
+  var result = {
+    message: ""
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/available-class/" + id_clas,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;

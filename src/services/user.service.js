@@ -66,6 +66,12 @@ class UserService {
     ];
     return DUMMY_DATA;
   }
+
+  get_ClassesList() {
+    return axios.get(
+      process.env.REACT_APP_API_URL + "/available-class/all"
+    );
+  }
 }
 
 export default new UserService();

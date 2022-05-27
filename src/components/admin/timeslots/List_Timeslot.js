@@ -81,7 +81,7 @@ function List_TimeSlot(params) {
                       " - " +
                       time.endTime[0] +
                       ":" +
-                      time.endTime[1]}{" "}
+                      time.endTime[1]}
                   </p>
                   {error.flag && (
                     <section>

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import userService from "../../../services/user.service";
 import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
@@ -13,6 +14,7 @@ function New_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const activities = useSelector((state) => state.activityList.activityList);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(async () => {
 
@@ -30,6 +32,27 @@ function New_Class(params) {
       }
     }
 
+    async function loadActividades() {
+      try {
+        if (!timeslots) {
+          var lista = await loadActivityList();
+          return lista;
+        } else {
+          throw "Exception";
+        }
+      } catch (error) {
+        throw new Error("Actividades already loaded");
+      }
+    }
+
+    loadActividades()
+      .then((data) => {
+        dispatch(set_ActivityLista(data));
+      })
+      .catch((error) => {
+        // Nothing
+      });
+
     loadTimeslots()
       .then((data) => {
         dispatch(set_TimeLista(data));
@@ -41,7 +64,7 @@ function New_Class(params) {
 
   function cancelHandler(event) {
     event.preventDefault();
-    // TODO ir a la pantalla anterior
+    navigate("/admin", { replace: true });
   }
 
   async function saveHandler(event) {
