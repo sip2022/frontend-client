@@ -4,8 +4,14 @@ import authHeader from "./auth-Header";
 const API_URL = "https://sip-api-dev.herokuapp.com";
 
 /* 
-  Esta clase contiene funciones que requieren cargar datos en el store.
-  Como ejemplo --> cargar los datos del usuario en userDataSlice
+
+  Esta clase contiene funciones para recuperar datos del backend (funciones GET)
+
+  Formato:
+    get_object_modifiers
+    object: class, activity, DTO in the back
+    modifiers: all, byActivityID, listados en swagger
+
 */
 class UserService {
   // Axios GET calls
@@ -24,8 +30,23 @@ class UserService {
     );
   }
 
-  getClasses_ByActId(id) {
-    return axios.get(process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id);
+  get_Classes_ByActId(id) {
+    return axios.get(
+      process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id
+    );
+  }
+
+  /* Devuelve la cantidad de reservas hechas a una clase especifica */
+  get_reservation_atendeesAmount(classID) {
+    return axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          "/reservation/attendee-amount-by-available-class/" +
+          classID
+      )
+      .then((response) => {
+        return response.data.attendeeAmount;
+      });
   }
 
   getProfessorList() {

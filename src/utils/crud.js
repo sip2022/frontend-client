@@ -3,6 +3,16 @@ import axios from "axios";
 import authHeader from "../services/auth-Header";
 import userService from "../services/user.service";
 
+/*
+
+  Este archivo contiene funciones dedicadas a modificar datos del bakcend:
+  funciones POST, PUT y DELETE
+
+  TODO
+  Las funciones NO DEBEN devolver un mensaje de error, solo el axios. El componente o funcion que lo llame debe encargarse de eso.
+
+*/
+
 // -------------------- Usuario --------------------
 export async function register(input) {
   var result = {
@@ -302,10 +312,9 @@ export async function loadClassList() {
     classes: [],
   };
   try {
-    const response = await userService.getClassesList()
-      .then((response) => {
-        result.classes = response.data;
-      });
+    const response = await userService.getClassesList().then((response) => {
+      result.classes = response.data;
+    });
   } catch (error) {
     if (error.response) {
       console.log("Error response");
@@ -317,3 +326,16 @@ export async function loadClassList() {
   return result;
 }
 // -------------------- END Clases --------------------
+
+// -------------------- Reservas --------------------
+export async function reservar_Clase(classID, atendeeID) {
+  return await axios
+    .post(process.env.REACT_APP_API_URL + "/reservation", {
+      "availableClassId": classID,
+      "attendeeId": atendeeID
+    })
+    .then((response) => {
+      return response.data;
+    });
+}
+// -------------------- END Reservas --------------------
