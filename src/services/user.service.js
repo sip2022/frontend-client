@@ -50,27 +50,27 @@ class UserService {
   }
 
   getProfessorList() {
-    const DUMMY_DATA = [
-      // Profesor Mock
-      {
-        id: "355adda9-77ff-4b58-9c01-994a8fcae6db",
-        dni: 123987,
-        email: "professor@mail.com",
-        firstName: null,
-        lastName: null,
-        birthDate: null,
-        phone: null,
-        status: "ACTIVE",
-        roles: ["ROLE_PROFESSOR"],
-      },
-    ];
-    return DUMMY_DATA;
+    return axios
+      .get(process.env.REACT_APP_API_URL + "/management/role/all")
+      .then((response) => {
+        const roles = response.data;
+        const rol_prof = roles.find((rol) => {
+          return rol.name == "ROLE_PROFESSOR";
+        });
+        console.log(rol_prof.id);
+        return axios
+          .get(
+            process.env.REACT_APP_API_URL + "/user/users-by-role/" + rol_prof.id
+          )
+          .then((response) => {
+            console.log(response.data);
+            return response.data;
+          });
+      });
   }
 
   get_ClassesList() {
-    return axios.get(
-      process.env.REACT_APP_API_URL + "/available-class/all"
-    );
+    return axios.get(process.env.REACT_APP_API_URL + "/available-class/all");
   }
 }
 

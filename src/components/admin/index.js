@@ -17,7 +17,7 @@ function AdminMenu(params) {
       <button onClick={() => clickHandler("/admin/actividades")}>
         Actividades
       </button>
-      <button onClick={() => clickHandler("/admin/timeslot")}>Timeslots</button>
+      <button onClick={() => clickHandler("/admin/timeslot")}>Horarios</button>
       <button onClick={() => clickHandler("/admin/classes")}>Clases</button>
     </section>
   );

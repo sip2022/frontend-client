@@ -22,6 +22,7 @@ import List_TimeSlot from './components/admin/timeslots/List_Timeslot';
 import Edit_Timeslot from './components/admin/timeslots/Edit_Timeslot';
 import AdminMenu from './components/admin';
 import List_Class from './components/admin/availableClasses/List_Class';
+import Edit_Class from './components/admin/availableClasses/Edit_Class';
 
 
 
@@ -65,6 +66,7 @@ function App() {
           
           <Route path='/admin/classes' element={<List_Class />} />
           <Route path='/admin/classes/new' element={<New_Class />} />
+          <Route path='/admin/classes/edit/:id_class' element={<Edit_Class />} />
         </Routes>
       </Layout>
     </div>

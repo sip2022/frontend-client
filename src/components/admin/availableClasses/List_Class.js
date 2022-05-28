@@ -44,7 +44,7 @@ function List_Class(params) {
 
   function editarHandler(params) {
     console.log(params);
-    // navigate("/admin/classes/edit/" + params, { replace: true });
+    navigate("/admin/classes/edit/" + params, { replace: true });
   }
 
   async function eliminarHandler(params) {

@@ -266,16 +266,16 @@ export async function updateTimeslot(params) {
 
 // -------------------- Profesores --------------------
 export async function loadProfessors() {
-  // var result = [];
-  // try {
-  //   const response = await userService.getProfessorList().then((response) => {
-  //     result = response.data;
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  // return result;
-  return userService.getProfessorList();
+  var result = [];
+  try {
+    const response = await userService.getProfessorList().then((response) => {
+      console.log(response);
+      result = response;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
 }
 // -------------------- END Porfesores --------------------
 
@@ -327,7 +327,7 @@ export async function loadClassList() {
 
 export async function eliminarClass(id_clas) {
   var result = {
-    message: ""
+    message: "",
   };
   try {
     const response = await axios.delete(
@@ -338,10 +338,37 @@ export async function eliminarClass(id_clas) {
     );
   } catch (error) {
     if (error.response) {
+      console.log(error.response);
       result.message = error.response.data.message;
     } else {
       result.message =
         "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function update_class(params) {
+  var result = {
+    message: "",
+    editedClass: null,
+  };
+  try {
+    const response = await axios
+      .put(process.env.REACT_APP_API_URL + "/available-class", {
+        headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        result.editedTime = response.data;
+        console.log(result);
+      });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message =
+        "Hubo un problema al editar la clase. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
@@ -352,8 +379,8 @@ export async function eliminarClass(id_clas) {
 export async function reservar_Clase(classID, atendeeID) {
   return await axios
     .post(process.env.REACT_APP_API_URL + "/reservation", {
-      "availableClassId": classID,
-      "attendeeId": atendeeID
+      availableClassId: classID,
+      attendeeId: atendeeID,
     })
     .then((response) => {
       return response.data;

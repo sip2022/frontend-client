@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import userService from "../../../services/user.service";
 import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import {
@@ -15,9 +14,9 @@ function New_Class(params) {
   const activities = useSelector((state) => state.activityList.activityList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(async () => {
-
     // TODO esto va en UserService
     async function loadTimeslots() {
       try {
@@ -64,7 +63,7 @@ function New_Class(params) {
 
   function cancelHandler(event) {
     event.preventDefault();
-    navigate("/admin", { replace: true });
+    navigate("/admin/classes", { replace: true });
   }
 
   async function saveHandler(event) {
@@ -86,6 +85,8 @@ function New_Class(params) {
     };
 
     const result = await agregarClase(newClass);
+    if (!result.message) alert("¡Clase creada!");
+    else setError(result.message);
   }
 
   return (
@@ -100,6 +101,11 @@ function New_Class(params) {
           <label>Actividades: </label>
           <DropDownActivity lista={activities} />
         </section>
+        {error && (
+          <section>
+            <p>{error}</p>
+          </section>
+        )}
         <section>
           <button onClick={cancelHandler}>Cancelar</button>
           <button onClick={saveHandler}>Crear Clase</button>

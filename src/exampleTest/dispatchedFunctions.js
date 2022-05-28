@@ -8,7 +8,7 @@ import { setearEstado } from "../store/slices/userData/userDataSlice"
 
   Estas funciones se llamaran desde los componentes con dispatch(function()).
 */
-export const loadActivityListExample = async () => (dispatch, getState) => {
+export const load_ActivityList_Example = async () => (dispatch, getState) => {
   dispatch(setearEstado({
     firstName: "seba",
     lastName: "lastName",
