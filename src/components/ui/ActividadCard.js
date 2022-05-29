@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./ActividadCard.module.css";
 
 function ActividadCard({ actividad }) {
-  const { id, texto, imagen, key } = actividad;
+  const { id, name, key } = actividad;
 
   const navigate = useNavigate();
 
@@ -13,13 +13,8 @@ function ActividadCard({ actividad }) {
 
   return (
     <section className={classes.actividad} key={key}>
-      <img
-        className={classes.actividad_image}
-        src={imagen}
-        alt="logo actividad"
-      />
       <section>
-        <p>{texto}</p>
+        <p>{name}</p>
         <button className={classes.boton_verMas} onClick={clickHandler}>
           Ver Mas
         </button>

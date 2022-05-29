@@ -34,7 +34,7 @@ function NewActividadForm() {
     }
     loadProfesores().then((data) => {
       dispatch(setProfessors(data));
-    }).catch((eror) => {
+    }).catch((error) => {
       // Nothing
     });
   }, []);

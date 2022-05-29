@@ -8,6 +8,7 @@ import planListSlice from "./slices/planList/planListSlice.js";
 import usersListSlice from "./slices/usersList/usersListSlice.js";
 import professorsListSlice from "./slices/professorsList/professorsListSlice.js";
 import timeslotListSlice from "./slices/timeslotList/timeslotListSlice.js";
+import classesListSlice from "./slices/classesList/classesListSlice.js";
 
 export const store = configureStore({
   // En reducer se colocan los recurser de los slices
@@ -19,6 +20,7 @@ export const store = configureStore({
     activityList: activityListSlice,
     info: infoAppSlice,
     planList: planListSlice,
-    timeslotList: timeslotListSlice
+    timeslotList: timeslotListSlice,
+    classList: classesListSlice
   },
 });

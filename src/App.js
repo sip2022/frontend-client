@@ -1,6 +1,6 @@
 import Layout from './components/layout/layout';
 import InicioPage from './pages/InicioPage'
-import ActividadesPage from './pages/ActividadesPage'
+import List_Actividades from "./components/actividadesPage/List_Actividades";
 import PlanesPage from './pages/PlanesPage'
 import ContactosPage from './pages/ContactosPage'
 import UserPage from './pages/UserPage'
@@ -16,8 +16,13 @@ import UserEditInfo from './components/user/UserEdit/UserEditInfo';
 import ActividadesLista from './components/admin/actividades/ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
-import NewTimeslotForm from './components/admin/timeslots/NewTimeslotForm';
-import NewClassForm from './components/admin/availableClasses/NewClassForm';
+import New_Class from './components/admin/availableClasses/New_Class';
+import New_Timeslot from './components/admin/timeslots/New_Timeslot';
+import List_TimeSlot from './components/admin/timeslots/List_Timeslot';
+import Edit_Timeslot from './components/admin/timeslots/Edit_Timeslot';
+import AdminMenu from './components/admin';
+import List_Class from './components/admin/availableClasses/List_Class';
+import Edit_Class from './components/admin/availableClasses/Edit_Class';
 
 
 
@@ -36,8 +41,8 @@ function App() {
           {/* "/user/info/pass" */}
 
           {/* Actividades Routes */}
-          <Route path='/actividades' element={<ActividadesPage />} />
-          <Route path='/actividad/:id' element={<Actividad />} />
+          <Route path='/actividades' element={<List_Actividades />} />
+          <Route path='/actividad/:id_act' element={<Actividad />} />
 
           {/* Planes Routes */}
           <Route path='/planes' element={<PlanesPage />} />
@@ -49,13 +54,20 @@ function App() {
           <Route path='/userList' element={<UserListPage />} />
 
           {/* Admin Routes */}
+          <Route path='/admin' element={<AdminMenu />} />
+
           <Route path='/admin/actividades' element={<ActividadesLista />} />
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
 
-          <Route path='/admin/timeslot/new' element={<NewTimeslotForm />} />
+
+          <Route path='/admin/timeslot' element={<List_TimeSlot />} />
+          <Route path='/admin/timeslot/new' element={<New_Timeslot />} />
+          <Route path='/admin/timeslot/edit/:id' element={<Edit_Timeslot />} />
           
-          <Route path='/admin/classes/new' element={<NewClassForm />} />
+          <Route path='/admin/classes' element={<List_Class />} />
+          <Route path='/admin/classes/new' element={<New_Class />} />
+          <Route path='/admin/classes/edit/:id_class' element={<Edit_Class />} />
         </Routes>
       </Layout>
     </div>
