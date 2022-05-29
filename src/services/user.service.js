@@ -67,6 +67,7 @@ class UserService {
             return response.data;
           });
       });
+
   }
 
   get_ClassesList() {

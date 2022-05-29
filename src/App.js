@@ -60,6 +60,7 @@ function App() {
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
 
+
           <Route path='/admin/timeslot' element={<List_TimeSlot />} />
           <Route path='/admin/timeslot/new' element={<New_Timeslot />} />
           <Route path='/admin/timeslot/edit/:id' element={<Edit_Timeslot />} />

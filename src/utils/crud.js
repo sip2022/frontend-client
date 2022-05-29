@@ -195,12 +195,12 @@ export async function agregarTimeslot(params) {
   };
   try {
     const response = await axios
+
       .post(process.env.REACT_APP_API_URL + "/timeslot", {
         // headers: authHeader(),
         ...params,
       })
       .then((response) => {
-        console.log(response.data);
         result.timeslot = response.data;
       });
   } catch (error) {
@@ -259,6 +259,7 @@ export async function updateTimeslot(params) {
         "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
+
   return result;
 }
 
@@ -387,3 +388,4 @@ export async function reservar_Clase(classID, atendeeID) {
     });
 }
 // -------------------- END Reservas --------------------
+

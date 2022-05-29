@@ -24,7 +24,6 @@ function NewActividadForm() {
       try {
         if (!profesores) {
           var lista = await loadProfessors();
-          console.log(lista);
           return lista;
         }else{
           throw "Exception"
