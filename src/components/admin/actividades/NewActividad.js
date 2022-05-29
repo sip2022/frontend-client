@@ -24,6 +24,7 @@ function NewActividadForm() {
       try {
         if (!profesores) {
           var lista = await loadProfessors();
+          console.log(lista);
           return lista;
         }else{
           throw "Exception"
@@ -34,7 +35,7 @@ function NewActividadForm() {
     }
     loadProfesores().then((data) => {
       dispatch(setProfessors(data));
-    }).catch((eror) => {
+    }).catch((error) => {
       // Nothing
     });
   }, []);

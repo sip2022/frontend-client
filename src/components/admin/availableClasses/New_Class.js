@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import userService from "../../../services/user.service";
-import { setActivityLista } from "../../../store/slices/activityList/activityListSlice";
+import { useNavigate } from "react-router-dom";
+import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
 import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
 import {
   agregarClase,
@@ -9,14 +9,15 @@ import {
   loadTimeslotList,
 } from "../../../utils/crud";
 
-function NewClassForm(params) {
+function New_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
   const activities = useSelector((state) => state.activityList.activityList);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   useEffect(async () => {
     // TODO esto va en UserService
-
     async function loadTimeslots() {
       try {
         if (!timeslots) {
@@ -45,7 +46,7 @@ function NewClassForm(params) {
 
     loadActividades()
       .then((data) => {
-        dispatch(setActivityLista(data));
+        dispatch(set_ActivityLista(data));
       })
       .catch((error) => {
         // Nothing
@@ -62,7 +63,7 @@ function NewClassForm(params) {
 
   function cancelHandler(event) {
     event.preventDefault();
-    // TODO ir a la pantalla anterior
+    navigate("/admin/classes", { replace: true });
   }
 
   async function saveHandler(event) {
@@ -84,6 +85,8 @@ function NewClassForm(params) {
     };
 
     const result = await agregarClase(newClass);
+    if (!result.message) alert("¡Clase creada!");
+    else setError(result.message);
   }
 
   return (
@@ -98,6 +101,11 @@ function NewClassForm(params) {
           <label>Actividades: </label>
           <DropDownActivity lista={activities} />
         </section>
+        {error && (
+          <section>
+            <p>{error}</p>
+          </section>
+        )}
         <section>
           <button onClick={cancelHandler}>Cancelar</button>
           <button onClick={saveHandler}>Crear Clase</button>
@@ -149,4 +157,4 @@ function DropDownActivity({ lista }) {
   );
 }
 
-export default NewClassForm;
+export default New_Class;

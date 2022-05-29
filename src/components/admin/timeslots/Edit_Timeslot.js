@@ -35,23 +35,7 @@ function Edit_Timeslot(params) {
 
     const startInput = document.querySelector("#start-Time");
     const endInput = document.querySelector("#end-Time");
-
-    // const editedTime = {
-    //   startTime: {
-    //     hour: parseInt(startInput.value.substr(0, 2)),
-    //     minute: parseInt(startInput.value.substr(3, 2)),
-    //     second: 0,
-    //     nano: 0,
-    //   },
-    //   endTime: {
-    //     hour: parseInt(endInput.value.substr(0, 2)),
-    //     minute: parseInt(endInput.value.substr(3, 2)),
-    //     second: 0,
-    //     nano: 0,
-    //   },
-    //   dayOfWeek: day,
-    //   id: id
-    // };
+    
     const editedTime = {
       startTime: [
         parseInt(startInput.value.substr(0, 2)),

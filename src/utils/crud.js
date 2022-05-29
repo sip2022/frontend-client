@@ -3,6 +3,16 @@ import axios from "axios";
 import authHeader from "../services/auth-Header";
 import userService from "../services/user.service";
 
+/*
+
+  Este archivo contiene funciones dedicadas a modificar datos del bakcend:
+  funciones POST, PUT y DELETE
+
+  TODO
+  Las funciones NO DEBEN devolver un mensaje de error, solo el axios. El componente o funcion que lo llame debe encargarse de eso.
+
+*/
+
 // -------------------- Usuario --------------------
 export async function register(input) {
   var result = {
@@ -181,7 +191,7 @@ export async function loadTimeslotList() {
 export async function agregarTimeslot(params) {
   var result = {
     message: "",
-    timeslot: {}
+    timeslot: {},
   };
   try {
     const response = await axios
@@ -201,7 +211,6 @@ export async function agregarTimeslot(params) {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
     }
   }
-  console.log("que será");
   return result;
 }
 
@@ -220,33 +229,34 @@ export async function eliminarTimeslot(params) {
     if (error.response) {
       result.message = error.response.data.message;
     } else {
-      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
 }
 
-export async function updateTimeslot(params){
+export async function updateTimeslot(params) {
   var result = {
     message: "",
-    editedTime: null
+    editedTime: null,
   };
   try {
-    const response = await axios.put(
-      process.env.REACT_APP_API_URL + "/timeslot/" + params.id,
-      {
+    const response = await axios
+      .put(process.env.REACT_APP_API_URL + "/timeslot/" + params.id, {
         headers: authHeader(),
-        ...params
-      }
-    ).then((response)=>{
-      result.editedTime = response.data;
-      console.log(result);
-    });
+        ...params,
+      })
+      .then((response) => {
+        result.editedTime = response.data;
+        console.log(result);
+      });
   } catch (error) {
     if (error.response) {
       result.message = error.response.data.message;
     } else {
-      result.message = "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
   return result;
@@ -256,16 +266,16 @@ export async function updateTimeslot(params){
 
 // -------------------- Profesores --------------------
 export async function loadProfessors() {
-  // var result = [];
-  // try {
-  //   const response = await userService.getProfessorList().then((response) => {
-  //     result = response.data;
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  // return result;
-  return userService.getProfessorList();
+  var result = [];
+  try {
+    const response = await userService.getProfessorList().then((response) => {
+      console.log(response);
+      result = response;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
 }
 // -------------------- END Porfesores --------------------
 
@@ -294,4 +304,86 @@ export async function agregarClase(params) {
   }
   return result;
 }
+
+export async function loadClassList() {
+  var result = {
+    message: "",
+    classes: [],
+  };
+  try {
+    const response = await userService.get_ClassesList().then((response) => {
+      result.classes = response.data;
+      console.log(response.data);
+    });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function eliminarClass(id_clas) {
+  var result = {
+    message: "",
+  };
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_API_URL + "/available-class/" + id_clas,
+      {
+        headers: authHeader(),
+      }
+    );
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response);
+      result.message = error.response.data.message;
+    } else {
+      result.message =
+        "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
+
+export async function update_class(params) {
+  var result = {
+    message: "",
+    editedClass: null,
+  };
+  try {
+    const response = await axios
+      .put(process.env.REACT_APP_API_URL + "/available-class", {
+        headers: authHeader(),
+        ...params,
+      })
+      .then((response) => {
+        result.editedTime = response.data;
+        console.log(result);
+      });
+  } catch (error) {
+    if (error.response) {
+      result.message = error.response.data.message;
+    } else {
+      result.message =
+        "Hubo un problema al editar la clase. Vuelva a intentarlo más tarde.";
+    }
+  }
+  return result;
+}
 // -------------------- END Clases --------------------
+
+// -------------------- Reservas --------------------
+export async function reservar_Clase(classID, atendeeID) {
+  return await axios
+    .post(process.env.REACT_APP_API_URL + "/reservation", {
+      availableClassId: classID,
+      attendeeId: atendeeID,
+    })
+    .then((response) => {
+      return response.data;
+    });
+}
+// -------------------- END Reservas --------------------
