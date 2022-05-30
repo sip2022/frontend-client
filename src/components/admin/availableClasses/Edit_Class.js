@@ -13,8 +13,6 @@ function Edit_Class(params) {
     (state) => state.professorsList.professorsList
   );
 
-  const timeslots = useSelector((state) => state.timeslotList.timeslotList);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,19 +22,13 @@ function Edit_Class(params) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // TODO funcion loadClases
-    // TODO funcion loadTimeslots
-    // TODO funcion loadActividades
-
     if (!profesores) dispatch(load_list_professor());
+
 
     const clase = ReduxService.get_Class_byID(id_class);
     setClase(clase);
     setActividad(clase.activityDto);
     setHorario(clase.timeslotDto);
-    // console.log(clase);
-    // console.log(clase.activityDto);
-    // console.log(clase.timeslotDto);
   }, []);
 
   async function saveHandler(params) {

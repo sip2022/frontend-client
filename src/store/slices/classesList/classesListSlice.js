@@ -3,7 +3,7 @@ import userService from "../../../services/user.service.js";
 import { setClassList } from "./actions.js";
 
 // Ascyn thunk -> para hacer dispatch de acciones que son asincronas
-export const load_list_timeslot = createAsyncThunk(
+export const load_list_class = createAsyncThunk(
   "class/loadClasses",
   async () => {
     console.log("Cargando lista de clases...");
@@ -22,6 +22,20 @@ export const classListSlice = createSlice({
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
     set_ClassLista: setClassList,
+  },
+  extraReducers: {
+    [load_list_class.pending]: (state, action) => {
+      console.log("Pending clases");
+    },
+    [load_list_class.fulfilled]: (state, action) => {
+      console.log("Fulfilled clases");
+      state.classList = action.payload;
+    },
+    [load_list_class.rejected]: (state, action) => {
+      console.log("Failed clases");
+      console.log(action);
+      state.classList = null;
+    },
   },
 });
 

@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
-import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import {
-  agregarClase,
-  loadActivityList,
-  loadTimeslotList,
-} from "../../../utils/crud";
+import { load_list_activity } from "../../../store/slices/activityList/activityListSlice";
+import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
+import { agregarClase } from "../../../utils/crud";
 
 function New_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
@@ -17,48 +13,8 @@ function New_Class(params) {
   const [error, setError] = useState("");
 
   useEffect(async () => {
-    // TODO esto va en UserService
-    async function loadTimeslots() {
-      try {
-        if (!timeslots) {
-          var lista = await loadTimeslotList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Timeslots already loaded");
-      }
-    }
-
-    async function loadActividades() {
-      try {
-        if (!timeslots) {
-          var lista = await loadActivityList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Actividades already loaded");
-      }
-    }
-
-    loadActividades()
-      .then((data) => {
-        dispatch(set_ActivityLista(data));
-      })
-      .catch((error) => {
-        // Nothing
-      });
-
-    loadTimeslots()
-      .then((data) => {
-        dispatch(set_TimeLista(data));
-      })
-      .catch((error) => {
-        // Nothing
-      });
+    if (!timeslots) dispatch(load_list_timeslot());
+    if (!activities) dispatch(load_list_activity());
   }, []);
 
   function cancelHandler(event) {
