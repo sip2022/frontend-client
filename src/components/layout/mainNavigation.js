@@ -5,27 +5,25 @@ import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function MainNavigation() {
-  const firstName = useSelector(state => state.user.firstName);
+  const firstName = useSelector((state) => state.user.firstName);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO
-    // Ver si el user está seteado. Esto setea automaticamente "usernae" en store
-    // Recuperar store
-    // const token = localStorage.getItem("accessToken");
-    // if(token){
-    //   // Hace la llamada al back para obtener los datos del usuario correspondiente
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      console.log(token);
+    } else console.log("No está logueado");
+  }, []);
 
-    // }
-  }, [firstName]);
-
-  function logoClickHandler(){
+  function logoClickHandler() {
     navigate("/", { replace: true });
   }
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo} onClick={logoClickHandler}>Club Geminis</div>
+      <div className={classes.logo} onClick={logoClickHandler}>
+        Club Geminis
+      </div>
       <nav>
         <ul>
           <li>
