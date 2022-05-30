@@ -1,38 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { set_ActivityLista } from "../../store/slices/activityList/activityListSlice";
-import { loadActivityList } from "../../utils/crud";
+import {
+  load_list_activity,
+} from "../../store/slices/activityList/activityListSlice";
 import ActividadCard from "../ui/ActividadCard";
 import classes from "./ActividadesList.module.css";
 
-function List_Actividades(props) {
+function List_Actividades() {
   const actividades = useSelector((state) => state.activityList.activityList);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO funcion loadActividades
-    async function loadActividades() {
-      try {
-        if (!actividades) {
-          var lista = await loadActivityList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Actividades already loaded");
-      }
-    }
-    loadActividades()
-      .then((data) => {
-        console.log(data);
-        dispatch(set_ActivityLista(data));
-      })
-      .catch((error) => {
-        // Nothing
-      });
+    if (!actividades) dispatch(load_list_activity());
   }, []);
 
   return (

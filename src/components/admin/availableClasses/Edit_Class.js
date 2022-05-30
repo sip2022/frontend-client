@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getActividadRedux,
-  getClaseRedux,
-  getHorarioRedux,
-} from "../../../store/redux.service";
-import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { loadProfessors, update_class } from "../../../utils/crud";
+import ReduxService from "../../../store/redux.service";
+
+import { load_list_professor } from "../../../store/slices/professorsList/professorsListSlice";
+import { update_class } from "../../../utils/crud";
 import daysList from "../timeslots/daysList";
 
 function Edit_Class(params) {
@@ -25,6 +22,22 @@ function Edit_Class(params) {
   const [actividad, setActividad] = useState({});
   const [horario, setHorario] = useState({});
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // TODO funcion loadClases
+    // TODO funcion loadTimeslots
+    // TODO funcion loadActividades
+
+    if (!profesores) dispatch(load_list_professor());
+
+    const clase = ReduxService.get_Class_byID(id_class);
+    setClase(clase);
+    setActividad(clase.activityDto);
+    setHorario(clase.timeslotDto);
+    // console.log(clase);
+    // console.log(clase.activityDto);
+    // console.log(clase.timeslotDto);
+  }, []);
 
   async function saveHandler(params) {
     // El profesor lo tomamos directamente del input
@@ -75,7 +88,7 @@ function Edit_Class(params) {
       };
       console.log(claseEditada);
       const result = await update_class(claseEditada);
-      if (!result.message) alert("¡Clase Editada con Exito!")
+      if (!result.message) alert("¡Clase Editada con Exito!");
       else setError(result.message);
       console.log("mensaje = " + result.message);
     }
@@ -108,40 +121,6 @@ function Edit_Class(params) {
     console.log(name);
     console.log(value);
   }
-
-  useEffect(() => {
-    // TODO funcion loadClases
-    // TODO funcion loadTimeslots
-    // TODO funcion loadActividades
-
-    async function loadProfesores() {
-      try {
-        if (!profesores) {
-          var lista = await loadProfessors();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Profesores already loaded");
-      }
-    }
-    loadProfesores()
-      .then((data) => {
-        dispatch(setProfessors(data));
-      })
-      .catch((eror) => {
-        // Nothing
-      });
-
-    const clase = getClaseRedux(id_class);
-    setClase(clase);
-    setActividad(clase.activityDto);
-    setHorario(clase.timeslotDto);
-    // console.log(clase);
-    // console.log(clase.activityDto);
-    // console.log(clase.timeslotDto);
-  }, []);
 
   /*
     TODO REALIZAR UN REFACTOR MASIVO

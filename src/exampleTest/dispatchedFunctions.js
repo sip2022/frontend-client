@@ -1,4 +1,6 @@
+import userService from "../services/user.service"
 import { setearEstado } from "../store/slices/userData/userDataSlice"
+import { store } from "../store/store"
 
 /*
   Este archivo contiene las funciones Load-Dispatch cuyo objetivo es:

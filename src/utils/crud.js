@@ -95,7 +95,7 @@ export async function getUser(email) {
 export async function loadActivityList() {
   var result = [];
   try {
-    const response = await userService.getActivityList().then((response) => {
+    const response = await userService.get_Activity_List().then((response) => {
       result = response.data;
     });
   } catch (error) {
