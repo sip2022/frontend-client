@@ -24,6 +24,16 @@ class UserService {
       });
   }
 
+  get_User_Turnos() {
+    return axios
+      .get(process.env.REACT_APP_API_URL + "/user/all", {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   get_Activity_List() {
     return axios
       .get(process.env.REACT_APP_API_URL + "/activity/all")
