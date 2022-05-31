@@ -52,7 +52,7 @@ function LoggedSection(props) {
   // TODO cmopletar para que muestre el nombre y la imagen del usuario
   return (
     <li>
-      <Link to="/login">{props.firstName}</Link>
+      <Link to="/user">{props.firstName}</Link>
     </li>
   );
 }

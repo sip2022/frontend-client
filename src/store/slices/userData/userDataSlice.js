@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 // Para traer las acciones del slice
 import { setState } from "./actions";
 
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
+    id: "f714cd40-12ba-4844-9620-7690b8728f37",
     firstName: "Sebastian",
     lastName: "Marchetti",
     dni: "99999999",
