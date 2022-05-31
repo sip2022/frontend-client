@@ -23,6 +23,7 @@ import Edit_Timeslot from './components/admin/timeslots/Edit_Timeslot';
 import AdminMenu from './components/admin';
 import List_Class from './components/admin/availableClasses/List_Class';
 import Edit_Class from './components/admin/availableClasses/Edit_Class';
+import UserTurnos from './components/user/Turnos/UserTurnos';
 
 
 
@@ -38,7 +39,7 @@ function App() {
           <Route path='/user' element={<UserPage />} />
           <Route path='/user/info' exact element={<UserInfo />} />
           <Route path='/user/info/change' exact element={<UserEditInfo />} />
-          {/* "/user/info/pass" */}
+          <Route path='/user/turnos' exact element={<UserTurnos />} />
 
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />
