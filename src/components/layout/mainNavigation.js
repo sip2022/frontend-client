@@ -10,9 +10,9 @@ function MainNavigation() {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      console.log(token);
-    } else console.log("No está logueado");
+    // if (token) {
+    //   console.log(token);
+    // } else console.log("No está logueado");
   }, []);
 
   function logoClickHandler() {

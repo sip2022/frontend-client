@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import userService from "../../services/user.service";
-import { set_ActivityLista } from "../../store/slices/activityList/activityListSlice";
-import { set_ClassLista } from "../../store/slices/classesList/classesListSlice";
+import {
+  load_list_activity,
+} from "../../store/slices/activityList/activityListSlice";
 import { reservar_Clase } from "../../utils/crud";
 import classes from "./Actividad.module.css";
 
@@ -12,6 +13,8 @@ function Actividad(props) {
   const dispatch = useDispatch();
 
   const actividades = useSelector((state) => state.activityList.activityList);
+  const estado = useSelector((state) => state.activityList.status);
+  const usuario = useSelector((state) => state.activityList.status);
   const [availableClasses, setAvailableClasses] = useState(null);
 
   const [error, setError] = useState("");
@@ -28,15 +31,21 @@ function Actividad(props) {
   const [amountReserved, setAmountReserved] = useState(0);
 
   useEffect(() => {
-    // Obtener los horarios de clases (available-classes) de la actividad (tengo el id)
-    userService.get_Classes_ByActId(id_act).then((response) => {
-      setAvailableClasses(response.data);
-    });
-    // Conseguir la actividad elegida (tengo el id)
-    const actividadElegida = actividades.find((act) => {
-      return act.id == id_act;
-    });
-    setContenido(actividadElegida);
+    if (!actividades) dispatch(load_list_activity());
+  }, []);
+
+  useEffect(() => {
+    if (actividades) {
+      // Obtener los horarios de clases (available-classes) de la actividad (tengo el id)
+      userService.get_Classes_ByActId(id_act).then((response) => {
+        setAvailableClasses(response.data);
+      });
+      // Conseguir la actividad elegida (tengo el id)
+      const actividadElegida = actividades.find((act) => {
+        return act.id == id_act;
+      });
+      setContenido(actividadElegida);
+    }
   }, [actividades]);
 
   async function reservarHandler(event) {
@@ -129,7 +138,7 @@ function Actividad(props) {
           id_clas={reserva.id}
         />
       )}
-      {error && <section>{error}</section>}
+      {error && <section><p>{error}</p></section>}
     </section>
   );
 }
@@ -162,9 +171,10 @@ function DisplayReserva({
     attendeesLeft: 0,
     attendeesReserved: 0,
   });
-  const [canReserve, setCanReserve] = useState(false);
+  const [canReserve, setCanReserve] = useState(null);
 
   useEffect(() => {
+    // buscar si id_clas está reservada en por el usuario
     const att_left = actividad.attendeesLimit - amountReserved;
     const newContenido = {
       act_name: actividad.name,
@@ -225,7 +235,12 @@ function DisplayReserva({
           </section>
         </section>
         <section>
-          <button onClick={submitHandler}>Reservar</button>
+          {canReserve ? 
+          <button onClick={submitHandler}>Reservar</button> : 
+          <section>
+            <p>No puede reservarse, no quedan lugares disponibles</p>
+          </section>
+          }
           <button onClick={callbackCloseWindow}>Cancelar</button>
         </section>
       </section>

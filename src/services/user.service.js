@@ -48,7 +48,7 @@ class UserService {
       });
   }
 
-  get_Class_ByActId(id) {
+  get_Classes_ByActId(id) {
     return axios.get(
       process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id
     );

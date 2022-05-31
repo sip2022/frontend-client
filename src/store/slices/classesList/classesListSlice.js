@@ -18,6 +18,7 @@ export const classListSlice = createSlice({
   name: "classList",
   initialState: {
     classList: null,
+    status: null,
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
@@ -26,14 +27,17 @@ export const classListSlice = createSlice({
   extraReducers: {
     [load_list_class.pending]: (state, action) => {
       console.log("Pending clases");
+      state.satus = "loading"
     },
     [load_list_class.fulfilled]: (state, action) => {
       console.log("Fulfilled clases");
+      state.satus = "loaded"
       state.classList = action.payload;
     },
     [load_list_class.rejected]: (state, action) => {
       console.log("Failed clases");
       console.log(action);
+      state.satus = "failed"
       state.classList = null;
     },
   },

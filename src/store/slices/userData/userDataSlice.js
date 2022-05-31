@@ -6,12 +6,12 @@ import { setState } from "./actions";
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
-    firstName: "",
-    lastName: "",
-    dni: "",
-    phone: "",
-    email: "",
-    age: "",
+    firstName: "Sebastian",
+    lastName: "Marchetti",
+    dni: "99999999",
+    phone: "2323",
+    email: "seba@gmail.com",
+    age: "23",
     roles: [],
     turnos: [],
   },
