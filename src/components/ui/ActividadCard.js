@@ -12,10 +12,11 @@ function ActividadCard({ actividad }) {
   }
 
   return (
-    <section className={classes.actividad} key={key}>
+    <section className="bg-[#BFE0DC] rounded-[1rem]" key={key}>
       <section>
         <p>{name}</p>
-        <button className={classes.boton_verMas} onClick={clickHandler}>
+        {/* <button {...{[variableX]: true}} crear className={classes.boton_verMas} onClick={clickHandler}> */}
+        <button className={classes.boton_verMas} {...{onClick: clickHandler}} onClick={clickHandler}>
           Ver Mas
         </button>
       </section>
