@@ -24,8 +24,7 @@ import AdminMenu from './components/admin';
 import List_Class from './components/admin/availableClasses/List_Class';
 import Edit_Class from './components/admin/availableClasses/Edit_Class';
 import UserTurnos from './components/user/Turnos/UserTurnos';
-
-
+import PagoPlan from './components/planes/PagoPlan';
 
 function App() {
 
@@ -47,6 +46,7 @@ function App() {
 
           {/* Planes Routes */}
           <Route path='/planes' element={<PlanesPage />} />
+          <Route path='/planes/:id_plan' element={<PagoPlan />} />
 
           <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />

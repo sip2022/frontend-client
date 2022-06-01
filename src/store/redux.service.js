@@ -48,6 +48,17 @@ class ReduxService {
     }
     return null;
   }
+
+  // Recupera un plan del estado, segun ID
+  get_Plan_byID(id_plan) {
+    const planes = store.getState().planList.planList;
+    if (planes) {
+      return planes.find((plan) => {
+        return plan.id == id_plan;
+      });
+    }
+    return null;
+  }
 }
 
 export default new ReduxService();

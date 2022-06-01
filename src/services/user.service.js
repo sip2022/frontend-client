@@ -50,6 +50,14 @@ class UserService {
       });
   }
 
+  get_Planes_List() {
+    return axios
+      .get(process.env.REACT_APP_API_URL + "/plan/all")
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   get_Class_List() {
     return axios
       .get(process.env.REACT_APP_API_URL + "/available-class/all")

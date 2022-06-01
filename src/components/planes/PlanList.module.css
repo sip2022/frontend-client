@@ -13,6 +13,11 @@
   width: 45%;
   margin-top: 1rem;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.singlePlan:hover{
+  background-color: #E8A94A;
 }
 
 .plan_image{
