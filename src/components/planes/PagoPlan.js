@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import reduxService from "../../store/redux.service";
+import { useNavigate, useParams } from "react-router-dom";
+import reduxService from "../../store/redux.service";          
 
 function PagoPlan(params) {
   const { id_plan } = useParams();
@@ -18,6 +18,11 @@ function PagoPlan(params) {
 
   function pagoHandler(params) {
     alert("Pagar?")
+    try {
+      
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function cancelarHandler(params) {

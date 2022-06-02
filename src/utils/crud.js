@@ -2,6 +2,7 @@
 import axios from "axios";
 import authHeader from "../services/auth-Header";
 import userService from "../services/user.service";
+import { backAPI } from "./globalVars";
 
 /*
 
@@ -20,7 +21,7 @@ export async function register(input) {
   };
   try {
     const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/register",
+      backAPI + "/register",
       {
         ...input,
       }
@@ -43,7 +44,7 @@ export async function login(input) {
   };
   try {
     const response = await axios
-      .post(process.env.REACT_APP_API_URL + "/login", {
+      .post(backAPI + "/login", {
         ...input,
       })
       .then((response) => {
@@ -68,7 +69,7 @@ export async function getUser(email) {
   };
   try {
     const response = await axios
-      .get(process.env.REACT_APP_API_URL + "/user/email", {
+      .get(backAPI + "/user/email", {
         params: {
           email: email,
         },
@@ -110,7 +111,7 @@ export async function agregarActividad(actividad) {
   };
   try {
     const response = await axios
-      .post(process.env.REACT_APP_API_URL + "/activity", {
+      .post(backAPI + "/activity", {
         ...actividad,
       })
       .then((response) => {
@@ -134,7 +135,7 @@ export async function eliminarActividad(params) {
   };
   try {
     const response = await axios.delete(
-      process.env.REACT_APP_API_URL + "/activity/" + params,
+      backAPI + "/activity/" + params,
       {
         headers: authHeader(),
       }
@@ -156,7 +157,7 @@ export async function actualizarActividad(params) {
   };
   try {
     const response = await axios.put(
-      process.env.REACT_APP_API_URL + "/activity/" + params,
+      backAPI + "/activity/" + params,
       {
         headers: authHeader(),
         body: params,
@@ -196,7 +197,7 @@ export async function agregarTimeslot(params) {
   try {
     const response = await axios
 
-      .post(process.env.REACT_APP_API_URL + "/timeslot", {
+      .post(backAPI + "/timeslot", {
         // headers: authHeader(),
         ...params,
       })
@@ -220,7 +221,7 @@ export async function eliminarTimeslot(params) {
   };
   try {
     const response = await axios.delete(
-      process.env.REACT_APP_API_URL + "/timeslot/" + params,
+      backAPI + "/timeslot/" + params,
       {
         headers: authHeader(),
       }
@@ -243,7 +244,7 @@ export async function updateTimeslot(params) {
   };
   try {
     const response = await axios
-      .put(process.env.REACT_APP_API_URL + "/timeslot/" + params.id, {
+      .put(backAPI + "/timeslot/" + params.id, {
         headers: authHeader(),
         ...params,
       })
@@ -288,7 +289,7 @@ export async function agregarClase(params) {
   };
   try {
     const response = axios
-      .post(process.env.REACT_APP_API_URL + "/available-class", {
+      .post(backAPI + "/available-class", {
         // headers: authHeader(),
         ...params,
       })
@@ -332,7 +333,7 @@ export async function eliminarClass(id_clas) {
   };
   try {
     const response = await axios.delete(
-      process.env.REACT_APP_API_URL + "/available-class/" + id_clas,
+      backAPI + "/available-class/" + id_clas,
       {
         headers: authHeader(),
       }
@@ -356,7 +357,7 @@ export async function update_class(params) {
   };
   try {
     const response = await axios
-      .put(process.env.REACT_APP_API_URL + "/available-class", {
+      .put(backAPI + "/available-class", {
         headers: authHeader(),
         ...params,
       })
@@ -379,7 +380,7 @@ export async function update_class(params) {
 // -------------------- Reservas --------------------
 export async function reservar_Clase(classID, atendeeID) {
   return await axios
-    .post(process.env.REACT_APP_API_URL + "/reservation", {
+    .post(backAPI + "/reservation", {
       availableClassId: classID,
       attendeeId: atendeeID,
     })
@@ -390,7 +391,7 @@ export async function reservar_Clase(classID, atendeeID) {
 
 export async function cancelar_reserva(id_clas, id_user) {
   return axios.put(
-    process.env.REACT_APP_API_URL +
+    backAPI +
       "/reservation/remove-user/" +
       id_user +
       "/from-available-class/" +

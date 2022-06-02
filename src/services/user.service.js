@@ -1,4 +1,5 @@
 import axios from "axios";
+import { backAPI } from "../utils/globalVars";
 import authHeader from "./auth-Header";
 
 /* 
@@ -16,7 +17,7 @@ class UserService {
 
   get_User_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/user/all", {
+      .get(backAPI + "/user/all", {
         headers: authHeader(),
       })
       .then((response) => {
@@ -26,7 +27,7 @@ class UserService {
 
   get_User_Turnos() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/user/all", {
+      .get(backAPI + "/user/all", {
         headers: authHeader(),
       })
       .then((response) => {
@@ -36,7 +37,7 @@ class UserService {
 
   get_Activity_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/activity/all")
+      .get(backAPI + "/activity/all")
       .then((response) => {
         return response.data;
       });
@@ -44,7 +45,7 @@ class UserService {
 
   get_Timeslot_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/timeslot/available-and-ordered")
+      .get(backAPI + "/timeslot/available-and-ordered")
       .then((response) => {
         return response.data;
       });
@@ -52,7 +53,7 @@ class UserService {
 
   get_Planes_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/plan/all")
+      .get(backAPI + "/plan/all")
       .then((response) => {
         return response.data;
       });
@@ -60,7 +61,7 @@ class UserService {
 
   get_Class_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/available-class/all")
+      .get(backAPI + "/available-class/all")
       .then((response) => {
         return response.data;
       });
@@ -69,7 +70,7 @@ class UserService {
   get_Classes_ByActId(id) {
     return axios
       .get(
-        process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id
+        backAPI + "/available-class/by-activity-id/" + id
       )
       .then((response) => {
         return response.data;
@@ -80,7 +81,7 @@ class UserService {
   get_reservation_atendeesAmount(classID) {
     return axios
       .get(
-        process.env.REACT_APP_API_URL +
+        backAPI +
           "/reservation/attendee-amount-by-available-class/" +
           classID
       )
@@ -91,7 +92,7 @@ class UserService {
 
   get_Professor_List() {
     return axios
-      .get(process.env.REACT_APP_API_URL + "/management/role/all")
+      .get(backAPI + "/management/role/all")
       .then((response) => {
         const roles = response.data;
         const rol_prof = roles.find((rol) => {
@@ -99,7 +100,7 @@ class UserService {
         });
         return axios
           .get(
-            process.env.REACT_APP_API_URL + "/user/users-by-role/" + rol_prof.id
+            backAPI + "/user/users-by-role/" + rol_prof.id
           )
           .then((response) => {
             return response.data;
@@ -110,7 +111,7 @@ class UserService {
   get_Turnos_ByUserId(id) {
     return axios
       .get(
-        process.env.REACT_APP_API_URL + "/reservation/from-user/" + id
+        backAPI + "/reservation/from-user/" + id
       )
       .then((response) => {
         console.log(response.data);
