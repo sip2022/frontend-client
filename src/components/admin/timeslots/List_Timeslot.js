@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { set_TimeLista } from "../../../store/slices/timeslotList/timeslotListSlice";
-import { eliminarTimeslot, loadTimeslotList } from "../../../utils/crud";
+import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
+import { eliminarTimeslot } from "../../../utils/crud";
 
 function List_TimeSlot(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
@@ -15,27 +15,7 @@ function List_TimeSlot(params) {
   });
 
   useEffect(() => {
-    // TODO load lista de timeslots
-    async function loadTimeslots() {
-      try {
-        if (!timeslots) {
-          var lista = await loadTimeslotList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Timeslots already loaded");
-      }
-    }
-
-    loadTimeslots()
-      .then((data) => {
-        dispatch(set_TimeLista(data));
-      })
-      .catch((error) => {
-        // Nothing
-      });
+    if (!timeslots) dispatch(load_list_timeslot());
   }, []);
 
   function altaClickHandler() {
@@ -43,7 +23,6 @@ function List_TimeSlot(params) {
   }
 
   function editarHandler(params) {
-    console.log(params);
     navigate("/admin/timeslot/edit/" + params, { replace: true });
   }
 
@@ -51,7 +30,6 @@ function List_TimeSlot(params) {
     setError({ flag: false });
     const result = await eliminarTimeslot(params);
     if (result.message) {
-      console.log(result.message);
       setError({ flag: true, message: result.message });
     }
   }

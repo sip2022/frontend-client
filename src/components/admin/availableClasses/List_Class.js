@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { set_ClassLista } from "../../../store/slices/classesList/classesListSlice";
+import { load_list_class, set_ClassLista } from "../../../store/slices/classesList/classesListSlice";
 import { eliminarClass, loadClassList } from "../../../utils/crud";
 
 function List_Class(params) {
@@ -15,27 +15,8 @@ function List_Class(params) {
   });
 
   useEffect(() => {
-    // TODO dispatch loadClassList
-    async function loadClasses() {
-      try {
-        if (!classes) {
-          var lista = await loadClassList();
-          return lista;
-        } else {
-          throw "Exception";
-        }
-      } catch (error) {
-        throw new Error("Clases already loaded");
-      }
-    }
-
-    loadClasses()
-      .then((data) => {
-        dispatch(set_ClassLista(data.classes));
-      })
-      .catch((error) => {
-        // Nothing
-      });
+    if(!classes) 
+      dispatch(load_list_class());
   }, []);
 
   function altaClickHandler() {

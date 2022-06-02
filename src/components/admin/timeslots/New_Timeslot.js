@@ -1,20 +1,22 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { add_Timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { agregarTimeslot } from "../../../utils/crud";
+import ErrorSection from "../../ui/ErrorSection";
 import daysList from "./daysList";
-
 
 const days = daysList;
 
 function NewTimeslotForm(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
 
   async function saveHandler(event) {
     // TODO avisar si hubo un problema
     event.preventDefault(event);
-
+    setError(null);
     const day_select = document.getElementById("input-day");
     const day = day_select.options[day_select.selectedIndex].value;
 
@@ -36,6 +38,8 @@ function NewTimeslotForm(params) {
     const result = await agregarTimeslot(newTime).then((data) => {
       dispatch(add_Timeslot(data.timeslot));
     });
+    if (!result.message) alert("Nuevo horario agregado");
+    else setError(result.message);
   }
 
   function cancelarHandler(event) {
@@ -62,6 +66,7 @@ function NewTimeslotForm(params) {
             <button onClick={saveHandler}>Guardar Timeslot</button>
           </section>
         </section>
+        {error && <ErrorSection message={error} />}
       </section>
     </section>
   );

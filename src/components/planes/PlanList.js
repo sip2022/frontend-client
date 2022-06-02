@@ -1,64 +1,53 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { load_list_planes } from "../../store/slices/planList/planListSlice";
 import classes from "./PlanList.module.css";
 
 // Dummy data sobre los planes
 // TODO traerlos desde el Back cuando se implemente.
-const DUMMY_DATA = [
-  {
-    nombre: "Bronze",
-    imagen: "/images/planes_images/iconoPlanBronze.png",
-    descripcion: ["X actividades por semana", "Más Info"],
-  },
-  {
-    nombre: "Silver",
-    imagen: "/images/planes_images/iconoPlanSilver.png",
-    descripcion: ["X actividades por semana", "Más Info"],
-  },
-  {
-    nombre: "Gold",
-    imagen: "/images/planes_images/iconoPlanGold.png",
-    descripcion: ["X actividades por semana", "Más Info"],
-  },
-  {
-    nombre: "Platinum",
-    imagen: "/images/planes_images/iconoPlanPlatinum.png",
-    descripcion: ["X actividades por semana", "Más Info"],
-  },
-];
 
-function PlanCardPage({ nombre, imagen, descripcion }) {
+function PlanCardPage({ key, id, name, activitiesLimit }) {
+  const navigate = useNavigate();
+
+  function clickHandler(event) {
+    event.preventDefault();
+    navigate("/planes/" + id, { replace: true });
+  }
+
   return (
-    <section className={classes.singlePlan}>
-      <section className={classes.plan_image}>
-        <img src={imagen} />
-      </section>
+    <section className={classes.singlePlan} id={id} onClick={clickHandler}>
       <section>
-        <h2>{nombre}</h2>
-        <ul>{descripcion.map((desc, index) => {
-          return <li key={index}>{desc}</li>
-        })}</ul>
+        <h2>{name}</h2>
+        <ul>
+          <li>{"Limite de actividades: " + activitiesLimit}</li>
+        </ul>
       </section>
     </section>
   );
 }
 
 function PlanList(props) {
-  const [planes, setPlanes] = useState([]);
+  // const [planes, setPlanes] = useState([]);
+  const planes = useSelector((state) => state.planList.planList);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    setPlanes(DUMMY_DATA);
+    if (!planes) dispatch(load_list_planes());
   }, []);
 
   return (
     <section>
       <section className={classes.planes}>
-        {/* TODO Lista de planes,  */}
-        {planes ? planes.map((plan, index) => {
-          return <PlanCardPage nombre={plan.nombre} imagen={plan.imagen} descripcion={plan.descripcion} key={index} />
-        }) : null}
+        {planes
+          ? planes.map((plan, index) => {
+              return <PlanCardPage {...plan} key={index} />;
+            })
+          : null}
       </section>
       <section>
-        <h2>Elegí tu plan y comenzá a entrenar</h2>
-        <button>Suscribete</button>
+        <h2>¡Seleccioná un plan y comenzá a entrenar!</h2>
+        {/* <button>Suscribete</button> */}
       </section>
     </section>
   );

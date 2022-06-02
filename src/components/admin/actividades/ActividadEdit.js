@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { actualizarActividad, loadProfessors } from "../../../utils/crud";
+import { load_list_professor } from "../../../store/slices/professorsList/professorsListSlice";
+import { actualizarActividad } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
 function ActividadEditForm() {
@@ -14,29 +14,13 @@ function ActividadEditForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function loadProfesores() {
-      try {
-        if (!profesores) {
-          var lista = await loadProfessors();
-          return lista;
-        }else{
-          throw "Exception"
-        }
-      } catch (error) {
-        throw new Error('Profesores already loaded');
-      }
-    }
-    loadProfesores().then((data) => {
-      dispatch(setProfessors(data));
-    }).catch((eror) => {
-      // Nothing
-    });
+    if (!profesores) dispatch(load_list_professor());
   }, []);
 
   async function submitHandler(event) {
     event.preventDefault(event);
     const prof_select = document.getElementById("input-profesor");
-    const prof_seleccionado = prof_select.options[prof_select.selectedIndex];    
+    const prof_seleccionado = prof_select.options[prof_select.selectedIndex];
     const act = {
       name: document.getElementById("input-name").value,
       basePrice: document.getElementById("input-precio").value,

@@ -1,9 +1,11 @@
 import classes from "./UserInfo.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function UserInfo(props) {
 
+  const userInfo = useSelector((state) => state.user)
   const navigate = useNavigate()
   const [{ nombre, apellido, dni, telefono, mail, edad, imagen }, setDatos] = useState({
     nombre: "",
@@ -19,6 +21,7 @@ function UserInfo(props) {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
+    console.log(userInfo);
     setDatos({
       nombre: "Seba",
       apellido: "Marchetti",
@@ -26,7 +29,6 @@ function UserInfo(props) {
       telefono: "2323-232323",
       mail: "seba@gmail.com",
       edad: "23",
-      imagen: "/images/user_images/UserMockImage.jpeg"
     });
   }, []);
 
@@ -42,9 +44,9 @@ function UserInfo(props) {
 
   return (
     <section className={classes.userSection}>
-      <section className={classes.userImage}>
+      {/* <section className={classes.userImage}>
         <img src="/images/user_images/UserMockImage.jpeg" />
-      </section>
+      </section> */}
       <section className={classes.userInfo}>
         <h1 className={classes.UserName}>{nombre + " " + apellido}</h1>
         <section>

@@ -95,7 +95,7 @@ export async function getUser(email) {
 export async function loadActivityList() {
   var result = [];
   try {
-    const response = await userService.getActivityList().then((response) => {
+    const response = await userService.get_Activity_List().then((response) => {
       result = response.data;
     });
   } catch (error) {
@@ -387,5 +387,14 @@ export async function reservar_Clase(classID, atendeeID) {
       return response.data;
     });
 }
-// -------------------- END Reservas --------------------
 
+export async function cancelar_reserva(id_clas, id_user) {
+  return axios.put(
+    process.env.REACT_APP_API_URL +
+      "/reservation/remove-user/" +
+      id_user +
+      "/from-available-class/" +
+      id_clas
+  );
+}
+// -------------------- END Reservas --------------------

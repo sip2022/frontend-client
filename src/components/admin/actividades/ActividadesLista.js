@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { set_ActivityLista } from "../../../store/slices/activityList/activityListSlice";
-import { eliminarActividad, loadActivityList } from "../../../utils/crud";
+import { load_list_activity } from "../../../store/slices/activityList/activityListSlice";
+import { eliminarActividad } from "../../../utils/crud";
 import classes from "./ActividadesLista.module.css";
 
 function NotAdminMessage(props) {
@@ -45,66 +45,53 @@ function ActividadItem({ actividad }) {
   );
 }
 
-function ActividadesLista(props) {
+function ActividadesLista() {
   const dispatch = useDispatch();
   const actividades = useSelector((state) => state.activityList.activityList);
-  const [loading, setLoading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
-    async function loadActividades() {
-      if (!actividades) {
-        const lista = await loadActivityList();
-        dispatch(set_ActivityLista(lista));
-      }
-    }
-    loadActividades();
-    setIsAdmin(true);
+    if (!actividades) dispatch(load_list_activity());
   }, []);
 
   function altaClickHandler() {
     navigate("/admin/actividad/new", { replace: true });
   }
 
-  function goBackHandler(params) {
+  function goBackHandler() {
     navigate("/admin", { replace: true });
   }
 
   return (
     <section>
-      {!isAdmin ? (
-        <NotAdminMessage />
-      ) : (
-        <section className={classes.actividadesLista}>
-          <h1>Actividades</h1>
-          <section>
-            <section className={classes.agregarSection}>
-              <button
-                className={classes.agregarButton}
-                onClick={altaClickHandler}
-              >
-                Agregar Actividad
-              </button>
-            </section>
-            <section>
-              {actividades ? (
-                actividades.map((actividad) => {
-                  return (
-                    <ActividadItem actividad={actividad} key={actividad.id} />
-                  );
-                })
-              ) : (
-                <h1>No hay actividades subidas!</h1>
-              )}
-            </section>
+      <section className={classes.actividadesLista}>
+        <h1>Actividades</h1>
+        <section>
+          <section className={classes.agregarSection}>
+            <button
+              className={classes.agregarButton}
+              onClick={altaClickHandler}
+            >
+              Agregar Actividad
+            </button>
           </section>
           <section>
-            <button onClick={goBackHandler}>Volver</button>
+            {actividades ? (
+              actividades.map((actividad) => {
+                return (
+                  <ActividadItem actividad={actividad} key={actividad.id} />
+                );
+              })
+            ) : (
+              <h1>No hay actividades subidas!</h1>
+            )}
           </section>
         </section>
-      )}
+        <section>
+          <button onClick={goBackHandler}>Volver</button>
+        </section>
+      </section>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 export const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("accessToken");
 }
 
 export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(localStorage.getItem("accessToken"));
 }
 

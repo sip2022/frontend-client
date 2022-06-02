@@ -1,14 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import userService from "../../../services/user.service";
 // Para traer las acciones del slice
 import {  } from "./actions";
+
+// Ascyn thunk -> para hacer dispatch de acciones que son asincronas
+export const load_list_planes = createAsyncThunk(
+  "planes/loadPlanes",
+  async () => {
+    console.log("Cargando lista de planes...");
+    return await userService.get_Planes_List().then((response) => {
+      return response;
+    });
+  }
+);
 
 export const planListSlice = createSlice({
   name: "planList",
   initialState: {
-    planList: []
+    planList: null
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
+  },
+  extraReducers: {
+    [load_list_planes.pending]: (state, action) => {
+      console.log("Pending planes");
+    },
+    [load_list_planes.fulfilled]: (state, action) => {
+      console.log("Fulfilled planes");
+      state.planList = action.payload;
+    },
+    [load_list_planes.rejected]: (state, action) => {
+      console.log("Failed planes");
+      console.log(action);
+      state.planList = null;
+    },
   },
 });
 

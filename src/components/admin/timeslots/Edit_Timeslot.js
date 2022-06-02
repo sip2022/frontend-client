@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { upd_Timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
+import {
+  load_list_timeslot,
+  upd_Timeslot,
+} from "../../../store/slices/timeslotList/timeslotListSlice";
 import { updateTimeslot } from "../../../utils/crud";
+import ErrorSection from "../../ui/ErrorSection";
 import daysList from "./daysList";
 
 function Edit_Timeslot(params) {
@@ -12,8 +16,10 @@ function Edit_Timeslot(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
 
   const [timeslot, setTimeslot] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!timeslots) dispatch(load_list_timeslot());
     const time = timeslots.find((time) => {
       return time.id == id;
     });
@@ -22,20 +28,20 @@ function Edit_Timeslot(params) {
     // day_select.options[day_select.selectedIndex].value = timeslot.dayOfWeek;
   }, []);
 
-  useEffect(()=>{
-    console.log(timeslot);
+  useEffect(() => {
     // TODO hacer que, cuando cargue la pagina de editar, se resenten los valores actuales del horario
     // const day_select = document.getElementById("input-day");
     // day_select.options[day_select.selectedIndex].value = timeslot.dayOfWeek;
-  }, [timeslot])
+  }, [timeslot]);
 
   async function saveHandler(event) {
+    setError(null);
     const day_select = document.getElementById("input-day");
     const day = day_select.options[day_select.selectedIndex].value;
 
     const startInput = document.querySelector("#start-Time");
     const endInput = document.querySelector("#end-Time");
-    
+
     const editedTime = {
       startTime: [
         parseInt(startInput.value.substr(0, 2)),
@@ -46,15 +52,15 @@ function Edit_Timeslot(params) {
         parseInt(endInput.value.substr(3, 2)),
       ],
       dayOfWeek: day,
-      id: id
+      id: id,
     };
     console.log(editedTime);
 
     const result = await updateTimeslot(editedTime);
-    if(!result.message){
+    if (!result.message) {
       // TODO actualizar en la lista de timeslots
       dispatch(upd_Timeslot(result.editedTime));
-    }
+    } else setError(result.message);
   }
 
   function cancelarHandler(event) {
@@ -81,6 +87,7 @@ function Edit_Timeslot(params) {
             <button onClick={saveHandler}>Guardar Timeslot</button>
           </section>
         </section>
+        {error && <ErrorSection message={error} />}
       </section>
     </section>
   );

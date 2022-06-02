@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setProfessors } from "../../../store/slices/professorsList/professorsListSlice";
-import { agregarActividad, loadProfessors } from "../../../utils/crud";
+import { load_list_professor } from "../../../store/slices/professorsList/professorsListSlice"; 
+import { agregarActividad } from "../../../utils/crud";
 import classes from "./NewActividadForm.module.css";
 
 // ---------- Formulario Nueva actividad ----------
@@ -19,24 +19,8 @@ function NewActividadForm() {
   });
 
   useEffect(() => {
-    // TODO esta es una funcion async, agregar estado de cargado y caso en el que no sea el admin, por el JWT
-    async function loadProfesores() {
-      try {
-        if (!profesores) {
-          var lista = await loadProfessors();
-          return lista;
-        }else{
-          throw "Exception"
-        }
-      } catch (error) {
-        throw new Error('Profesores already loaded');
-      }
-    }
-    loadProfesores().then((data) => {
-      dispatch(setProfessors(data));
-    }).catch((error) => {
-      // Nothing
-    });
+    if(!profesores)
+      dispatch(load_list_professor());
   }, []);
 
   async function submitHandler(event) {
@@ -125,21 +109,23 @@ export default NewActividadForm;
 
 function DropdownProf({ profesores }) {
   return (
-    profesores && (
-      <select id="input-profesor" className={classes.dropdownProf}>
-        {profesores.map((profesor, index) => {
-          return (
-            <option
-              id_prof={profesor.id}
-              value={profesor.firstName + " " + profesor.lastName}
-              key={index}
-            >
-              {profesor.firstName + " " + profesor.lastName}
-            </option>
-          );
-        })}
-      </select>
-    )
+    <section>
+      {profesores && (
+        <select id="input-profesor" className={classes.dropdownProf}>
+          {profesores.map((profesor, index) => {
+            return (
+              <option
+                id_prof={profesor.id}
+                value={profesor.firstName + " " + profesor.lastName}
+                key={index}
+              >
+                {profesor.firstName + " " + profesor.lastName}
+              </option>
+            );
+          })}
+        </select>
+      )}
+    </section>
   );
 }
 

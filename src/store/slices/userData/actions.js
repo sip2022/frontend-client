@@ -11,3 +11,7 @@ export function setState(state, { payload }) {
   state.age = age;
   state.roles = roles;
 }
+
+export function setTurnos(state, { payload }) {
+  state.turnos = payload;
+}
