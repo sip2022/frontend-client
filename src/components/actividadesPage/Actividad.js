@@ -15,7 +15,7 @@ function Actividad(props) {
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
   const usuario = useSelector((state) => state.activityList.status);
-  const [availableClasses, setAvailableClasses] = useState(null);
+  const [availableClasses, setAvailableClasses] = useState([]);
 
   const [error, setError] = useState("");
   const [appearReserva, setAppearReserva] = useState(false);
@@ -38,7 +38,7 @@ function Actividad(props) {
     if (actividades) {
       // Obtener los horarios de clases (available-classes) de la actividad (tengo el id)
       userService.get_Classes_ByActId(id_act).then((response) => {
-        setAvailableClasses(response.data);
+        setAvailableClasses(response);
       });
       // Conseguir la actividad elegida (tengo el id)
       const actividadElegida = actividades.find((act) => {
@@ -49,6 +49,7 @@ function Actividad(props) {
   }, [actividades]);
 
   async function reservarHandler(event) {
+    console.log(availableClasses);
     clearError();
     try {
       var ele = document.getElementsByName("horario");
@@ -194,6 +195,7 @@ function DisplayReserva({
         // TODO ID del usuario
         const userIdMOCK = "56e7435d-e82c-419b-b32c-e441f41d9e58";
         await reservar_Clase(id_clas, userIdMOCK);
+        alert("Reserva exitosa")
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
