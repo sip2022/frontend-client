@@ -61,7 +61,7 @@ function TurnoCard({
     await cancelar_reserva(id_class, id_user)
       .then((response) => {
         userService.get_Turnos_ByUserId(id_user).then((response) => {
-          console.log(response);
+          alert("Reserva nulada exitosamente")
           dispatch(setearUserTurnos(response));
         });
       })
