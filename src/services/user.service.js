@@ -59,9 +59,13 @@ class UserService {
   }
 
   get_Classes_ByActId(id) {
-    return axios.get(
-      process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id
-    );
+    return axios
+      .get(
+        process.env.REACT_APP_API_URL + "/available-class/by-activity-id/" + id
+      )
+      .then((response) => {
+        return response.data;
+      });
   }
 
   /* Devuelve la cantidad de reservas hechas a una clase especifica */
@@ -92,6 +96,17 @@ class UserService {
           .then((response) => {
             return response.data;
           });
+      });
+  }
+
+  get_Turnos_ByUserId(id) {
+    return axios
+      .get(
+        process.env.REACT_APP_API_URL + "/reservation/from-user/" + id
+      )
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
       });
   }
 }

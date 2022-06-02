@@ -22,7 +22,7 @@ export const timeslotListSlice = createSlice({
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
     set_TimeLista: setTimeslotList,
     add_Timeslot: addTimeslot,
-    upd_Timeslot: updateTimeslot
+    upd_Timeslot: updateTimeslot,
   },
   extraReducers: {
     [load_list_timeslot.pending]: (state, action) => {
@@ -41,6 +41,7 @@ export const timeslotListSlice = createSlice({
 });
 
 export default timeslotListSlice.reducer;
-export const { set_TimeLista, add_Timeslot, upd_Timeslot } = timeslotListSlice.actions;
+export const { set_TimeLista, add_Timeslot, upd_Timeslot } =
+  timeslotListSlice.actions;
 
 // ---------- End createSlice ----------
