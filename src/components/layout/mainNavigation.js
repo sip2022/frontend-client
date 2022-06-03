@@ -32,9 +32,6 @@ function MainNavigation() {
           <li>
             <Link to="/planes">Planes</Link>
           </li>
-          <li>
-            <Link to="/contactos">Contactos</Link>
-          </li>
 
           {firstName ? (
             <LoggedSection firstName={firstName} />

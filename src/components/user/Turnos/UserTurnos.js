@@ -7,6 +7,7 @@ import {
   setearUserTurnos,
 } from "../../../store/slices/userData/userDataSlice";
 import { cancelar_reserva } from "../../../utils/crud";
+import { translateDay } from "../../../utils/translation";
 
 function UserTurnos(params) {
   const user = useSelector((state) => state.user);
@@ -61,7 +62,7 @@ function TurnoCard({
     await cancelar_reserva(id_class, id_user)
       .then((response) => {
         userService.get_Turnos_ByUserId(id_user).then((response) => {
-          alert("Reserva nulada exitosamente")
+          alert("Reserva anulada exitosamente")
           dispatch(setearUserTurnos(response));
         });
       })
@@ -73,7 +74,7 @@ function TurnoCard({
   return (
     <section>
       <p>
-        {dayOfWeek +
+        {translateDay(dayOfWeek) +
           " " +
           startTime[0] +
           ":" +

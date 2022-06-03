@@ -7,7 +7,7 @@ import classes from "./PlanList.module.css";
 // Dummy data sobre los planes
 // TODO traerlos desde el Back cuando se implemente.
 
-function PlanCardPage({ key, id, name, activitiesLimit }) {
+function PlanCardPage({ id, name, activitiesLimit }) {
   const navigate = useNavigate();
 
   function clickHandler(event) {

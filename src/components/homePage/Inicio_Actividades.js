@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import ActividadCard from "../ui/ActividadCard";
 import classes from "./Actividades.module.css";
 
@@ -26,9 +29,15 @@ const DUMMY_DATA = [
   },
 ];
 
-function Actividades() {
-  const actividades = DUMMY_DATA;
+function Inicio_Actividades() {
+  const actividades = useSelector((state) => state.activityList.activityList);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    
+    if (!actividades) dispatch(load_list_activity());
+  }, [])
 
   function verActividadesHandler(event){
     event.preventDefault();
@@ -42,7 +51,7 @@ function Actividades() {
       </section>
       <section className={classes.actividades_list}>
         {actividades
-          ? actividades.map((actividad, index) => {
+          ? actividades.slice(0,3).map((actividad, index) => {
               return <ActividadCard actividad={actividad} key={index} />;
             })
           : null}
@@ -52,4 +61,4 @@ function Actividades() {
   );
 }
 
-export default Actividades;
+export default Inicio_Actividades;

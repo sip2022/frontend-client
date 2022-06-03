@@ -2,12 +2,10 @@ import Layout from './components/layout/layout';
 import InicioPage from './pages/InicioPage'
 import List_Actividades from "./components/actividadesPage/List_Actividades";
 import PlanesPage from './pages/PlanesPage'
-import ContactosPage from './pages/ContactosPage'
 import UserPage from './pages/UserPage'
 import LoginPage from './pages/LoginPage'
 
 import {Routes, Route} from 'react-router-dom';
-import NewUserPage from './pages/NewUser';
 import UserListPage from './pages/UserListPage';
 import ActivacionPage from './pages/ActivacionPage';
 import Actividad from './components/actividadesPage/Actividad';
@@ -25,6 +23,8 @@ import List_Class from './components/admin/availableClasses/List_Class';
 import Edit_Class from './components/admin/availableClasses/Edit_Class';
 import UserTurnos from './components/user/Turnos/UserTurnos';
 import PagoPlan from './components/planes/PagoPlan';
+import User_Pagos from './components/user/Pagos/User_Pagos';
+import NewUserForm from './components/login/NewUserForm';
 
 function App() {
 
@@ -38,7 +38,8 @@ function App() {
           <Route path='/user' element={<UserPage />} />
           <Route path='/user/info' exact element={<UserInfo />} />
           <Route path='/user/info/change' exact element={<UserEditInfo />} />
-          <Route path='/user/turnos' exact element={<UserTurnos />} />
+          <Route path='/user/reservas' exact element={<UserTurnos />} />
+          <Route path='/user/pagos' exact element={<User_Pagos />} />
 
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />
@@ -48,9 +49,8 @@ function App() {
           <Route path='/planes' element={<PlanesPage />} />
           <Route path='/planes/:id_plan' element={<PagoPlan />} />
 
-          <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/newUser' element={<NewUserPage />} />
+          <Route path='/registro' element={<NewUserForm />} />
           <Route path='/activacion' element={<ActivacionPage />} />
           <Route path='/userList' element={<UserListPage />} />
 

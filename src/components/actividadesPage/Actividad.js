@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import userService from "../../services/user.service";
-import {
-  load_list_activity,
-} from "../../store/slices/activityList/activityListSlice";
+import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import { reservar_Clase } from "../../utils/crud";
+import { translateDay } from "../../utils/translation";
 import classes from "./Actividad.module.css";
 
 function Actividad(props) {
   const { id_act } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
-  const usuario = useSelector((state) => state.activityList.status);
+  const usuario = useSelector((state) => state.user);
   const [availableClasses, setAvailableClasses] = useState([]);
 
   const [error, setError] = useState("");
@@ -49,7 +49,6 @@ function Actividad(props) {
   }, [actividades]);
 
   async function reservarHandler(event) {
-    console.log(availableClasses);
     clearError();
     try {
       var ele = document.getElementsByName("horario");
@@ -93,6 +92,10 @@ function Actividad(props) {
     setError(text);
   }
 
+  function volverHandler(params) {
+    navigate("/actividades", { replace: true });
+  }
+
   return (
     <section className={classes.actividad_section} id="actividad_section">
       <section>
@@ -112,7 +115,7 @@ function Actividad(props) {
                   id_class={clas.id}
                 />
                 <label htmlFor={"horario" + index}>
-                  {time.dayOfWeek +
+                  {translateDay(time.dayOfWeek) +
                     ": " +
                     time.startTime[0] +
                     ":" +
@@ -129,6 +132,9 @@ function Actividad(props) {
       <section>
         <button onClick={reservarHandler}>Reservar</button>
       </section>
+      <section>
+        <button onClick={volverHandler}>Volver</button>
+      </section>
       {appearReserva && (
         <DisplayReserva
           callbackCloseWindow={closeWindowHandler}
@@ -137,9 +143,14 @@ function Actividad(props) {
           reserva={reserva}
           amountReserved={amountReserved}
           id_clas={reserva.id}
+          id_user={usuario.id}
         />
       )}
-      {error && <section><p>{error}</p></section>}
+      {error && (
+        <section>
+          <p>{error}</p>
+        </section>
+      )}
     </section>
   );
 }
@@ -153,6 +164,7 @@ function DisplayReserva({
   callbackCloseWindow,
   callbackSetError,
   id_clas,
+  id_user,
 }) {
   const [
     {
@@ -172,7 +184,9 @@ function DisplayReserva({
     attendeesLeft: 0,
     attendeesReserved: 0,
   });
+
   const [canReserve, setCanReserve] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // buscar si id_clas está reservada en por el usuario
@@ -192,10 +206,9 @@ function DisplayReserva({
   async function submitHandler() {
     try {
       if (canReserve) {
-        // TODO ID del usuario
-        const userIdMOCK = "56e7435d-e82c-419b-b32c-e441f41d9e58";
-        await reservar_Clase(id_clas, userIdMOCK);
-        alert("Reserva exitosa")
+        await reservar_Clase(id_clas, id_user);
+        alert("Reserva exitosa");
+        navigate("/", { replace: true });
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
@@ -215,7 +228,7 @@ function DisplayReserva({
         <section>
           <p>Gimnasio GEMINIS CLUB</p>
           <p>
-            {dayOfWeek +
+            {translateDay(dayOfWeek) +
               ": " +
               startTime[0] +
               ":" +
@@ -237,12 +250,13 @@ function DisplayReserva({
           </section>
         </section>
         <section>
-          {canReserve ? 
-          <button onClick={submitHandler}>Reservar</button> : 
-          <section>
-            <p>No puede reservarse, no quedan lugares disponibles</p>
-          </section>
-          }
+          {canReserve ? (
+            <button onClick={submitHandler}>Reservar</button>
+          ) : (
+            <section>
+              <p>No puede reservarse, no quedan lugares disponibles</p>
+            </section>
+          )}
           <button onClick={callbackCloseWindow}>Cancelar</button>
         </section>
       </section>
