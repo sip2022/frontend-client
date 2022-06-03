@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { eliminarTimeslot } from "../../../utils/crud";
+import { translateDay } from "../../../utils/translation";
 
 function List_TimeSlot(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
@@ -51,7 +52,7 @@ function List_TimeSlot(params) {
               return (
                 <section key={index}>
                   <p>
-                    {time.dayOfWeek +
+                    {translateDay(time.dayOfWeek) +
                       ": " +
                       time.startTime[0] +
                       ":" +

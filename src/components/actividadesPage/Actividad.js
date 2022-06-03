@@ -6,6 +6,7 @@ import {
   load_list_activity,
 } from "../../store/slices/activityList/activityListSlice";
 import { reservar_Clase } from "../../utils/crud";
+import { translateDay } from "../../utils/translation";
 import classes from "./Actividad.module.css";
 
 function Actividad(props) {
@@ -112,7 +113,7 @@ function Actividad(props) {
                   id_class={clas.id}
                 />
                 <label htmlFor={"horario" + index}>
-                  {time.dayOfWeek +
+                  {translateDay(time.dayOfWeek) +
                     ": " +
                     time.startTime[0] +
                     ":" +
@@ -215,7 +216,7 @@ function DisplayReserva({
         <section>
           <p>Gimnasio GEMINIS CLUB</p>
           <p>
-            {dayOfWeek +
+            {translateDay(dayOfWeek) +
               ": " +
               startTime[0] +
               ":" +

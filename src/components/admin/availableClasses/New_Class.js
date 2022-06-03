@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { load_list_activity } from "../../../store/slices/activityList/activityListSlice";
 import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { agregarClase } from "../../../utils/crud";
+import { translateDay } from "../../../utils/translation";
 
 function New_Class(params) {
   const timeslots = useSelector((state) => state.timeslotList.timeslotList);
@@ -79,7 +80,7 @@ function DropDownTimeslots({ lista }) {
           lista.map((time, index) => {
             return (
               <option id_time={time.id} key={index}>
-                {time.dayOfWeek +
+                {translateDay(time.dayOfWeek) +
                   " - " +
                   time.startTime[0] +
                   ":" +

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_class, set_ClassLista } from "../../../store/slices/classesList/classesListSlice";
 import { eliminarClass, loadClassList } from "../../../utils/crud";
+import { translateDay } from "../../../utils/translation";
 
 function List_Class(params) {
   const classes = useSelector((state) => state.classList.classList);
@@ -57,7 +58,7 @@ function List_Class(params) {
                     {clas.activityDto.name + " - $" + clas.activityDto.basePrice} 
                   </p>
                   <p>
-                    {clas.timeslotDto.dayOfWeek +
+                    {translateDay(clas.timeslotDto.dayOfWeek) +
                       ": " +
                       clas.timeslotDto.startTime[0] +
                       ":" +

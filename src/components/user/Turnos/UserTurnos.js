@@ -7,6 +7,7 @@ import {
   setearUserTurnos,
 } from "../../../store/slices/userData/userDataSlice";
 import { cancelar_reserva } from "../../../utils/crud";
+import { translateDay } from "../../../utils/translation";
 
 function UserTurnos(params) {
   const user = useSelector((state) => state.user);
@@ -73,7 +74,7 @@ function TurnoCard({
   return (
     <section>
       <p>
-        {dayOfWeek +
+        {translateDay(dayOfWeek) +
           " " +
           startTime[0] +
           ":" +

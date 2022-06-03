@@ -13,7 +13,7 @@ function AdminMenu(params) {
 
   return (
     <section className={classes.admin_menu}>
-      <h1>Admin Menu</h1>
+      <h1>Menu del Administrador</h1>
       <button onClick={() => clickHandler("/admin/actividades")}>
         Actividades
       </button>

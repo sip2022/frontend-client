@@ -2,7 +2,6 @@ import Layout from './components/layout/layout';
 import InicioPage from './pages/InicioPage'
 import List_Actividades from "./components/actividadesPage/List_Actividades";
 import PlanesPage from './pages/PlanesPage'
-import ContactosPage from './pages/ContactosPage'
 import UserPage from './pages/UserPage'
 import LoginPage from './pages/LoginPage'
 
@@ -48,7 +47,6 @@ function App() {
           <Route path='/planes' element={<PlanesPage />} />
           <Route path='/planes/:id_plan' element={<PagoPlan />} />
 
-          <Route path='/contactos' element={<ContactosPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/newUser' element={<NewUserPage />} />
           <Route path='/activacion' element={<ActivacionPage />} />

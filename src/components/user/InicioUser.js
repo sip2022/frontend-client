@@ -43,7 +43,6 @@ function UserInfo(props) {
         <ItemCard titulo="Informacion Personal" link="/user/info" navigate={navigate} />
         <ItemCard titulo="Mis Turnos" link="/user/turnos" navigate={navigate} />
         <ItemCard titulo="Mis Pagos" link="#" navigate={navigate} />
-        <ItemCard titulo="Cronograma de Actividades" link="#" navigate={navigate} />
       </section>
     </section>
   );
