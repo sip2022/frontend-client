@@ -15,7 +15,7 @@ function Actividad(props) {
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
   const usuario = useSelector((state) => state.user);
-  const [availableClasses, setAvailableClasses] = useState([]);
+  const [availableClasses, setAvailableClasses] = useState(null);
 
   const [error, setError] = useState("");
   const [appearReserva, setAppearReserva] = useState(false);
@@ -35,17 +35,25 @@ function Actividad(props) {
   }, []);
 
   useEffect(() => {
+    let unmounted = false;
     if (actividades) {
       // Obtener los horarios de clases (available-classes) de la actividad (tengo el id)
       userService.get_Classes_ByActId(id_act).then((response) => {
-        setAvailableClasses(response);
+        if (response && response.length != 0) {
+          console.log(response);
+          setAvailableClasses(response);
+        }
       });
       // Conseguir la actividad elegida (tengo el id)
       const actividadElegida = actividades.find((act) => {
         return act.id == id_act;
       });
-      setContenido(actividadElegida);
+      if (!unmounted) setContenido(actividadElegida);
     }
+
+    return () => {
+      unmounted = true;
+    };
   }, [actividades]);
 
   async function reservarHandler(event) {
@@ -92,7 +100,7 @@ function Actividad(props) {
     setError(text);
   }
 
-  function volverHandler(params) {
+  function volverHandler() {
     navigate("/actividades", { replace: true });
   }
 
@@ -103,9 +111,11 @@ function Actividad(props) {
       </section>
       <section>
         <h2>Horarios</h2>
-        {availableClasses &&
+
+        {availableClasses ? (
           availableClasses.map((clas, index) => {
             const time = clas.timeslotDto;
+            console.log(time);
             return (
               <section key={index}>
                 <input
@@ -127,11 +137,17 @@ function Actividad(props) {
                 </label>
               </section>
             );
-          })}
+          })
+        ) : (
+          <p>No hay clases establecidas para esta actviidad.</p>
+        )}
       </section>
-      <section>
-        <button onClick={reservarHandler}>Reservar</button>
-      </section>
+      {availableClasses && availableClasses != [] && (
+        <section>
+          <button onClick={reservarHandler}>Reservar</button>
+        </section>
+      )}
+
       <section>
         <button onClick={volverHandler}>Volver</button>
       </section>
