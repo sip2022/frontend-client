@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import userService from "../../services/user.service";
 import {
   load_list_activity,
@@ -15,7 +15,7 @@ function Actividad(props) {
 
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
-  const usuario = useSelector((state) => state.activityList.status);
+  const usuario = useSelector((state) => state.user);
   const [availableClasses, setAvailableClasses] = useState([]);
 
   const [error, setError] = useState("");
@@ -138,6 +138,7 @@ function Actividad(props) {
           reserva={reserva}
           amountReserved={amountReserved}
           id_clas={reserva.id}
+          id_user={usuario.id}
         />
       )}
       {error && <section><p>{error}</p></section>}
@@ -154,6 +155,7 @@ function DisplayReserva({
   callbackCloseWindow,
   callbackSetError,
   id_clas,
+  id_user,
 }) {
   const [
     {
@@ -173,7 +175,9 @@ function DisplayReserva({
     attendeesLeft: 0,
     attendeesReserved: 0,
   });
+
   const [canReserve, setCanReserve] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // buscar si id_clas está reservada en por el usuario
@@ -193,10 +197,9 @@ function DisplayReserva({
   async function submitHandler() {
     try {
       if (canReserve) {
-        // TODO ID del usuario
-        const userIdMOCK = "56e7435d-e82c-419b-b32c-e441f41d9e58";
-        await reservar_Clase(id_clas, userIdMOCK);
+        await reservar_Clase(id_clas, id_user);
         alert("Reserva exitosa")
+        navigate("/", {replace: true});
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }

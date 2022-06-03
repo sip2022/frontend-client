@@ -37,7 +37,7 @@ function App() {
           <Route path='/user' element={<UserPage />} />
           <Route path='/user/info' exact element={<UserInfo />} />
           <Route path='/user/info/change' exact element={<UserEditInfo />} />
-          <Route path='/user/turnos' exact element={<UserTurnos />} />
+          <Route path='/user/reservas' exact element={<UserTurnos />} />
 
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />
