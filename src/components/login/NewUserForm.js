@@ -11,20 +11,13 @@ export default function NewUserForm() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
-    // firstName: "",
-    // lastName: "",
-    // email: "",
-    // password: "",
-    // dni: "",
-    // phone: "",
-    // birthDate: "",
-    firstName: "Seba1",
-    lastName: "March1",
-    email: "seba1@gmail.com",
-    password: "contraseña",
-    dni: "11111111",
-    phone: "2323",
-    birthDate: "2000-01-01",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    dni: "",
+    phone: "",
+    birthDate: "",
   });
   const [errors, setErrors] = useState({});
   const [{ disable }, setFlag] = useState({

@@ -1,5 +1,5 @@
 import Inicio_Actividades from "../components/homePage/Inicio_Actividades";
-import Planes from "../components/homePage/Planes";
+import Inicio_Planes from "../components/homePage/Inicio_Planes";
 import PresentationImage from "../components/homePage/PresentationImage";
 
 
@@ -8,7 +8,7 @@ function InicioPage() {
     <section>
       <PresentationImage />
       <Inicio_Actividades />
-      <Planes />
+      <Inicio_Planes />
     </section>
   );
 }

@@ -12,10 +12,8 @@ export default function LoginForm() {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
-    email: "seba1@gmail.com",
-    password: "contraseña",
-    // email: "",
-    // password: "",
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [disable, setDisable] = useState(true);
