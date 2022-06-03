@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import userService from "../../services/user.service";
-import {
-  load_list_activity,
-} from "../../store/slices/activityList/activityListSlice";
+import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import { reservar_Clase } from "../../utils/crud";
 import { translateDay } from "../../utils/translation";
 import classes from "./Actividad.module.css";
@@ -12,6 +10,7 @@ import classes from "./Actividad.module.css";
 function Actividad(props) {
   const { id_act } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
@@ -50,7 +49,6 @@ function Actividad(props) {
   }, [actividades]);
 
   async function reservarHandler(event) {
-    console.log(availableClasses);
     clearError();
     try {
       var ele = document.getElementsByName("horario");
@@ -94,6 +92,10 @@ function Actividad(props) {
     setError(text);
   }
 
+  function volverHandler(params) {
+    navigate("/actividades", { replace: true });
+  }
+
   return (
     <section className={classes.actividad_section} id="actividad_section">
       <section>
@@ -130,6 +132,9 @@ function Actividad(props) {
       <section>
         <button onClick={reservarHandler}>Reservar</button>
       </section>
+      <section>
+        <button onClick={volverHandler}>Volver</button>
+      </section>
       {appearReserva && (
         <DisplayReserva
           callbackCloseWindow={closeWindowHandler}
@@ -141,7 +146,11 @@ function Actividad(props) {
           id_user={usuario.id}
         />
       )}
-      {error && <section><p>{error}</p></section>}
+      {error && (
+        <section>
+          <p>{error}</p>
+        </section>
+      )}
     </section>
   );
 }
@@ -198,8 +207,8 @@ function DisplayReserva({
     try {
       if (canReserve) {
         await reservar_Clase(id_clas, id_user);
-        alert("Reserva exitosa")
-        navigate("/", {replace: true});
+        alert("Reserva exitosa");
+        navigate("/", { replace: true });
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
@@ -241,12 +250,13 @@ function DisplayReserva({
           </section>
         </section>
         <section>
-          {canReserve ? 
-          <button onClick={submitHandler}>Reservar</button> : 
-          <section>
-            <p>No puede reservarse, no quedan lugares disponibles</p>
-          </section>
-          }
+          {canReserve ? (
+            <button onClick={submitHandler}>Reservar</button>
+          ) : (
+            <section>
+              <p>No puede reservarse, no quedan lugares disponibles</p>
+            </section>
+          )}
           <button onClick={callbackCloseWindow}>Cancelar</button>
         </section>
       </section>

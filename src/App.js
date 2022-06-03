@@ -6,7 +6,6 @@ import UserPage from './pages/UserPage'
 import LoginPage from './pages/LoginPage'
 
 import {Routes, Route} from 'react-router-dom';
-import NewUserPage from './pages/NewUser';
 import UserListPage from './pages/UserListPage';
 import ActivacionPage from './pages/ActivacionPage';
 import Actividad from './components/actividadesPage/Actividad';
@@ -25,6 +24,7 @@ import Edit_Class from './components/admin/availableClasses/Edit_Class';
 import UserTurnos from './components/user/Turnos/UserTurnos';
 import PagoPlan from './components/planes/PagoPlan';
 import User_Pagos from './components/user/Pagos/User_Pagos';
+import NewUserForm from './components/login/NewUserForm';
 
 function App() {
 
@@ -50,7 +50,7 @@ function App() {
           <Route path='/planes/:id_plan' element={<PagoPlan />} />
 
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/newUser' element={<NewUserPage />} />
+          <Route path='/registro' element={<NewUserForm />} />
           <Route path='/activacion' element={<ActivacionPage />} />
           <Route path='/userList' element={<UserListPage />} />
 

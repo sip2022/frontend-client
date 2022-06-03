@@ -40,7 +40,6 @@ function NewActividadForm() {
         lastName: prof.lastName,
       },
     };
-    console.log(newAct);
     const result = await agregarActividad(newAct);
     // TODO Marcar que la actividad se creo con o sin exito
   }
