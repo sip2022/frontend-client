@@ -20,12 +20,9 @@ export async function register(input) {
     message: "",
   };
   try {
-    const response = await axios.post(
-      backAPI + "/register",
-      {
-        ...input,
-      }
-    );
+    const response = await axios.post(backAPI + "/register", {
+      ...input,
+    });
   } catch (error) {
     if (error.response) {
       console.log(error.response.data.message);
@@ -134,12 +131,9 @@ export async function eliminarActividad(params) {
     message: "",
   };
   try {
-    const response = await axios.delete(
-      backAPI + "/activity/" + params,
-      {
-        headers: authHeader(),
-      }
-    );
+    const response = await axios.delete(backAPI + "/activity/" + params, {
+      headers: authHeader(),
+    });
   } catch (error) {
     if (error.response) {
       result.message = error.response.data.message;
@@ -156,13 +150,10 @@ export async function actualizarActividad(params) {
     message: "",
   };
   try {
-    const response = await axios.put(
-      backAPI + "/activity/" + params,
-      {
-        headers: authHeader(),
-        body: params,
-      }
-    );
+    const response = await axios.put(backAPI + "/activity/" + params, {
+      headers: authHeader(),
+      body: params,
+    });
   } catch (error) {
     if (error.response) {
       result.message = error.response.data.message;
@@ -220,12 +211,9 @@ export async function eliminarTimeslot(params) {
     message: "",
   };
   try {
-    const response = await axios.delete(
-      backAPI + "/timeslot/" + params,
-      {
-        headers: authHeader(),
-      }
-    );
+    const response = await axios.delete(backAPI + "/timeslot/" + params, {
+      headers: authHeader(),
+    });
   } catch (error) {
     if (error.response) {
       result.message = error.response.data.message;
@@ -399,3 +387,23 @@ export async function cancelar_reserva(id_clas, id_user) {
   );
 }
 // -------------------- END Reservas --------------------
+
+// -------------------- Planes --------------------
+
+export async function suscribir_Plan(
+  id_user,
+  id_plan,
+  nombrePlan,
+  cantidadMeses
+) {
+  const date = new Date().toISOString().substring(0, 10);
+  return axios.post(backAPI + "/subscription", {
+    description: nombrePlan + " plan",
+    startDate: date,
+    monthsToAdd: cantidadMeses,
+    planId: id_plan,
+    userId: id_user,
+  });
+}
+
+// -------------------- END Planes --------------------

@@ -24,6 +24,7 @@ import List_Class from './components/admin/availableClasses/List_Class';
 import Edit_Class from './components/admin/availableClasses/Edit_Class';
 import UserTurnos from './components/user/Turnos/UserTurnos';
 import PagoPlan from './components/planes/PagoPlan';
+import User_Pagos from './components/user/Pagos/User_Pagos';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
           <Route path='/user/info' exact element={<UserInfo />} />
           <Route path='/user/info/change' exact element={<UserEditInfo />} />
           <Route path='/user/reservas' exact element={<UserTurnos />} />
+          <Route path='/user/pagos' exact element={<User_Pagos />} />
 
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />

@@ -108,13 +108,22 @@ class UserService {
       });
   }
 
-  get_Turnos_ByUserId(id) {
+  get_Turnos_ByUserId(id_user) {
     return axios
       .get(
-        backAPI + "/reservation/from-user/" + id
+        backAPI + "/reservation/from-user/" + id_user
       )
       .then((response) => {
-        console.log(response.data);
+        return response.data;
+      });
+  }
+
+  get_Subscriptions_ByUserId(id_user) {
+    return axios
+      .get(
+        backAPI + "/subscription/from-user/" + id_user
+      )
+      .then((response) => {
         return response.data;
       });
   }

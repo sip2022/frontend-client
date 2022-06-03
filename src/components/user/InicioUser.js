@@ -42,7 +42,7 @@ function UserInfo(props) {
       <section className={classes.sectionCards}>
         <ItemCard titulo="Informacion Personal" link="/user/info" navigate={navigate} />
         <ItemCard titulo="Mis Reservas" link="/user/reservas" navigate={navigate} />
-        <ItemCard titulo="Mis Pagos" link="#" navigate={navigate} />
+        <ItemCard titulo="Mis Pagos" link="/user/pagos" navigate={navigate} />
       </section>
     </section>
   );

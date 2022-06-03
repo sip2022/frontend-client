@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import reduxService from "../../store/redux.service";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import { suscribir_Plan } from "../../utils/crud";
 import classes from "./PagoPlan.module.css";
 
 function PagoPlan(params) {
@@ -69,6 +70,7 @@ function PagoPlan(params) {
           meses={mesesCantidad}
           nombreUsuario={user.firstName + " " + user.lastName}
           callbackSetConfirmar={ocultarConfirmacion}
+          id_plan={id_plan}
         />
       )}
     </section>
@@ -83,19 +85,26 @@ function ConfirmacionPago({
   meses,
   nombreUsuario,
   callbackSetConfirmar,
+  id_plan,
 }) {
   const navigate = useNavigate();
   const [valorTotal, setValorTotal] = useState(0);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     setValorTotal(valorXMes * meses);
   }, []);
 
-  function pagoHandler() {}
-
-  function getActualDate() {
-    const date = new Date();
-    return date.toISOString().substring(0,10)
+  async function pagoHandler() {
+    try {
+      await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
+      alert(
+        "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
+      );
+      navigate("/user/pagos", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

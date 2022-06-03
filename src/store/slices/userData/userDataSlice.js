@@ -19,12 +19,12 @@ export const load_user_turnos = createAsyncThunk(
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
-    id: "56e7435d-e82c-419b-b32c-e441f41d9e58",
+    id: "84daf2bc-b739-4ee9-9607-7d641ff53c8c",
     firstName: "Mock_Nombre",
     lastName: "Mock_Apellido",
-    dni: "99999999",
+    dni: "44444444",
     phone: "2323",
-    email: "mail.Mock@gmail.com",
+    email: "user@user.com<",
     age: "23",
     roles: [],
     turnos: [],
