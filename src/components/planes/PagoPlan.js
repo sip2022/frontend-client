@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import reduxService from "../../store/redux.service";
+import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import classes from "./PagoPlan.module.css";
 
 function PagoPlan(params) {
   const { id_plan } = useParams();
@@ -13,8 +15,10 @@ function PagoPlan(params) {
 
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(load_list_planes());
     if (!user.firstName) navigate("/login", { replace: true });
     const plan_rec = reduxService.get_Plan_byID(id_plan);
     setPlan(plan_rec);
@@ -46,9 +50,10 @@ function PagoPlan(params) {
             <p>Plan {plan.name}</p>
             <p>Valor por mes: ${plan.price}</p>
             <section>
-              <p>Duración de la suscripción (meses): </p>
+              <p>Indique cuantos meses quiere que dure la suscripción</p>
+              <p>La cantidad de meses debe ser 1 o mayor</p>
               <input id="input-meses" type="number" min="1" />
-              {error && <p>{error}</p>}
+              {error && <p className={classes.errorMessage}>{error}</p>}
             </section>
           </section>
           <section>
@@ -88,27 +93,34 @@ function ConfirmacionPago({
 
   function pagoHandler() {}
 
+  function getActualDate() {
+    const date = new Date();
+    return date.toISOString().substring(0,10)
+  }
+
   return (
-    <section>
-      <h2>Confirmación del pago</h2>
-      <section>
-        <p>Usuario: {nombreUsuario}</p>
-      </section>
-      <section>
-        <p>Plan: {nombrePlan}</p>
-      </section>
-      <section>
-        <p>Valor por Mes (pesos): ${valorXMes}</p>
-      </section>
-      <section>
-        <p>Valor por Total (pesos): ${valorTotal}</p>
-      </section>
-      <section>
-        <p>Cantidad de meses: {meses}</p>
-      </section>
-      <section>
-        <button onClick={pagoHandler}>Suscribirse</button>
-        <button onClick={callbackSetConfirmar}>Cancelar</button>
+    <section className={classes.confirmacion_Section}>
+      <section className={classes.confirmacion_Display}>
+        <h2>Confirmación de la suscripción</h2>
+        <section>
+          <p>Usuario: {nombreUsuario}</p>
+        </section>
+        <section>
+          <p>Plan: {nombrePlan}</p>
+        </section>
+        <section>
+          <p>Valor por Mes (pesos): ${valorXMes}</p>
+        </section>
+        <section>
+          <p>Valor por Total (pesos): ${valorTotal}</p>
+        </section>
+        <section>
+          <p>Cantidad de meses: {meses}</p>
+        </section>
+        <section>
+          <button onClick={pagoHandler}>Suscribirse</button>
+          <button onClick={callbackSetConfirmar}>Cancelar</button>
+        </section>
       </section>
     </section>
   );
