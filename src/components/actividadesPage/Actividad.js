@@ -221,8 +221,8 @@ function DisplayReserva({
     try {
       if (canReserve) {
         await reservar_Clase(id_clas, id_user);
-        alert("Reserva exitosa");
-        navigate("/", { replace: true });
+        alert("¡Reserva exitosa!\nSe listará en tu sección de reservas.");
+        navigate("/user/reservas", { replace: true });
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
@@ -268,7 +268,7 @@ function DisplayReserva({
             <button onClick={submitHandler}>Reservar</button>
           ) : (
             <section>
-              <p>No puede reservarse, no quedan lugares disponibles</p>
+              <p>No puede reservar en este horario, ya que no quedan lugares disponibles</p>
             </section>
           )}
           <button onClick={callbackCloseWindow}>Cancelar</button>

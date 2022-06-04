@@ -3,12 +3,15 @@ import { useNavigate, useRoutes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardForm from "../ui/CardForm";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../utils/crud";
+import { activateUser, register } from "../../utils/crud";
+import userService from "../../services/user.service";
+import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 // import { register } from "../../actions/auth";
 
 export default function NewUserForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     firstName: "",
@@ -52,7 +55,8 @@ export default function NewUserForm() {
         if (value == null) ob[name] = " Fecha de nacimiento invalida ";
         break;
       case "phone":
-        if (value.length < 3 || value.length > 10) ob[name] = " Telefono invalido ";
+        if (value.length < 3 || value.length > 10)
+          ob[name] = " Telefono invalido ";
         break;
       case "dni":
         if (value.length !== 8)
@@ -82,12 +86,23 @@ export default function NewUserForm() {
   async function submitHandler(event) {
     event.preventDefault();
     const result = await register(input);
-    !result.message
-      ? navigate("/activacion", { replace: true })
-      : setErrors({
-          globalError:
-            result.message,
-        });
+    if (!result.message) {
+      loadUserMOCK(result.newUserData);
+      navigate("/activacion", { replace: true });
+    } else {
+      setErrors({
+        globalError: result.message,
+      });
+    }
+  }
+
+  async function loadUserMOCK(user_data) {
+    // TODO CAMBIAR DE LUGAR ESTA FUNCION
+    // Por ahora, tiene la funcnion de cargar en redux el usuario recién creado
+    // activa usuario en el back
+    await activateUser(user_data.id);
+    // setea usuario en el front
+    dispatch(setearEstado(user_data));
   }
 
   function goLoginUser(event) {

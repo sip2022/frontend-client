@@ -17,15 +17,19 @@ import { backAPI } from "./globalVars";
 // -------------------- Usuario --------------------
 export async function register(input) {
   var result = {
+    newUserData: null,
     message: "",
   };
   try {
-    const response = await axios.post(backAPI + "/register", {
-      ...input,
-    });
+    const response = await axios
+      .post(backAPI + "/register", {
+        ...input,
+      })
+      .then((response) => {
+        result.newUserData = response.data;
+      });
   } catch (error) {
     if (error.response) {
-      console.log(error.response.data.message);
       result.message = error.response.data.message;
     } else {
       result.message =
@@ -45,12 +49,10 @@ export async function login(input) {
         ...input,
       })
       .then((response) => {
-        console.log(response.headers.authorization);
         result = { ...result, accessToken: response.headers.authorization };
       });
   } catch (error) {
     if (error.response) {
-      console.log(error.response.data.message);
       result.message = error.response.data.message;
     } else {
       result.message =
@@ -73,12 +75,10 @@ export async function getUser(email) {
         headers: authHeader(),
       })
       .then((response) => {
-        console.log("Datos del usuario conseguidos");
         console.log(response);
       });
   } catch (error) {
     if (error.response) {
-      console.log(error.response.data.message);
       result.message = error.response.data.message;
     } else {
       console.log(error);
@@ -87,6 +87,16 @@ export async function getUser(email) {
     }
   }
   return result;
+}
+
+export async function activateUser(id_user) {
+  try {
+    await axios.put(backAPI + "/user/activate/" + id_user, {
+      headers: authHeader(),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // -------------------- Actividades --------------------
@@ -126,7 +136,6 @@ export async function agregarActividad(actividad) {
 }
 
 export async function eliminarActividad(params) {
-  console.log(params);
   var result = {
     message: "",
   };
@@ -145,7 +154,6 @@ export async function eliminarActividad(params) {
 }
 
 export async function actualizarActividad(params) {
-  console.log(params);
   var result = {
     message: "",
   };
@@ -197,7 +205,6 @@ export async function agregarTimeslot(params) {
       });
   } catch (error) {
     if (error.response) {
-      console.log("Error response");
       result.message = error.response.data.message;
     } else {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
@@ -215,6 +222,7 @@ export async function eliminarTimeslot(params) {
       headers: authHeader(),
     });
   } catch (error) {
+    console.log(error);
     if (error.response) {
       result.message = error.response.data.message;
     } else {
@@ -238,9 +246,9 @@ export async function updateTimeslot(params) {
       })
       .then((response) => {
         result.editedTime = response.data;
-        console.log(result);
       });
   } catch (error) {
+    console.log(error);
     if (error.response) {
       result.message = error.response.data.message;
     } else {
@@ -248,7 +256,6 @@ export async function updateTimeslot(params) {
         "Hubo un problema al borrar el timeslot. Vuelva a intentarlo más tarde.";
     }
   }
-
   return result;
 }
 
@@ -259,7 +266,6 @@ export async function loadProfessors() {
   var result = [];
   try {
     const response = await userService.getProfessorList().then((response) => {
-      console.log(response);
       result = response;
     });
   } catch (error) {
@@ -271,22 +277,17 @@ export async function loadProfessors() {
 
 // -------------------- Clases --------------------
 export async function agregarClase(params) {
-  console.log(params);
   var result = {
     message: "",
   };
   try {
-    const response = axios
-      .post(backAPI + "/available-class", {
-        // headers: authHeader(),
-        ...params,
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    const response = axios.post(backAPI + "/available-class", {
+      // headers: authHeader(),
+      ...params,
+    });
   } catch (error) {
+    console.log(error);
     if (error.response) {
-      console.log("Error response");
       result.message = error.response.data.message;
     } else {
       result.message = "Hubo un problema. Vuelva a intentarlo más tarde.";
@@ -303,7 +304,6 @@ export async function loadClassList() {
   try {
     const response = await userService.get_ClassesList().then((response) => {
       result.classes = response.data;
-      console.log(response.data);
     });
   } catch (error) {
     if (error.response) {
@@ -327,8 +327,8 @@ export async function eliminarClass(id_clas) {
       }
     );
   } catch (error) {
+    console.log(error);
     if (error.response) {
-      console.log(error.response);
       result.message = error.response.data.message;
     } else {
       result.message =
@@ -351,9 +351,9 @@ export async function update_class(params) {
       })
       .then((response) => {
         result.editedTime = response.data;
-        console.log(result);
       });
   } catch (error) {
+    console.log(error);
     if (error.response) {
       result.message = error.response.data.message;
     } else {

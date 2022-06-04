@@ -7,7 +7,6 @@ import { setState, setTurnos } from "./actions";
 export const load_user_turnos = createAsyncThunk(
   "user/loadUserTurnos",
   async (_, thunkAPI) => {
-    console.log("Cargando lista de turnos del usuario...");
     return await userService
       .get_Turnos_ByUserId(thunkAPI.getState().user.id)
       .then((response) => {
@@ -25,10 +24,9 @@ export const userDataSlice = createSlice({
     dni: null,
     phone: null,
     email: null,
-    age: null,
-    roles: null,
+    birthDate: null,
+    rolesNames: null,
     turnos: null,  
-    status: null,  
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
@@ -38,14 +36,11 @@ export const userDataSlice = createSlice({
   },
   extraReducers: {
     [load_user_turnos.pending]: (state, action) => {
-      console.log("Pending turnos del usuario");
     },
     [load_user_turnos.fulfilled]: (state, action) => {
-      console.log("Fulfilled turnos del usuario");
       state.turnos = action.payload;
     },
     [load_user_turnos.rejected]: (state, action) => {
-      console.log("Failed turnos del usuario");
       console.log(action);
       state.turnos = [];
     },

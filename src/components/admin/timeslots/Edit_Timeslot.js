@@ -54,7 +54,6 @@ function Edit_Timeslot(params) {
       dayOfWeek: day,
       id: id,
     };
-    console.log(editedTime);
 
     const result = await updateTimeslot(editedTime);
     if (!result.message) {

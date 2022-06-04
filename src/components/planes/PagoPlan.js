@@ -20,7 +20,7 @@ function PagoPlan(params) {
 
   useEffect(() => {
     dispatch(load_list_planes());
-    if (!user.firstName) navigate("/login", { replace: true });
+    if (!user.id) navigate("/login", { replace: true });
     const plan_rec = reduxService.get_Plan_byID(id_plan);
     setPlan(plan_rec);
   }, []);
@@ -110,7 +110,7 @@ function ConfirmacionPago({
   return (
     <section className={classes.confirmacion_Section}>
       <section className={classes.confirmacion_Display}>
-        <h2>Confirmación de la suscripción</h2>
+        <h2>Confirmación de la Suscripción</h2>
         <section>
           <p>Usuario: {nombreUsuario}</p>
         </section>
@@ -121,7 +121,7 @@ function ConfirmacionPago({
           <p>Valor por Mes (pesos): ${valorXMes}</p>
         </section>
         <section>
-          <p>Valor por Total (pesos): ${valorTotal}</p>
+          <p>Valor Total (pesos): ${valorTotal}</p>
         </section>
         <section>
           <p>Cantidad de meses: {meses}</p>

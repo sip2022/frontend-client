@@ -6,7 +6,6 @@ import { setActivityList } from "./actions";
 export const load_list_activity = createAsyncThunk(
   "activity/loadActivities",
   async () => {
-    console.log("Cargando lista de actividades...");
     return await userService.get_Activity_List().then((response) => {
       return response;
     });
@@ -24,14 +23,11 @@ export const activityListSlice = createSlice({
   },
   extraReducers: {
     [load_list_activity.pending]: (state, action) => {
-      console.log("Pending actividades");
     },
     [load_list_activity.fulfilled]: (state, action) => {
-      console.log("Fulfilled actividades");
       state.activityList = action.payload;
     },
     [load_list_activity.rejected]: (state, action) => {
-      console.log("Failed actividades");
       console.log(action);
       state.activityList = null;
     },
