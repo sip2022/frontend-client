@@ -6,7 +6,6 @@ import { setClassList } from "./actions.js";
 export const load_list_class = createAsyncThunk(
   "class/loadClasses",
   async () => {
-    console.log("Cargando lista de clases...");
     return await userService.get_Class_List().then((response) => {
       return response;
     });
@@ -26,16 +25,13 @@ export const classListSlice = createSlice({
   },
   extraReducers: {
     [load_list_class.pending]: (state, action) => {
-      console.log("Pending clases");
       state.satus = "loading"
     },
     [load_list_class.fulfilled]: (state, action) => {
-      console.log("Fulfilled clases");
       state.satus = "loaded"
       state.classList = action.payload;
     },
     [load_list_class.rejected]: (state, action) => {
-      console.log("Failed clases");
       console.log(action);
       state.satus = "failed"
       state.classList = null;

@@ -78,11 +78,9 @@ function Edit_Class(params) {
           dayOfWeek: document.getElementById("input-day").value,
         },
       };
-      console.log(claseEditada);
       const result = await update_class(claseEditada);
       if (!result.message) alert("¡Clase Editada con Exito!");
       else setError(result.message);
-      console.log("mensaje = " + result.message);
     }
   }
 
@@ -109,9 +107,6 @@ function Edit_Class(params) {
         setHorario((prev) => ({ ...prev, [name]: value }));
         break;
     }
-    console.log(object);
-    console.log(name);
-    console.log(value);
   }
 
   /*

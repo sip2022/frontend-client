@@ -6,7 +6,6 @@ import { setProfessorsList } from "./actions";
 export const load_list_professor = createAsyncThunk(
   "professor/loadProfessor",
   async () => {
-    console.log("Cargando lista de profesores...");
     return await userService.get_Professor_List().then((response) => {
       return response;
     });
@@ -23,14 +22,11 @@ export const professorsListSlice = createSlice({
   },
   extraReducers: {
     [load_list_professor.pending]: (state, action) => {
-      console.log("Pending profesores");
     },
     [load_list_professor.fulfilled]: (state, action) => {
-      console.log("Fulfilled profesores");
       state.professorsList = action.payload;
     },
     [load_list_professor.rejected]: (state, action) => {
-      console.log("Failed profesores");
       console.log(action);
       state.professorsList = null;
     },

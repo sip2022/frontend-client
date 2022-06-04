@@ -60,12 +60,12 @@ export default function LoginForm() {
     const result = await getUser(input.email);
     if (!result.message) {
       // dispatch(setearEstado(DUMMY_DATA));
-      console.log("Exito");
+      alert("¡Logueo Exitoso!");
+      navigate("/", {replace: true})
     } else {
       setErrors({
         globalError: result.message,
       });
-      console.log("Fracaso");
     }
   }
 
@@ -81,7 +81,7 @@ export default function LoginForm() {
 
   function goNewUser(event) {
     event.preventDefault();
-    navigate("/newUser", { replace: true });
+    navigate("/registro", { replace: true });
   }
 
   return (

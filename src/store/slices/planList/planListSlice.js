@@ -7,7 +7,6 @@ import {  } from "./actions";
 export const load_list_planes = createAsyncThunk(
   "planes/loadPlanes",
   async () => {
-    console.log("Cargando lista de planes...");
     return await userService.get_Planes_List().then((response) => {
       return response;
     });
@@ -24,14 +23,11 @@ export const planListSlice = createSlice({
   },
   extraReducers: {
     [load_list_planes.pending]: (state, action) => {
-      console.log("Pending planes");
     },
     [load_list_planes.fulfilled]: (state, action) => {
-      console.log("Fulfilled planes");
       state.planList = action.payload;
     },
     [load_list_planes.rejected]: (state, action) => {
-      console.log("Failed planes");
       console.log(action);
       state.planList = null;
     },

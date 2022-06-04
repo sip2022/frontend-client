@@ -7,6 +7,7 @@ function UserInfo(props) {
 
   const user = useSelector((state) => state.user)
   const navigate = useNavigate()
+  const [age, setAge] = useState(0);
   const [{ nombre, apellido, dni, telefono, mail, edad, imagen }, setDatos] = useState({
     nombre: "",
     apellido: "",
@@ -21,7 +22,9 @@ function UserInfo(props) {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
-    
+    const now = new Date();
+    const age = now.getFullYear() - user.birthDate[0]
+    setAge(age);
   }, []);
 
   function editDatosHandler(event) {
@@ -42,7 +45,7 @@ function UserInfo(props) {
           <p>DNI: {user.dni}</p>
           <p>Telefono: {user.phone}</p>
           <p>Mail: {user.email}</p>
-          <p>Edad: {user.age}</p>
+          <p>Edad: {age}</p>
         </section>
       </section>
       <section className={classes.userEdit}>

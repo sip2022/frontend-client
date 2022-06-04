@@ -25,7 +25,6 @@ function List_Class(params) {
   }
 
   function editarHandler(params) {
-    console.log(params);
     navigate("/admin/classes/edit/" + params, { replace: true });
   }
 
@@ -33,7 +32,6 @@ function List_Class(params) {
     setError({ flag: false });
     const result = await eliminarClass(params);
     if (result.message) {
-      console.log(result.message);
       setError({ flag: true, message: result.message });
     }
   }

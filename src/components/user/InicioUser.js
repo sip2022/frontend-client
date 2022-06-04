@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classes from "./InicioUser.module.css";
 
@@ -20,24 +21,19 @@ function ItemCard({ titulo, link, navigate }) {
 function UserInfo(props) {
 
   const navigate = useNavigate();
-
-  const [{ nombre }, setDatos] = useState({
-    nombre: "",
-  });
+  
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
-    setDatos({
-      nombre: "Seba"
-    })
   }, []);
 
   return (
     <section>
       <section>
-        <h1>Hola {nombre}</h1>
+        <h1>Hola {user.firstName}</h1>
       </section>
       <section className={classes.sectionCards}>
         <ItemCard titulo="Informacion Personal" link="/user/info" navigate={navigate} />

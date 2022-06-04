@@ -1,19 +1,16 @@
 // Funciones actions de redux SOLO APRA MODIFICAR EL ESTADO DIRECTAMENTE
 
 export function setState(state, { payload }) {
-  const { id, firstName, lastName, dni, phone, email, birthDate, roles, status } =
+  const { id, firstName, lastName, dni, phone, email, birthDate, rolesNames } =
     payload;
-  const now = new Date();
-  const age = now.getFullYear() - birthDate[0]
   state.id = id;
   state.firstName = firstName;
   state.lastName = lastName;
+  state.birthDate = birthDate;
   state.dni = dni;
   state.phone = phone;
   state.email = email;
-  state.age = age;
-  state.roles = roles;
-  state.status = status;
+  state.rolesNames = rolesNames;
 }
 
 export function setTurnos(state, { payload }) {

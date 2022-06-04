@@ -25,7 +25,7 @@ function UserTurnos(params) {
   return (
     <section>
       <h1>Mis Reservas</h1>
-      {user.turnos &&
+      {(user.turnos && (user.turnos.length != 0))  ?
         user.turnos.map((turno, index) => {
           return (
             <TurnoCard
@@ -36,7 +36,7 @@ function UserTurnos(params) {
               key={index}
             />
           );
-        })}
+        }) : <p>¡No has realizado ninguna reserva!</p>}
       <section>
         <button onClick={volverHandler}>Volver</button>
       </section>
@@ -57,8 +57,6 @@ function TurnoCard({
   const dispatch = useDispatch();
 
   async function clickHandler() {
-    console.log("user " + id_user);
-    console.log("clase " + id_class);
     await cancelar_reserva(id_class, id_user)
       .then((response) => {
         userService.get_Turnos_ByUserId(id_user).then((response) => {
