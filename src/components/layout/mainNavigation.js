@@ -1,18 +1,27 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./mainNavigation.module.css";
-import { useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import userService from "../../services/user.service";
+import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
 function MainNavigation() {
   const firstName = useSelector((state) => state.user.firstName);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    // const token = localStorage.getItem("accessToken");
     // if (token) {
     //   console.log(token);
     // } else console.log("No está logueado");
+
+    // TODO Gets the user with the id set
+    const id_mock = "3c6cc742-b85c-4430-b7ee-c911f2a1b7e8";
+    userService.get_User_ById(id_mock).then((response) => {
+      dispatch(setearEstado(response))
+    });
   }, []);
 
   function logoClickHandler() {

@@ -15,6 +15,16 @@ import authHeader from "./auth-Header";
 class UserService {
   // Axios GET calls
 
+  get_User_ById(id_user) {
+    return axios
+      .get(backAPI + "/user/" + id_user, {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   get_User_List() {
     return axios
       .get(backAPI + "/user/all", {
