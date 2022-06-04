@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 function UserInfo(props) {
 
-  const userInfo = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user)
   const navigate = useNavigate()
   const [{ nombre, apellido, dni, telefono, mail, edad, imagen }, setDatos] = useState({
     nombre: "",
@@ -21,15 +21,7 @@ function UserInfo(props) {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
-    console.log(userInfo);
-    setDatos({
-      nombre: "Seba",
-      apellido: "Marchetti",
-      dni: "12345678",
-      telefono: "2323-232323",
-      mail: "seba@gmail.com",
-      edad: "23",
-    });
+    
   }, []);
 
   function editDatosHandler(event) {
@@ -44,16 +36,13 @@ function UserInfo(props) {
 
   return (
     <section className={classes.userSection}>
-      {/* <section className={classes.userImage}>
-        <img src="/images/user_images/UserMockImage.jpeg" />
-      </section> */}
       <section className={classes.userInfo}>
-        <h1 className={classes.UserName}>{nombre + " " + apellido}</h1>
+        <h1 className={classes.UserName}>{user.firstName + " " + user.lastName}</h1>
         <section>
-          <p>DNI: {dni}</p>
-          <p>Telefono: {telefono}</p>
-          <p>Mail: {mail}</p>
-          <p>Edad: {edad}</p>
+          <p>DNI: {user.dni}</p>
+          <p>Telefono: {user.phone}</p>
+          <p>Mail: {user.email}</p>
+          <p>Edad: {user.age}</p>
         </section>
       </section>
       <section className={classes.userEdit}>

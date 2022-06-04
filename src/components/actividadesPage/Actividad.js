@@ -40,7 +40,6 @@ function Actividad(props) {
       // Obtener los horarios de clases (available-classes) de la actividad (tengo el id)
       userService.get_Classes_ByActId(id_act).then((response) => {
         if (response && response.length != 0) {
-          console.log(response);
           setAvailableClasses(response);
         }
       });
@@ -115,7 +114,6 @@ function Actividad(props) {
         {availableClasses ? (
           availableClasses.map((clas, index) => {
             const time = clas.timeslotDto;
-            console.log(time);
             return (
               <section key={index}>
                 <input
