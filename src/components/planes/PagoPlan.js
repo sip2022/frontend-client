@@ -97,15 +97,22 @@ function ConfirmacionPago({
 
   async function pagoHandler() {
     try {
-      const carrito = {
-
-      };
-      // Aquí se envía los items al back para configurar el pago
-      const preference = await axios.post("api/pay", {
+      // Primero, envio os datos al back para que se crea la preferencia en mercado pago y me devuelva el ID del mismo
+      /**
+       * Primero, envio os datos al back para que se crea la preferencia en mercado pago
+       * y me devuelva el ID del mismo
+       */
+      const carrito = {};
+      const preference_ID = await axios.post("api/pay", {
         body: carrito,
-      }).json()
+      }).json();
 
-      // Creacion del script de mercado pago (boton)
+      /**
+       * Creacion del script de mercado pago (boton)
+       * El script src contiene la URL especificada en la página de mercadopago
+       * (Se usan una de dos versiones, tengo que probar ambas)
+       *  y se inserta en el elemento html que quiera
+       */
       var script = document.createElement("script");
       // script.src = "https://sdk.mercadopago.com/js/v2";
       script.src = "https://sdk.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
@@ -114,14 +121,13 @@ function ConfirmacionPago({
       script.dataset.preferenceId = preference.preference_ID;
       document.getElementById("botones-section").innerHTML = "";
       document.getElementById("botones-section").appendChild(script)
-
+      
 
       // await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
       // alert(
       //   "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
       // );
       // navigate("/user/pagos", { replace: true });
-
     } catch (error) {
       console.log(error);
     }

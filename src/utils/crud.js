@@ -397,7 +397,7 @@ export async function suscribir_Plan(
   cantidadMeses
 ) {
   const date = new Date().toISOString().substring(0, 10);
-  return axios.post(backAPI + "/subscription", {
+  return await axios.post(backAPI + "/subscription", {
     description: nombrePlan + " plan",
     startDate: date,
     monthsToAdd: cantidadMeses,
@@ -407,3 +407,11 @@ export async function suscribir_Plan(
 }
 
 // -------------------- END Planes --------------------
+
+// -------------------- Pagos --------------------
+
+export async function checkPaySuscription(params) {
+  return await axios
+}
+
+// -------------------- END Pagos --------------------
