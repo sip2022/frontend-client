@@ -30,7 +30,6 @@ class ReduxService {
   // Devuelve true si la clase fue reservada por el suuario
   check_Class_ofUser_byClassID(id_Class) {
     const user = store.getState().user;
-    console.log(user.turnos);
     var flag = false;
     user.turnos.map((turno) => {
       if (turno.availableClass.id == id_Class) flag = true;

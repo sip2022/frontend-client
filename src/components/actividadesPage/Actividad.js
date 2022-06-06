@@ -207,15 +207,15 @@ function DisplayReserva({
   });
 
   const [canReserve, setCanReserve] = useState(null);
-  const [alreadyReserved, setAlreadyReserved] = useState(false)
+  const [alreadyReserved, setAlreadyReserved] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(reduxService.check_Class_ofUser_byClassID(id_clas))
+    if (reduxService.check_Class_ofUser_byClassID(id_clas))
       setAlreadyReserved(true);
     // buscar si id_clas está reservada en por el usuario
     const att_left = actividad.attendeesLimit - amountReserved;
-    console.log(id_clas);
     const newContenido = {
       act_name: actividad.name,
       startTime: reserva.timeslotDto.startTime,
@@ -226,6 +226,7 @@ function DisplayReserva({
     };
     setContenido(newContenido);
     if (att_left > 0) setCanReserve(true);
+    setLoaded(true);
   }, []);
 
   async function submitHandler() {
@@ -249,41 +250,54 @@ function DisplayReserva({
   return (
     <section className={classes.reserva_Section}>
       <section className={classes.reserva_Display}>
-        <h2>{act_name}</h2>
-        <section>
-          <p>Gimnasio GEMINIS CLUB</p>
-          <p>
-            {translateDay(dayOfWeek) +
-              ": " +
-              startTime[0] +
-              ":" +
-              startTime[1] +
-              " - " +
-              endTime[0] +
-              ":" +
-              endTime[1]}
-          </p>
-        </section>
-        <section>
+        {loaded ? (
           <section>
-            <p>{attendeesLeft}</p>
-            <p>Lugares Disponibles</p>
-          </section>
-          <section>
-            <p>{attendeesReserved}</p>
-            <p>Reservas Realizadas</p>
-          </section>
-        </section>
-        <section>
-          {canReserve ? (
-            <button onClick={submitHandler}>Reservar</button>
-          ) : (
+            <h2>{act_name}</h2>
             <section>
-              <p>No puede reservar en este horario, ya que no quedan lugares disponibles</p>
+              <p>Gimnasio GEMINIS CLUB</p>
+              <p>
+                {translateDay(dayOfWeek) +
+                  ": " +
+                  startTime[0] +
+                  ":" +
+                  startTime[1] +
+                  " - " +
+                  endTime[0] +
+                  ":" +
+                  endTime[1]}
+              </p>
             </section>
-          )}
-          <button onClick={callbackCloseWindow}>Cancelar</button>
-        </section>
+            <section>
+              <section>
+                <p>{attendeesLeft}</p>
+                <p>Lugares Disponibles</p>
+              </section>
+              <section>
+                <p>{attendeesReserved}</p>
+                <p>Reservas Realizadas</p>
+              </section>
+            </section>
+            <section>
+              {alreadyReserved && <p>Ya tienes esta clase reservada</p>}
+              {!alreadyReserved && canReserve && (
+                <button onClick={submitHandler}>Reservar</button>
+              )}
+              {!alreadyReserved && !canReserve && (
+                <section>
+                  <p>
+                    No puede reservar en este horario, ya que no quedan lugares
+                    disponibles
+                  </p>
+                </section>
+              )}
+            </section>
+            <section>
+              <button onClick={callbackCloseWindow}>Cancelar</button>
+            </section>
+          </section>
+        ) : (
+          <p>Cargando...</p>
+        )}
       </section>
     </section>
   );
