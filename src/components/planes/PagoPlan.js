@@ -102,10 +102,10 @@ function ConfirmacionPago({
        * Primero, envio os datos al back para que se crea la preferencia en mercado pago
        * y me devuelva el ID del mismo
        */
-      const carrito = {};
-      const preference_ID = await axios.post("api/pay", {
-        body: carrito,
-      }).json();
+      // const carrito = {};
+      // const preference_ID = await axios.post("api/pay", {
+      //   body: carrito,
+      // }).json();
 
       /**
        * Creacion del script de mercado pago (boton)
@@ -113,21 +113,21 @@ function ConfirmacionPago({
        * (Se usan una de dos versiones, tengo que probar ambas)
        *  y se inserta en el elemento html que quiera
        */
-      var script = document.createElement("script");
-      // script.src = "https://sdk.mercadopago.com/js/v2";
-      script.src = "https://sdk.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-      script.type = "text/javascript";
-      console.log(script);
-      script.dataset.preferenceId = preference.preference_ID;
-      document.getElementById("botones-section").innerHTML = "";
-      document.getElementById("botones-section").appendChild(script)
+      // var script = document.createElement("script");
+      // // script.src = "https://sdk.mercadopago.com/js/v2";
+      // script.src = "https://sdk.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      // script.type = "text/javascript";
+      // console.log(script);
+      // script.dataset.preferenceId = preference.preference_ID;
+      // document.getElementById("botones-section").innerHTML = "";
+      // document.getElementById("botones-section").appendChild(script)
       
 
-      // await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
-      // alert(
-      //   "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
-      // );
-      // navigate("/user/pagos", { replace: true });
+      await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
+      alert(
+        "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
+      );
+      navigate("/user/pagos", { replace: true });
     } catch (error) {
       console.log(error);
     }

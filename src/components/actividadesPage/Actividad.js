@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ReactReduxContext, useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import userService from "../../services/user.service";
+import reduxService from "../../store/redux.service";
 import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
+import { load_user_turnos } from "../../store/slices/userData/userDataSlice";
 import { reservar_Clase } from "../../utils/crud";
 import { translateDay } from "../../utils/translation";
 import classes from "./Actividad.module.css";
@@ -31,6 +33,7 @@ function Actividad(props) {
   const [amountReserved, setAmountReserved] = useState(0);
 
   useEffect(() => {
+    dispatch(load_user_turnos());
     if (!actividades) dispatch(load_list_activity());
   }, []);
 
@@ -171,6 +174,10 @@ function Actividad(props) {
 
 export default Actividad;
 
+/**
+ * Display de la Reserva
+ */
+
 function DisplayReserva({
   actividad,
   reserva,
@@ -200,11 +207,15 @@ function DisplayReserva({
   });
 
   const [canReserve, setCanReserve] = useState(null);
+  const [alreadyReserved, setAlreadyReserved] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(reduxService.check_Class_ofUser_byClassID(id_clas))
+      setAlreadyReserved(true);
     // buscar si id_clas está reservada en por el usuario
     const att_left = actividad.attendeesLimit - amountReserved;
+    console.log(id_clas);
     const newContenido = {
       act_name: actividad.name,
       startTime: reserva.timeslotDto.startTime,
