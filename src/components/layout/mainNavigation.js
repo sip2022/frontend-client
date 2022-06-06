@@ -13,11 +13,11 @@ function MainNavigation() {
   useEffect(() => {
 
     // TODO Gets the user with the id set
-    // const id_mock = "9fbc73a1-a81c-4625-88f5-34592cbba90b";
-    // if (id_mock)
-    //   userService.get_User_ById(id_mock).then((response) => {
-    //     dispatch(setearEstado(response));
-    //   });
+    const id_mock = "9fbc73a1-a81c-4625-88f5-34592cbba90b";
+    if (id_mock)
+      userService.get_User_ById(id_mock).then((response) => {
+        dispatch(setearEstado(response));
+      });
   }, []);
 
   function logoClickHandler() {

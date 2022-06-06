@@ -97,11 +97,31 @@ function ConfirmacionPago({
 
   async function pagoHandler() {
     try {
-      await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
-      alert(
-        "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
-      );
-      navigate("/user/pagos", { replace: true });
+      const carrito = {
+
+      };
+      // Aquí se envía los items al back para configurar el pago
+      const preference = await axios.post("api/pay", {
+        body: carrito,
+      }).json()
+
+      // Creacion del script de mercado pago (boton)
+      var script = document.createElement("script");
+      // script.src = "https://sdk.mercadopago.com/js/v2";
+      script.src = "https://sdk.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.type = "text/javascript";
+      console.log(script);
+      script.dataset.preferenceId = preference.preference_ID;
+      document.getElementById("botones-section").innerHTML = "";
+      document.getElementById("botones-section").appendChild(script)
+
+
+      // await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
+      // alert(
+      //   "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
+      // );
+      // navigate("/user/pagos", { replace: true });
+
     } catch (error) {
       console.log(error);
     }
@@ -126,7 +146,7 @@ function ConfirmacionPago({
         <section>
           <p>Cantidad de meses: {meses}</p>
         </section>
-        <section>
+        <section id="botones-section">
           <button onClick={pagoHandler}>Suscribirse</button>
           <button onClick={callbackSetConfirmar}>Cancelar</button>
         </section>
