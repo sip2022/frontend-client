@@ -13,6 +13,10 @@ export function setState(state, { payload }) {
   state.rolesNames = rolesNames;
 }
 
+export function setEmail(state, { payload }) {
+  state.email = payload;
+}
+
 export function setTurnos(state, { payload }) {
   state.turnos = payload;
 }

@@ -1,7 +1,9 @@
 import classes from "./UserEditInfo.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../../utils/crud";
+import { setearEmail } from "../../../store/slices/userData/userDataSlice";
 
 function UserEditInfo(props) {
   const navigate = useNavigate();
@@ -15,20 +17,33 @@ function UserEditInfo(props) {
   });
 
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
     setDatos({
-      ...user
+      ...user,
     });
   }, []);
 
-  function saveHandler(event) {
+  async function saveHandler(event) {
     event.preventDefault();
     // TODO Guarda los cambios en el back, espera la respuesta.
     // Ponerlo en un estado de redux, en userDataSlice
+    try {
+      const newData = {
+        id: user.id,
+        ...datos,
+      };
+      await updateUser(newData);
+      dispatch(setearEmail(datos.email));
+      alert("¡Datos actualizados!");
+      navigate("/user/info", { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function cancelarHandler(event) {
@@ -45,7 +60,7 @@ function UserEditInfo(props) {
       <h2>Editar Perfil</h2>
       {/* TODO Refactor Datos.map no funciona */}
       <section className={classes.editItems}>
-        <EditSection
+        {/* <EditSection
           name="firstName"
           type="text"
           value={datos.firstName}
@@ -68,19 +83,19 @@ function UserEditInfo(props) {
           type="text"
           value={datos.phone}
           onChange={(e) => handleChange(e.target)}
-        />
+        /> */}
         <EditSection
           name="email"
           type="text"
           value={datos.email}
           onChange={(e) => handleChange(e.target)}
         />
-        <EditSection
+        {/* <EditSection
           name="birthDate"
           type="date"
           value={datos.birthDate}
           onChange={(e) => handleChange(e.target)}
-        />
+        /> */}
       </section>
       <section className={classes.editButtons}>
         <button className={classes.btnGuardar} onClick={saveHandler}>

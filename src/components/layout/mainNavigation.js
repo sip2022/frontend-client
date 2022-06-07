@@ -13,7 +13,7 @@ function MainNavigation() {
   useEffect(() => {
 
     // TODO Gets the user with the id set
-    const id_mock = "9fbc73a1-a81c-4625-88f5-34592cbba90b";
+    const id_mock = "52b0e16f-726f-4e1f-8f5c-bc107d0e5afe";
     if (id_mock)
       userService.get_User_ById(id_mock).then((response) => {
         dispatch(setearEstado(response));

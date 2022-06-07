@@ -1,38 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { load_list_planes } from "../../store/slices/planList/planListSlice";
 import classes from "./Planes.module.css";
 
-// TODO eliminar Dummy data una vez la coneion con el back este hecha
-const DUMMY_DATA = [
-  {
-    texto: "Bronze",
-    imagen: "/images/planes_images/iconoPlanBronze.png",
-  },
-  {
-    texto: "Silver",
-    imagen: "/images/planes_images/iconoPlanSilver.png",
-  },
-  {
-    texto: "Gold",
-    imagen: "/images/planes_images/iconoPlanGold.png",
-  },
-  {
-    texto: "Platinum",
-    imagen: "/images/planes_images/iconoPlanPlatinum.png",
-  },
-];
-
 function PlanCard({ plan }) {
-  // plan -> texto, imagen, key 
+  // plan -> texto, imagen, key
+
+  const navigate = useNavigate();
+
+  function clickHandler() {
+    navigate("/planes/" + plan.id);
+  }
 
   return (
-    <section className={classes.plan} key={plan.key} >
-      <img className={classes.plan_image} src={plan.imagen} alt="logo plan" />
-      <h3 className={classes.planes_h3}>{plan.texto}</h3>
+    <section className={classes.plan} onClick={clickHandler} key={plan.key}>
+      {/* <img className={classes.plan_image} src={plan.imagen} alt="logo plan" /> */}
+      <h3 className={classes.planes_h3}>{plan.name}</h3>
     </section>
   );
 }
 
 function Planes() {
-  const planes = DUMMY_DATA;
+  const planes = useSelector((state) => state.planList.planList);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!planes) dispatch(load_list_planes());
+  }, []);
 
   return (
     <section className={classes.planes_section}>

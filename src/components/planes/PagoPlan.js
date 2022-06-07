@@ -49,6 +49,7 @@ function PagoPlan(params) {
           <h2>Suscripcion a Plan</h2>
           <section>
             <p>Plan {plan.name}</p>
+            <p>Limite de actividades para reservar: {plan.activitiesLimit}</p>
             <p>Valor por mes: ${plan.price}</p>
             <section>
               <p>Indique cuantos meses quiere que dure la suscripción</p>

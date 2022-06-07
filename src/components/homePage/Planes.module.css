@@ -17,11 +17,17 @@
 .plan{
   display: flex;
   align-items: center;
-  background-color: #E8A94A;
+  background-color: #F8B551;
   padding: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.plan:hover{
+  
+  background-color: #E8A94A;
 }
 
 .plan_image{

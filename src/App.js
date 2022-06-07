@@ -41,6 +41,8 @@ function App() {
           <Route path='/user/reservas' exact element={<UserTurnos />} />
           <Route path='/user/pagos' exact element={<User_Pagos />} />
 
+          <Route path='/user/pago/:id_plan/result/:flag' exact element={<User_Pagos />} />
+
           {/* Actividades Routes */}
           <Route path='/actividades' element={<List_Actividades />} />
           <Route path='/actividad/:id_act' element={<Actividad />} />

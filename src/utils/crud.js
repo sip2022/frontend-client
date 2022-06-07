@@ -65,6 +65,7 @@ export async function login(input) {
 export async function getUser(email) {
   var result = {
     message: "",
+    user: null,
   };
   try {
     const response = await axios
@@ -76,6 +77,7 @@ export async function getUser(email) {
       })
       .then((response) => {
         console.log(response);
+        // result.user = response;
       });
   } catch (error) {
     if (error.response) {
@@ -97,6 +99,13 @@ export async function activateUser(id_user) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function updateUser({id, email}) {
+  // TODO actualiza todos los datos en EditInfo
+  return await axios.put(backAPI + "/user/email/" + id, {
+    email: email,
+  })
 }
 
 // -------------------- Actividades --------------------
