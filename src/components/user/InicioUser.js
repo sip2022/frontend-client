@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classes from "./InicioUser.module.css";
 
-
 function ItemCard({ titulo, link, navigate }) {
   function clickHandler(event) {
     event.preventDefault();
@@ -19,9 +18,8 @@ function ItemCard({ titulo, link, navigate }) {
 }
 
 function UserInfo(props) {
-
   const navigate = useNavigate();
-  
+
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -36,9 +34,24 @@ function UserInfo(props) {
         <h1>Hola {user.firstName}</h1>
       </section>
       <section className={classes.sectionCards}>
-        <ItemCard titulo="Informacion Personal" link="/user/info" navigate={navigate} />
-        <ItemCard titulo="Mis Reservas" link="/user/reservas" navigate={navigate} />
+        <ItemCard
+          titulo="Informacion Personal"
+          link="/user/info"
+          navigate={navigate}
+        />
+        <ItemCard
+          titulo="Mis Reservas"
+          link="/user/reservas"
+          navigate={navigate}
+        />
         <ItemCard titulo="Mis Pagos" link="/user/pagos" navigate={navigate} />
+        {user.roles && user.roles.find(elem => elem == "ROLE_ADMIN") && (
+          <ItemCard
+            titulo="Menú de Administrador"
+            link="/admin"
+            navigate={navigate}
+          />
+        )}
       </section>
     </section>
   );

@@ -25,7 +25,7 @@ export const userDataSlice = createSlice({
     phone: null,
     email: null,
     birthDate: null,
-    rolesNames: null,
+    roles: null,
     turnos: null,
   },
   reducers: {

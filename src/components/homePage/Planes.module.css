@@ -17,12 +17,14 @@
 .plan{
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: #F8B551;
   padding: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 15px;
   cursor: pointer;
+  width: 15%;
 }
 
 .plan:hover{

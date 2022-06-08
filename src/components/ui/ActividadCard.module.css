@@ -3,4 +3,6 @@
   margin-right: 0.5rem;
   background-color: #BFE0DC;
   border-radius: 15px;
+  width: 20%;
+  cursor: pointer;
 }

@@ -1,7 +1,7 @@
 // Funciones actions de redux SOLO APRA MODIFICAR EL ESTADO DIRECTAMENTE
 
 export function setState(state, { payload }) {
-  const { id, firstName, lastName, dni, phone, email, birthDate, rolesNames } =
+  const { id, firstName, lastName, dni, phone, email, birthDate, roles } =
     payload;
   state.id = id;
   state.firstName = firstName;
@@ -10,7 +10,7 @@ export function setState(state, { payload }) {
   state.dni = dni;
   state.phone = phone;
   state.email = email;
-  state.rolesNames = rolesNames;
+  state.roles = roles;
 }
 
 export function setEmail(state, { payload }) {
