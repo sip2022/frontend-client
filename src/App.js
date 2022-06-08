@@ -25,6 +25,7 @@ import UserTurnos from './components/user/Turnos/UserTurnos';
 import PagoPlan from './components/planes/PagoPlan';
 import User_Pagos from './components/user/Pagos/User_Pagos';
 import NewUserForm from './components/login/NewUserForm';
+import Asignar_Rol from './components/admin/roles/Asignar_Rol';
 
 function App() {
 
@@ -64,7 +65,6 @@ function App() {
           <Route path='/admin/actividad/new' element={<NewActividadForm />} />
           <Route path='/admin/actividad/edit/:id' element={<ActividadEditForm />} />
 
-
           <Route path='/admin/timeslot' element={<List_TimeSlot />} />
           <Route path='/admin/timeslot/new' element={<New_Timeslot />} />
           <Route path='/admin/timeslot/edit/:id' element={<Edit_Timeslot />} />
@@ -72,6 +72,8 @@ function App() {
           <Route path='/admin/classes' element={<List_Class />} />
           <Route path='/admin/classes/new' element={<New_Class />} />
           <Route path='/admin/classes/edit/:id_class' element={<Edit_Class />} />
+
+          <Route path='/admin/assign-role-to-user' element={<Asignar_Rol />} />
         </Routes>
       </Layout>
     </div>

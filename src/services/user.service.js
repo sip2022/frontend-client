@@ -137,6 +137,14 @@ class UserService {
         return response.data;
       });
   }
+  
+  get_Roles_List() {
+    return axios
+      .get(backAPI + "/management/role/all")
+      .then((response) => {
+        return response.data;
+      });
+  }
 }
 
 export default new UserService();

@@ -1,15 +1,14 @@
 // redux estado sobre lista de usuarios
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios"; 
-import { loadUserList } from "./actions"
+import { setUserList } from "./actions"
 
 export const usersListSlice = createSlice({
   name: "userList",
   initialState: {
-    usersList: []
+    usersList: null
   },
   reducers: {
-    loadUserList: loadUserList
+    setear_UserList: setUserList
   },
 });
 

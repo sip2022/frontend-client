@@ -101,11 +101,11 @@ export async function activateUser(id_user) {
   }
 }
 
-export async function updateUser({id, email}) {
+export async function updateUser({ id, email }) {
   // TODO actualiza todos los datos en EditInfo
   return await axios.put(backAPI + "/user/email/" + id, {
     email: email,
-  })
+  });
 }
 
 // -------------------- Actividades --------------------
@@ -420,7 +420,13 @@ export async function suscribir_Plan(
 // -------------------- Pagos --------------------
 
 export async function checkPaySuscription(params) {
-  return await axios
+  return await axios;
 }
 
 // -------------------- END Pagos --------------------
+
+export async function assignRoltoUser(id_user, id_rol) {
+  return axios.put(
+    backAPI + "/management/assign-role-to-user/" + id_user + "/" + id_rol
+  );
+}
