@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import reduxService from "../../store/redux.service";
-import planListSlice, {
-  load_list_planes,
-} from "../../store/slices/planList/planListSlice";
+import { load_list_planes } from "../../store/slices/planList/planListSlice";
 
 export default function Pago_Result(params) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { id_plan, result } = useParams();
+  const user = useSelector((state) => state.user);
   const planes = useSelector((state) => state.planList.planList);
   const [plan, setPlan] = useState(null);
 
@@ -30,13 +29,43 @@ export default function Pago_Result(params) {
   return (
     <section>
       <section>
-        {result == "success" && <p>Pago exitoso</p>}
-        {result == "failure" && <p>Pago fallido</p>}
-        {result == "pending" && <p>Pago pendiente</p>}
+        {result == "success" && (
+          <Display_Result user={user} plan={plan} success />
+        )}
+        {result == "failure" && (
+          <Display_Result user={user} plan={plan} failure />
+        )}
+        {result == "pending" && (
+          <Display_Result user={user} plan={plan} pending />
+        )}
       </section>
       <section>
-        <button onClick={volverHandler}>Ir a Inicio</button>
+        <button onClick={volverHandler}>Volver a Inicio</button>
       </section>
+    </section>
+  );
+}
+
+function Display_Result({ user, plan, monto, success, failure, pending }) {
+  function reintentoHandler() {
+    // TODO reintenta realizar el pago
+  }
+  return (
+    <section>
+      {success && <h2>Pago Realizado</h2>}
+      {failure && <h2>No se ha podido procesar tu pago</h2>}
+      {pending && <h2>El pago está en proceso</h2>}
+
+      <section>
+        <p>Nombre: {user.firtsName + " " + user.lastName}</p>
+        <p>Plan: {plan.name}</p>
+        <p>Monto pagado: {monto}</p>
+      </section>
+      {failure && (
+        <section>
+          <button onClick={reintentoHandler}>Reintentar</button>
+        </section>
+      )}
     </section>
   );
 }

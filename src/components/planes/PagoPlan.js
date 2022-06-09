@@ -6,7 +6,7 @@ import { load_list_planes } from "../../store/slices/planList/planListSlice";
 import { suscribir_Plan } from "../../utils/crud";
 import classes from "./PagoPlan.module.css";
 
-function PagoPlan(params) {
+function PagoPlan() {
   const { id_plan } = useParams();
 
   const [plan, setPlan] = useState(null);
@@ -34,7 +34,7 @@ function PagoPlan(params) {
     }
   }
 
-  function cancelarHandler(params) {
+  function cancelarHandler() {
     navigate("/planes", { replace: true });
   }
 
@@ -46,7 +46,7 @@ function PagoPlan(params) {
     <section>
       {plan && (
         <section>
-          <h2>Suscripcion a Plan</h2>
+          <h1>Suscripcion a Plan</h1>
           <section>
             <p>Plan {plan.name}</p>
             <p>Limite de actividades para reservar: {plan.activitiesLimit}</p>
