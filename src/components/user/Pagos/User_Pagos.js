@@ -35,10 +35,41 @@ function User_Pagos(params) {
   }
 
   function pagoHandler(params) {
-    alert("¡Aquí iría la integración con MercadoPago!");
+    /**
+     * Primero, envio os datos al back para que se crea la preferencia en mercado pago
+     * y me devuelva el ID del mismo
+     */
+    // TODO cambiar endpoint y modo de envio de los datos
+
+    // const preference = await axios
+    //   .post("api/pay", {
+    //     body: suscripcion,
+    //     user: user.id
+    //   })
+    //   .json();
+
+    /**
+     * Luego de obtener el init_point, debo crear un script con el id, e insertarlo en el html
+     */
+    const preference = {
+      preference_ID:
+        "https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=1135511061-0bce0629-12a8-476b-8f5b-af9b661fcf33",
+    };
+    if (preference.preference_ID) {
+      var script = document.createElement("script");
+      script.src = "https://sdk.mercadopago.com/js/v2";
+      script.type = "text/javascript";
+      script.async = true;
+      script.dataset.preferenceId = preference.preference_ID;
+
+      var link = document.createElement("p");
+      document.getElementById("suscrip-section").innerHTML = "";
+      document.getElementById("suscrip-section").appendChild(script);
+    }
   }
 
   return (
+    // TODO mostrar dos secciones: 1)- Si hay una suscripcion sin pagar - 2)- El historial de pagos (si no hay pagos, mostrar cartel)
     <section>
       <h1>Lista de Pagos</h1>
       <section>
@@ -59,8 +90,11 @@ function User_Pagos(params) {
                   <p>Monto por mes: {suscripcion.planDto.price}</p>
                   <p>Monto Total: {months * suscripcion.planDto.price}</p>
                 </section>
-                <section>
-                  <button onClick={pagoHandler}>Empezar a pagar</button>
+                <section id="suscrip-section">
+                  {/* <button onClick={pagoHandler}>Empezar a pagar</button> */}
+                  <p>
+                    Link de pago: <a href="https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=1135511061-0bce0629-12a8-476b-8f5b-af9b661fcf33" target="_self">Pagar</a>
+                  </p>
                 </section>
               </section>
             ) : (
