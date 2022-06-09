@@ -127,6 +127,9 @@ function ConfirmacionPago({
         <section>
           <p>Cantidad de meses: {meses}</p>
         </section>
+        <section>
+          <p>* Recuerde que es un solo pago, por el monto total.</p>
+        </section>
         <section id="suscrip-section">
           <button onClick={pagoHandler}>Suscribirse</button>
         </section>

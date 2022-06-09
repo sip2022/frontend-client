@@ -9,6 +9,7 @@ export default function Asignar_Rol() {
   const [roles, setRoles] = useState(null);
   const [users, setUsers] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     try {
@@ -18,6 +19,7 @@ export default function Asignar_Rol() {
       userService.get_Roles_List().then((response) => {
         setRoles(response);
       });
+      setLoading(true);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +50,7 @@ export default function Asignar_Rol() {
   return (
     <section>
       <h1>Asignar Rol a un Usuario</h1>
-      {users && roles && (
+      {users && roles ? (
         <section>
           <section>
             <p>Usuario: </p>
@@ -60,6 +62,8 @@ export default function Asignar_Rol() {
             <button onClick={submitHandler}>Asignar Rol</button>
           </section>
         </section>
+      ) : (
+        <p>Cargando usuarios y roles...</p>
       )}
       <section>
         <button onClick={clickHandler}>Volver</button>
