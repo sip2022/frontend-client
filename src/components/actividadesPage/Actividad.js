@@ -117,14 +117,14 @@ function Actividad(props) {
       <section>
         <h1>{contenido.name}</h1>
       </section>
-      <section>
+      <section className={classes.section_horarios}>
         <h2>Horarios</h2>
 
         {availableClasses ? (
           availableClasses.map((clas, index) => {
             const time = clas.timeslotDto;
             return (
-              <section key={index}>
+              <section className={classes.horario_radio} key={index}>
                 <input
                   type="radio"
                   name="horario"
@@ -151,12 +151,12 @@ function Actividad(props) {
       </section>
       {availableClasses && availableClasses != [] && (
         <section>
-          <button onClick={reservarHandler}>Reservar</button>
+          <button onClick={reservarHandler} className={classes.boton}>Reservar</button>
         </section>
       )}
 
       <section>
-        <button onClick={volverHandler}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>Volver</button>
       </section>
       {appearReserva && (
         <DisplayReserva

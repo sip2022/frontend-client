@@ -7,6 +7,10 @@ import classes from "./User_Pagos.module.css";
 
 const FORM_ID = "CHECKOUT_ID";
 
+function fechaATexto(fecha) {
+  return fecha[0] + "-" + fecha[1] + "-" + fecha[2];
+}
+
 export default function User_Pagos(params) {
   const navigate = useNavigate();
 
@@ -18,7 +22,6 @@ export default function User_Pagos(params) {
     if (user.id) {
       try {
         userService.get_Pagos_ByUserId(user.id).then((response) => {
-          console.log(response);
           setPagos(response);
         });
 
@@ -59,8 +62,7 @@ export default function User_Pagos(params) {
         ) : (
           <section>
             {pagos.map((pago, index) => {
-              console.log(pago);
-              return <PagoCard pago={pago} key={index} />;
+              return <PagoCard pago={pago} index={index + 1} key={index} />;
             })}
           </section>
         )}
@@ -73,10 +75,13 @@ export default function User_Pagos(params) {
 
 /*----------------------------------------------------------------------------------------------------*/
 
-function PagoCard({ pago }) {
+function PagoCard({ pago, index }) {
   return (
-    <section>
-      <p>Pago: {pago.id}</p>
+    <section className={classes.pago_card}>
+      <p>
+        Pago #{index} - Fecha: {fechaATexto(pago.paymentDate)} - Monto pagado: $
+        {pago.amountPaid}
+      </p>
     </section>
   );
 }
@@ -116,10 +121,6 @@ function SubscriptionDebtCard({ subscription }) {
       alert("Hubo un problema con el pago. Vuelva a intentarlo más tarde.");
       setEsperandoPago(false);
     }
-  }
-
-  function fechaATexto(fecha) {
-    return fecha[0] + "-" + fecha[1] + "-" + fecha[2];
   }
 
   return (

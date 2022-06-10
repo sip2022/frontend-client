@@ -105,7 +105,7 @@ class UserService {
   }
 
   async get_Pagos_ByUserId(id_user){
-    const response = await axios.get(backAPI + "/payment/from-user/" + id_user);
+    const response = await axios.get(backAPI + "/payment/all");
     return response.data;
   }
 }
