@@ -12,7 +12,7 @@
 }
 
 .confirmacion_Display{
-  height: 70%;
+  padding: 1rem;
   width: 50%;
   background-color: rgba(237, 237, 237, 1);
   position: absolute;
@@ -21,8 +21,29 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: bold;
+}
+
+.infoPlan_section{
+  width: 50%;
+    border: black 0.1rem solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 2rem;
+    background-color: rgba(237, 237, 237, 1);
+    font-weight: bold;
+}
+
+.infoPlan_botones{
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
 }
 
 .errorMessage{
   color: red;
+}
+
+.confirmacion_botones{
+  margin-bottom: 1rem;
 }

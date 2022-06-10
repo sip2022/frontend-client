@@ -43,7 +43,8 @@ function User_Pagos(params) {
       const susc_id = suscripcion.id;
       await cargarPago(susc_id).then((response) => {
         console.log(response);
-        navigate(response, { replace: true });
+        // navigate(response.sandboxInitPoint, { replace: true });
+        window.location.replace(response.sandboxInitPoint);
       });
     } catch (error) {
       console.log(error);

@@ -420,7 +420,7 @@ export async function suscribir_Plan(
 // -------------------- Pagos --------------------
 
 export async function cargarPago(id_sub) {
-  const response = await axios.post(
+  const response = await axios.get(
     backAPI + "/payment/create-preference/" + id_sub
   );
   return response.data;

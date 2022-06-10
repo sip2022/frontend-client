@@ -47,7 +47,7 @@ function PagoPlan() {
       {plan && (
         <section>
           <h1>Suscripcion a Plan</h1>
-          <section>
+          <section className={classes.infoPlan_section}>
             <p>Plan {plan.name}</p>
             <p>Limite de actividades para reservar: {plan.activitiesLimit}</p>
             <p>Valor por mes: ${plan.price}</p>
@@ -58,7 +58,7 @@ function PagoPlan() {
               {error && <p className={classes.errorMessage}>{error}</p>}
             </section>
           </section>
-          <section>
+          <section className={classes.infoPlan_botones}>
             <button onClick={suscribeHandler}>Suscribirse</button>
             <button onClick={cancelarHandler}>Cancelar</button>
           </section>
@@ -130,7 +130,7 @@ function ConfirmacionPago({
         <section>
           <p>* Recuerde que es un solo pago, por el monto total.</p>
         </section>
-        <section id="suscrip-section">
+        <section id="suscrip-section" className={classes.confirmacion_botones}>
           <button onClick={pagoHandler}>Suscribirse</button>
         </section>
         <section>
