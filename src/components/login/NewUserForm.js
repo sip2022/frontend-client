@@ -87,22 +87,15 @@ export default function NewUserForm() {
     event.preventDefault();
     const result = await register(input);
     if (!result.message) {
-      loadUserMOCK(result.newUserData);
+      await activateUser(result.newUserData.id);
+      localStorage.setItem("logued_user", result.newUserData.id);
+      dispatch(setearEstado(result.newUserData));
       navigate("/activacion", { replace: true });
     } else {
       setErrors({
         globalError: result.message,
       });
     }
-  }
-
-  async function loadUserMOCK(user_data) {
-    // TODO CAMBIAR DE LUGAR ESTA FUNCION
-    // Por ahora, tiene la funcnion de cargar en redux el usuario recién creado
-    // activa usuario en el back
-    await activateUser(user_data.id);
-    // setea usuario en el front
-    dispatch(setearEstado(user_data));
   }
 
   function goLoginUser(event) {

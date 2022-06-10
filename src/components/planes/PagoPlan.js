@@ -6,7 +6,7 @@ import { load_list_planes } from "../../store/slices/planList/planListSlice";
 import { suscribir_Plan } from "../../utils/crud";
 import classes from "./PagoPlan.module.css";
 
-function PagoPlan(params) {
+function PagoPlan() {
   const { id_plan } = useParams();
 
   const [plan, setPlan] = useState(null);
@@ -34,7 +34,7 @@ function PagoPlan(params) {
     }
   }
 
-  function cancelarHandler(params) {
+  function cancelarHandler() {
     navigate("/planes", { replace: true });
   }
 
@@ -46,9 +46,10 @@ function PagoPlan(params) {
     <section>
       {plan && (
         <section>
-          <h2>Suscripcion a Plan</h2>
-          <section>
+          <h1>Suscripcion a Plan</h1>
+          <section className={classes.infoPlan_section}>
             <p>Plan {plan.name}</p>
+            <p>Limite de actividades para reservar: {plan.activitiesLimit}</p>
             <p>Valor por mes: ${plan.price}</p>
             <section>
               <p>Indique cuantos meses quiere que dure la suscripción</p>
@@ -57,7 +58,7 @@ function PagoPlan(params) {
               {error && <p className={classes.errorMessage}>{error}</p>}
             </section>
           </section>
-          <section>
+          <section className={classes.infoPlan_botones}>
             <button onClick={suscribeHandler}>Suscribirse</button>
             <button onClick={cancelarHandler}>Cancelar</button>
           </section>
@@ -127,7 +128,12 @@ function ConfirmacionPago({
           <p>Cantidad de meses: {meses}</p>
         </section>
         <section>
+          <p>* Recuerde que es un solo pago, por el monto total.</p>
+        </section>
+        <section id="suscrip-section" className={classes.confirmacion_botones}>
           <button onClick={pagoHandler}>Suscribirse</button>
+        </section>
+        <section>
           <button onClick={callbackSetConfirmar}>Cancelar</button>
         </section>
       </section>

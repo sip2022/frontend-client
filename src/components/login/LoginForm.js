@@ -59,8 +59,8 @@ export default function LoginForm() {
     localStorage.setItem("accessToken", params.accessToken);
     const result = await getUser(input.email);
     if (!result.message) {
-      // dispatch(setearEstado(DUMMY_DATA));
       alert("¡Logueo Exitoso!");
+      // dispatch(setearEstado(result.user))
       navigate("/", {replace: true})
     } else {
       setErrors({

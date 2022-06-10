@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ReactReduxContext, useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import userService from "../../services/user.service";
+import reduxService from "../../store/redux.service";
 import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
+import { load_user_turnos } from "../../store/slices/userData/userDataSlice";
 import { reservar_Clase } from "../../utils/crud";
 import { translateDay } from "../../utils/translation";
 import classes from "./Actividad.module.css";
@@ -14,7 +16,7 @@ function Actividad(props) {
 
   const actividades = useSelector((state) => state.activityList.activityList);
   const estado = useSelector((state) => state.activityList.status);
-  const usuario = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const [availableClasses, setAvailableClasses] = useState(null);
 
   const [error, setError] = useState("");
@@ -31,6 +33,7 @@ function Actividad(props) {
   const [amountReserved, setAmountReserved] = useState(0);
 
   useEffect(() => {
+    dispatch(load_user_turnos());
     if (!actividades) dispatch(load_list_activity());
   }, []);
 
@@ -57,33 +60,39 @@ function Actividad(props) {
 
   async function reservarHandler(event) {
     clearError();
-    try {
-      var ele = document.getElementsByName("horario");
-      let hor_selected = null;
-      for (let i = 0; i < ele.length; i++) {
-        if (ele[i].checked) hor_selected = ele[i];
-      }
-      if (hor_selected) {
-        // get ID of Available Class selected (radio buttons) and recover the available class
-        const id_clas_select = hor_selected.getAttribute("id_class");
-        const reserva_elegida = availableClasses.find((clas) => {
-          return clas.id == id_clas_select;
-        });
-        // get atendees reserved amount
-        setAmountReserved(
-          await userService.get_reservation_atendeesAmount(id_clas_select)
-        );
-        setReserva(reserva_elegida);
-        setAppearReserva(true);
-      } else {
+    if (user.id) {
+      try {
+        var ele = document.getElementsByName("horario");
+        let hor_selected = null;
+        for (let i = 0; i < ele.length; i++) {
+          if (ele[i].checked) hor_selected = ele[i];
+        }
+        if (hor_selected) {
+          // get ID of Available Class selected (radio buttons) and recover the available class
+          const id_clas_select = hor_selected.getAttribute("id_class");
+          const reserva_elegida = availableClasses.find((clas) => {
+            return clas.id == id_clas_select;
+          });
+          // get atendees reserved amount
+          setAmountReserved(
+            await userService.get_reservation_atendeesAmount(id_clas_select)
+          );
+          setReserva(reserva_elegida);
+          setAppearReserva(true);
+        } else {
+          setError(
+            "Para reservar la actividad, seleccione primero uno de los horarios mostrados"
+          );
+        }
+      } catch (error) {
         setError(
-          "Para reservar la actividad, seleccione primero uno de los horarios mostrados"
+          "Algo salió mal con la solicitud al servidor. Vuelva a intentarlo mas tarde."
         );
       }
-    } catch (error) {
-      setError(
-        "Algo salió mal con la solicitud al servidor. Vuelva a intentarlo mas tarde."
-      );
+    } else {
+      if (window.confirm("Para reservar una actividad, primero debes loguearte!")){
+        navigate("/login", { replace: true });
+      }
     }
   }
 
@@ -157,7 +166,7 @@ function Actividad(props) {
           reserva={reserva}
           amountReserved={amountReserved}
           id_clas={reserva.id}
-          id_user={usuario.id}
+          id_user={user.id}
         />
       )}
       {error && (
@@ -170,6 +179,10 @@ function Actividad(props) {
 }
 
 export default Actividad;
+
+/**
+ * Display de la Reserva
+ */
 
 function DisplayReserva({
   actividad,
@@ -200,9 +213,13 @@ function DisplayReserva({
   });
 
   const [canReserve, setCanReserve] = useState(null);
+  const [alreadyReserved, setAlreadyReserved] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (reduxService.check_Class_ofUser_byClassID(id_clas))
+      setAlreadyReserved(true);
     // buscar si id_clas está reservada en por el usuario
     const att_left = actividad.attendeesLimit - amountReserved;
     const newContenido = {
@@ -215,6 +232,7 @@ function DisplayReserva({
     };
     setContenido(newContenido);
     if (att_left > 0) setCanReserve(true);
+    setLoaded(true);
   }, []);
 
   async function submitHandler() {
@@ -238,41 +256,54 @@ function DisplayReserva({
   return (
     <section className={classes.reserva_Section}>
       <section className={classes.reserva_Display}>
-        <h2>{act_name}</h2>
-        <section>
-          <p>Gimnasio GEMINIS CLUB</p>
-          <p>
-            {translateDay(dayOfWeek) +
-              ": " +
-              startTime[0] +
-              ":" +
-              startTime[1] +
-              " - " +
-              endTime[0] +
-              ":" +
-              endTime[1]}
-          </p>
-        </section>
-        <section>
+        {loaded ? (
           <section>
-            <p>{attendeesLeft}</p>
-            <p>Lugares Disponibles</p>
-          </section>
-          <section>
-            <p>{attendeesReserved}</p>
-            <p>Reservas Realizadas</p>
-          </section>
-        </section>
-        <section>
-          {canReserve ? (
-            <button onClick={submitHandler}>Reservar</button>
-          ) : (
+            <h2>{act_name}</h2>
             <section>
-              <p>No puede reservar en este horario, ya que no quedan lugares disponibles</p>
+              <p>Gimnasio GEMINIS CLUB</p>
+              <p>
+                {translateDay(dayOfWeek) +
+                  ": " +
+                  startTime[0] +
+                  ":" +
+                  startTime[1] +
+                  " - " +
+                  endTime[0] +
+                  ":" +
+                  endTime[1]}
+              </p>
             </section>
-          )}
-          <button onClick={callbackCloseWindow}>Cancelar</button>
-        </section>
+            <section>
+              <section>
+                <p>{attendeesLeft}</p>
+                <p>Lugares Disponibles</p>
+              </section>
+              <section>
+                <p>{attendeesReserved}</p>
+                <p>Reservas Realizadas</p>
+              </section>
+            </section>
+            <section>
+              {alreadyReserved && <p>Ya tienes esta clase reservada</p>}
+              {!alreadyReserved && canReserve && (
+                <button onClick={submitHandler}>Reservar</button>
+              )}
+              {!alreadyReserved && !canReserve && (
+                <section>
+                  <p>
+                    No puede reservar en este horario, ya que no quedan lugares
+                    disponibles
+                  </p>
+                </section>
+              )}
+            </section>
+            <section>
+              <button onClick={callbackCloseWindow}>Cancelar</button>
+            </section>
+          </section>
+        ) : (
+          <p>Cargando...</p>
+        )}
       </section>
     </section>
   );

@@ -15,127 +15,93 @@ import authHeader from "./auth-Header";
 class UserService {
   // Axios GET calls
 
-  get_User_ById(id_user) {
-    return axios
+  async get_User_ById(id_user) {
+    const response = await axios
       .get(backAPI + "/user/" + id_user, {
         headers: authHeader(),
-      })
-      .then((response) => {
-        return response.data;
       });
+    return response.data;
   }
 
-  get_User_List() {
-    return axios
+  async get_User_List() {
+    const response = await axios
       .get(backAPI + "/user/all", {
         headers: authHeader(),
-      })
-      .then((response) => {
-        return response.data;
       });
+    return response.data;
   }
 
-  get_User_Turnos() {
-    return axios
+  async get_User_Turnos() {
+    const response = await axios
       .get(backAPI + "/user/all", {
         headers: authHeader(),
-      })
-      .then((response) => {
-        return response.data;
       });
+    return response.data;
   }
 
-  get_Activity_List() {
-    return axios
-      .get(backAPI + "/activity/all")
-      .then((response) => {
-        return response.data;
-      });
+  async get_Activity_List() {
+    const response = await axios.get(backAPI + "/activity/all");
+    return response.data;
   }
 
-  get_Timeslot_List() {
-    return axios
-      .get(backAPI + "/timeslot/available-and-ordered")
-      .then((response) => {
-        return response.data;
-      });
+  async get_Timeslot_List() {
+    const response = await axios
+      .get(backAPI + "/timeslot/available-and-ordered");
+    return response.data;
   }
 
-  get_Planes_List() {
-    return axios
-      .get(backAPI + "/plan/all")
-      .then((response) => {
-        return response.data;
-      });
+  async get_Planes_List() {
+    const response = await axios.get(backAPI + "/plan/all");
+    return response.data;
   }
 
-  get_Class_List() {
-    return axios
-      .get(backAPI + "/available-class/all")
-      .then((response) => {
-        return response.data;
-      });
+  async get_Class_List() {
+    const response = await axios.get(backAPI + "/available-class/all");
+    return response.data;
   }
 
-  get_Classes_ByActId(id) {
-    return axios
-      .get(
-        backAPI + "/available-class/by-activity-id/" + id
-      )
-      .then((response) => {
-        return response.data;
-      });
+  async get_Classes_ByActId(id) {
+    const response = await axios
+      .get(backAPI + "/available-class/by-activity-id/" + id);
+    return response.data;
   }
 
   /* Devuelve la cantidad de reservas hechas a una clase especifica */
-  get_reservation_atendeesAmount(classID) {
-    return axios
+  async get_reservation_atendeesAmount(classID) {
+    const response = await axios
       .get(
-        backAPI +
-          "/reservation/attendee-amount-by-available-class/" +
-          classID
-      )
-      .then((response) => {
-        return response.data.attendeeAmount;
-      });
+        backAPI + "/reservation/attendee-amount-by-available-class/" + classID
+      );
+    return response.data.attendeeAmount;
   }
 
-  get_Professor_List() {
-    return axios
-      .get(backAPI + "/management/role/all")
-      .then((response) => {
-        const roles = response.data;
-        const rol_prof = roles.find((rol) => {
-          return rol.name == "ROLE_PROFESSOR";
-        });
-        return axios
-          .get(
-            backAPI + "/user/users-by-role/" + rol_prof.id
-          )
-          .then((response) => {
-            return response.data;
-          });
-      });
+  async get_Professor_List() {
+    const response = await axios.get(backAPI + "/management/role/all");
+    const roles = response.data;
+    const rol_prof = roles.find((rol) => {
+      return rol.name == "ROLE_PROFESSOR";
+    });
+    const response_1 = await axios
+      .get(backAPI + "/user/users-by-role/" + rol_prof.id);
+    return response_1.data;
   }
 
-  get_Turnos_ByUserId(id_user) {
-    return axios
-      .get(
-        backAPI + "/reservation/from-user/" + id_user
-      )
-      .then((response) => {
-        return response.data;
-      });
+  async get_Turnos_ByUserId(id_user) {
+    const response = await axios.get(
+      backAPI + "/reservation/from-user/" + id_user
+    );
+    return response.data;
   }
 
-  get_Subscriptions_ByUserId(id_user) {
-    return axios
-      .get(
-        backAPI + "/subscription/from-user/" + id_user
-      )
-      .then((response) => {
-        return response.data;
-      });
+  async get_Subscriptions_ByUserId(id_user) {
+    const response = await axios
+      .get(backAPI + "/subscription/from-user/" + id_user);
+    return response.data;
+  }
+
+  async get_Roles_List() {
+    const response = await axios.get(backAPI + "/management/role/all");
+    return response.data;
   }
 }
 

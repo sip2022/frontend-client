@@ -19,6 +19,7 @@ function AdminMenu(params) {
       </button>
       <button onClick={() => clickHandler("/admin/timeslot")}>Horarios</button>
       <button onClick={() => clickHandler("/admin/classes")}>Clases</button>
+      <button onClick={() => clickHandler("/admin/assign-role-to-user")}>Asignar Roles</button>
     </section>
   );
 }

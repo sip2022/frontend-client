@@ -5,30 +5,6 @@ import { load_list_activity } from "../../store/slices/activityList/activityList
 import ActividadCard from "../ui/ActividadCard";
 import classes from "./Actividades.module.css";
 
-// TODO cambiar las imagenes, cuando esten disponibles
-const DUMMY_DATA = [
-  {
-    texto: "Crossfit",
-    imagen: "/images/actividades_images/activityCardImage.jpg",
-  },
-  {
-    texto: "Spinning",
-    imagen: "/images/actividades_images/activityCardImage.jpg",
-  },
-  {
-    texto: "Musculacion",
-    imagen: "/images/actividades_images/activityCardImage.jpg",
-  },
-  {
-    texto: "Natacion",
-    imagen: "/images/actividades_images/activityCardImage.jpg",
-  },
-  {
-    texto: "Boxeo",
-    imagen: "/images/actividades_images/activityCardImage.jpg",
-  },
-];
-
 function Inicio_Actividades() {
   const actividades = useSelector((state) => state.activityList.activityList);
   const navigate = useNavigate();

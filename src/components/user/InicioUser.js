@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { reiniciarUser } from "../../store/slices/userData/userDataSlice";
 import classes from "./InicioUser.module.css";
-
 
 function ItemCard({ titulo, link, navigate }) {
   function clickHandler(event) {
@@ -19,16 +18,16 @@ function ItemCard({ titulo, link, navigate }) {
 }
 
 function UserInfo(props) {
-
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    // TODO get info del estado del usuario
-    // if(usuario no está logueado)
-    //   navigate("/login", { replace: true });
-  }, []);
+  function logoutHandler() {
+    localStorage.removeItem("logued_user");
+    dispatch(reiniciarUser());
+    navigate("/", { replace: true });
+  }
 
   return (
     <section>
@@ -36,10 +35,26 @@ function UserInfo(props) {
         <h1>Hola {user.firstName}</h1>
       </section>
       <section className={classes.sectionCards}>
-        <ItemCard titulo="Informacion Personal" link="/user/info" navigate={navigate} />
-        <ItemCard titulo="Mis Reservas" link="/user/reservas" navigate={navigate} />
+        <ItemCard
+          titulo="Informacion Personal"
+          link="/user/info"
+          navigate={navigate}
+        />
+        <ItemCard
+          titulo="Mis Reservas"
+          link="/user/reservas"
+          navigate={navigate}
+        />
         <ItemCard titulo="Mis Pagos" link="/user/pagos" navigate={navigate} />
+        {user.roles && user.roles.find((elem) => elem == "ROLE_ADMIN") && (
+          <ItemCard
+            titulo="Menú de Administrador"
+            link="/admin"
+            navigate={navigate}
+          />
+        )}
       </section>
+      <button onClick={logoutHandler}>Cerrar Sesión</button>
     </section>
   );
 }

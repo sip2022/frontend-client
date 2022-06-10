@@ -16,6 +16,14 @@
   cursor: pointer;
 }
 
+.singlePlan ul{
+  padding: 0%;
+}
+
+.singlePlan li{
+  list-style: none;
+}
+
 .singlePlan:hover{
   background-color: #E8A94A;
 }

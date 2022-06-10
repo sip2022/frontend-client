@@ -65,6 +65,7 @@ export async function login(input) {
 export async function getUser(email) {
   var result = {
     message: "",
+    user: null,
   };
   try {
     const response = await axios
@@ -76,6 +77,7 @@ export async function getUser(email) {
       })
       .then((response) => {
         console.log(response);
+        // result.user = response;
       });
   } catch (error) {
     if (error.response) {
@@ -97,6 +99,13 @@ export async function activateUser(id_user) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function updateUser({ id, email }) {
+  // TODO actualiza todos los datos en EditInfo
+  return await axios.put(backAPI + "/user/email/" + id, {
+    email: email,
+  });
 }
 
 // -------------------- Actividades --------------------
@@ -397,7 +406,7 @@ export async function suscribir_Plan(
   cantidadMeses
 ) {
   const date = new Date().toISOString().substring(0, 10);
-  return axios.post(backAPI + "/subscription", {
+  return await axios.post(backAPI + "/subscription", {
     description: nombrePlan + " plan",
     startDate: date,
     monthsToAdd: cantidadMeses,
@@ -407,3 +416,20 @@ export async function suscribir_Plan(
 }
 
 // -------------------- END Planes --------------------
+
+// -------------------- Pagos --------------------
+
+export async function cargarPago(id_sub) {
+  const response = await axios.get(
+    backAPI + "/payment/create-preference/" + id_sub
+  );
+  return response.data;
+}
+
+// -------------------- END Pagos --------------------
+
+export async function assignRoltoUser(id_user, id_rol) {
+  return axios.put(
+    backAPI + "/management/assign-role-to-user/" + id_user + "/" + id_rol
+  );
+}
