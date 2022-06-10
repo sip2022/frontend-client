@@ -103,6 +103,11 @@ class UserService {
     const response = await axios.get(backAPI + "/management/role/all");
     return response.data;
   }
+
+  async get_Pagos_ByUserId(id_user){
+    const response = await axios.get(backAPI + "/payment/from-user/" + id_user);
+    return response.data;
+  }
 }
 
 export default new UserService();
