@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userService from "../../../services/user.service";
 import { cargarPago } from "../../../utils/crud";
-import classes from "./User_Pagos.module.css"
+import classes from "./User_Pagos.module.css";
 
 const FORM_ID = "CHECKOUT_ID";
 
@@ -11,14 +11,16 @@ export default function User_Pagos(params) {
   const navigate = useNavigate();
 
   const user = useSelector((state) => state.user);
-  const [pagos, setPagos] = useState(null);
+  const [pagos, setPagos] = useState([]);
   const [subscriptionDebts, setSubscriptionDebts] = useState([]);
 
   useEffect(() => {
     if (user.id) {
       try {
-        const lista_pagos = userService.get_Pagos_ByUserId(user.id);
-        // setPagos(lista_pagos);
+        userService.get_Pagos_ByUserId(user.id).then((response) => {
+          console.log(response);
+          setPagos(response);
+        });
 
         const susc = userService
           .get_Subscriptions_ByUserId(user.id)
@@ -45,7 +47,6 @@ export default function User_Pagos(params) {
           <section>
             <h1>Suscripciones Pendientes</h1>
             {subscriptionDebts.map((sub, index) => {
-              console.log(sub);
               return <SubscriptionDebtCard subscription={sub} key={index} />;
             })}
           </section>
@@ -53,12 +54,13 @@ export default function User_Pagos(params) {
 
         <h1>Historial de Pagos</h1>
         {/* TODO listar los pagos del usuario */}
-        {!pagos ? (
+        {!pagos.length > 0 ? (
           <p>¡No has realizado nigún pago!</p>
         ) : (
           <section>
             {pagos.map((pago, index) => {
-              return <PagoCard id={pago.id} key={index} />;
+              console.log(pago);
+              return <PagoCard pago={pago} key={index} />;
             })}
           </section>
         )}
@@ -71,10 +73,10 @@ export default function User_Pagos(params) {
 
 /*----------------------------------------------------------------------------------------------------*/
 
-function PagoCard({ id }) {
+function PagoCard({ pago }) {
   return (
     <section>
-      <p>Pago: {id}</p>
+      <p>Pago: {pago.id}</p>
     </section>
   );
 }
@@ -106,12 +108,12 @@ function SubscriptionDebtCard({ subscription }) {
     try {
       const susc_id = subscription.id;
       await cargarPago(susc_id).then((response) => {
-        console.log(response);
         // navigate(response.sandboxInitPoint, { replace: true });
         window.location.replace(response.sandboxInitPoint);
       });
     } catch (error) {
       console.log(error);
+      alert("Hubo un problema con el pago. Vuelva a intentarlo más tarde.");
       setEsperandoPago(false);
     }
   }
