@@ -11,11 +11,10 @@ function MainNavigation() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
-    // TODO Gets the user with the id set
-    const id_mock = "52b0e16f-726f-4e1f-8f5c-bc107d0e5afe";
-    if (id_mock)
-      userService.get_User_ById(id_mock).then((response) => {
+    localStorage.setItem("logued_user", "52b0e16f-726f-4e1f-8f5c-bc107d0e5afe");
+    const id_logued = localStorage.getItem("logued_user");
+    if (id_logued)
+      userService.get_User_ById(id_logued).then((response) => {
         dispatch(setearEstado(response));
       });
   }, []);

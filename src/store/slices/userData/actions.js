@@ -20,3 +20,15 @@ export function setEmail(state, { payload }) {
 export function setTurnos(state, { payload }) {
   state.turnos = payload;
 }
+
+export function resetUser(state) {
+  state.id = null;
+  state.firstName = null;
+  state.lastName = null;
+  state.dni = null;
+  state.phone = null;
+  state.email = null;
+  state.birthDate = null;
+  state.roles = null;
+  state.turnos = null;
+}

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "../../../services/user.service";
 // Para traer las acciones del slice
-import { setState, setTurnos, setEmail } from "./actions";
+import { setState, setTurnos, setEmail, resetUser } from "./actions";
 
 // Ascyn thunk -> para hacer dispatch de acciones que son asincronas
 export const load_user_turnos = createAsyncThunk(
@@ -34,6 +34,7 @@ export const userDataSlice = createSlice({
     setearEstado: setState,
     setearUserTurnos: setTurnos,
     setearEmail: setEmail,
+    reiniciarUser: resetUser,
   },
   extraReducers: {
     [load_user_turnos.pending]: (state, action) => {},
@@ -48,7 +49,8 @@ export const userDataSlice = createSlice({
 });
 
 export default userDataSlice.reducer;
-export const { setearEstado, setearUserTurnos, setearEmail } = userDataSlice.actions;
+export const { setearEstado, setearUserTurnos, setearEmail, reiniciarUser } =
+  userDataSlice.actions;
 
 // ---------- End createSlice ----------
 // axios.interceptors.request.use((request) => {

@@ -419,8 +419,11 @@ export async function suscribir_Plan(
 
 // -------------------- Pagos --------------------
 
-export async function checkPaySuscription(params) {
-  return await axios;
+export async function cargarPago(id_sub) {
+  const response = await axios.post(
+    backAPI + "/payment/create-preference/" + id_sub
+  );
+  return response.data;
 }
 
 // -------------------- END Pagos --------------------

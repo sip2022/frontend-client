@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userService from "../../../services/user.service";
+import { cargarPago } from "../../../utils/crud";
+
+const FORM_ID = "CHECKOUT_ID";
 
 function User_Pagos(params) {
   const navigate = useNavigate();
@@ -9,9 +12,11 @@ function User_Pagos(params) {
   const user = useSelector((state) => state.user);
   const [pagos, setPagos] = useState(null);
 
+  // True -> mostrar "esperando que se inicie el pago..." en lugar del link
+  const [esperandoPago, setEsperandoPago] = useState(false);
+
   const [suscripcion, setSuscripcion] = useState(null);
   const [months, setMonths] = useState(0);
-  const [linkPago, setLinkPago] = useState("");
 
   useEffect(() => {
     const susc = userService
@@ -24,19 +29,27 @@ function User_Pagos(params) {
           var f = new Date(from[0], from[1], from[2]);
           var t = new Date(to[0], to[1], to[2]);
           setMonths(t.getMonth() - f.getMonth());
-
-          // TODO
-          /**
-           * Enviar el id de la suscripción al back:
-           * response[0].id
-           * para generar el pago, y el init_point que devuelva lo inserto en el anchor
-           */
-          const link =
-            "https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=1135511061-0bce0629-12a8-476b-8f5b-af9b661fcf33";
-          setLinkPago(link);
         }
       });
-  }, []);
+  }, [user.id]);
+
+  /**
+   * Se espera el Init_point del back, y luego redirije automaticamente
+   */
+  async function pagoHandler(event) {
+    event.preventDefault();
+    setEsperandoPago(true);
+    try {
+      const susc_id = suscripcion.id;
+      await cargarPago(susc_id).then((response) => {
+        console.log(response);
+        navigate(response, { replace: true });
+      });
+    } catch (error) {
+      console.log(error);
+      setEsperandoPago(false);
+    }
+  }
 
   function volverHandler() {
     navigate("/user", { replace: true });
@@ -47,7 +60,6 @@ function User_Pagos(params) {
   }
 
   return (
-    // TODO mostrar dos secciones: 1)- Si hay una suscripcion sin pagar - 2)- El historial de pagos (si no hay pagos, mostrar cartel)
     <section>
       <section>
         {suscripcion && suscripcion.length != 0 && (
@@ -70,12 +82,11 @@ function User_Pagos(params) {
                   <p>Monto por mes: {suscripcion.planDto.price}</p>
                   <p>Monto Total: {months * suscripcion.planDto.price}</p>
                 </section>
-                <section id="suscrip-section">
-                  {linkPago ? (
+                <section>
+                  {!esperandoPago ? (
                     <section>
                       <p>
-                        Link de pago:{" "}
-                        <a id="link_pago" href={linkPago} target="_self">
+                        <a id="link_pago" href="#" onClick={pagoHandler}>
                           Click aquí para pagar
                         </a>
                       </p>
@@ -83,8 +94,8 @@ function User_Pagos(params) {
                     </section>
                   ) : (
                     <p>
-                      Todavía no se ha cargado el link de pago. Por favor,
-                      espere...
+                      Esperando a que cargue el pago. Será automaticamente
+                      redirigido.
                     </p>
                   )}
                 </section>
