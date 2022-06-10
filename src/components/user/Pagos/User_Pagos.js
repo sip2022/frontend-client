@@ -62,7 +62,7 @@ export default function User_Pagos(params) {
         ) : (
           <section>
             {pagos.map((pago, index) => {
-              return <PagoCard pago={pago} index={index + 1} />;
+              return <PagoCard pago={pago} index={index + 1} key={index} />;
             })}
           </section>
         )}
