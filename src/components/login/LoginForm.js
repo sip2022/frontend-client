@@ -61,6 +61,7 @@ export default function LoginForm() {
     if (!result.message) {
       alert("¡Logueo Exitoso!");
       // dispatch(setearEstado(result.user))
+      // localStorage.setItem("logued_user", result.newUserData.id);
       navigate("/", {replace: true})
     } else {
       setErrors({
