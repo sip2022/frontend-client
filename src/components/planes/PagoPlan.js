@@ -26,6 +26,7 @@ function PagoPlan() {
   }, []);
 
   function suscribeHandler() {
+    setError(null);
     const mesesCant = document.getElementById("input-meses").value;
     if (mesesCant < 1) setError("El número de meses debe ser 1 o mayor");
     else {
@@ -38,7 +39,9 @@ function PagoPlan() {
     navigate("/planes", { replace: true });
   }
 
-  function ocultarConfirmacion() {
+  function ocultarConfirmacion(error) {
+    console.log(error);
+    error && setError(error);
     setConfirmar(false);
   }
 
@@ -59,8 +62,12 @@ function PagoPlan() {
             </section>
           </section>
           <section className={classes.infoPlan_botones}>
-            <button onClick={suscribeHandler} className={classes.boton}>Suscribirse</button>
-            <button onClick={cancelarHandler} className={classes.boton}>Cancelar</button>
+            <button onClick={suscribeHandler} className={classes.boton}>
+              Suscribirse
+            </button>
+            <button onClick={cancelarHandler} className={classes.boton}>
+              Cancelar
+            </button>
           </section>
         </section>
       )}
@@ -104,6 +111,7 @@ function ConfirmacionPago({
       );
       navigate("/user/pagos", { replace: true });
     } catch (error) {
+      callbackSetConfirmar("Usted ya tiene una suscripción activa con este mismo plan");
       console.log(error);
     }
   }
@@ -131,10 +139,14 @@ function ConfirmacionPago({
           <p>* Recuerde que es un solo pago, por el monto total.</p>
         </section>
         <section id="suscrip-section" className={classes.confirmacion_botones}>
-          <button onClick={pagoHandler} className={classes.boton}>Suscribirse</button>
+          <button onClick={pagoHandler} className={classes.boton}>
+            Suscribirse
+          </button>
         </section>
         <section>
-          <button onClick={callbackSetConfirmar} className={classes.boton}>Cancelar</button>
+          <button onClick={() => callbackSetConfirmar()} className={classes.boton}>
+            Cancelar
+          </button>
         </section>
       </section>
     </section>
