@@ -21,29 +21,15 @@ export default function User_Pagos(params) {
   useEffect(() => {
     if (user.id) {
       try {
-        // userService.get_Pagos_ByUserId(user.id).then((response) => {
-        //   setPagos(response);
-        // });
-
         userService.get_Subscriptions_ByUserId(user.id).then((response) => {
           response.map((sub) => {
             userService.get_Payment_ById(sub.paymentId).then((response) => {
-              if(response.paymentStatus){
+              if (response.paymentStatus) {
                 setPagos((prev) => [...prev, response]);
-              }else{
+              } else {
                 setSubscriptionDebts((prev) => [...prev, sub]);
               }
-            })
-
-
-            // if (!sub.paymentId) setSubscriptionDebts((prev) => [...prev, sub]);
-            // else {
-            //   userService.get_Payment_ById(sub.paymentId).then((response) => {
-            //     console.log(response);
-            //     if (!response.paymentStatus)
-            //       setSubscriptionDebts((prev) => [...prev, sub]);
-            //   });
-            // }
+            });
           });
         });
       } catch (error) {
@@ -96,6 +82,7 @@ function PagoCard({ pago, index }) {
       <p>
         Pago #{index} - Fecha: {fechaATexto(pago.paymentDate)} - Monto pagado: $
         {pago.amountPaid}
+        {pago.paymentStatus == "pending" && <p>El pago sigue en proceso de confirmación por MercadoPago</p>}
       </p>
     </section>
   );
