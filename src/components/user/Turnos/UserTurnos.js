@@ -8,6 +8,7 @@ import {
 } from "../../../store/slices/userData/userDataSlice";
 import { cancelar_reserva } from "../../../utils/crud";
 import { translateDay } from "../../../utils/translation";
+import classes from "./User_Turnos.module.css"
 
 function UserTurnos(params) {
   const user = useSelector((state) => state.user);
@@ -38,7 +39,7 @@ function UserTurnos(params) {
           );
         }) : <p>¡No has realizado ninguna reserva!</p>}
       <section>
-        <button onClick={volverHandler}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>Volver</button>
       </section>
     </section>
   );
@@ -70,7 +71,7 @@ function TurnoCard({
   }
 
   return (
-    <section>
+    <section className={classes.section_turno}>
       <p>
         {translateDay(dayOfWeek) +
           " " +
@@ -85,7 +86,7 @@ function TurnoCard({
           actividadName}
       </p>
       <section>
-        <button onClick={clickHandler}>Anular Reserva</button>
+        <button onClick={clickHandler} className={classes.boton}>Anular Reserva</button>
       </section>
     </section>
   );

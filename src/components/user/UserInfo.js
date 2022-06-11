@@ -56,9 +56,13 @@ function UserInfo(props) {
         </section>
       </section>
       <section className={classes.userEdit}>
-        <button onClick={editDatosHandler}>Editar Datos</button>
+        <button onClick={editDatosHandler} className={classes.boton}>
+          Editar Datos
+        </button>
         {/* TODO <button onClick={editPassHandler}>Cambiar Contraseña</button> */}
-        <button onClick={volverHandler}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>
+          Volver
+        </button>
       </section>
     </section>
   );

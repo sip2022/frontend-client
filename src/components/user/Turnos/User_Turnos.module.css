@@ -1,0 +1,32 @@
+.section_turno{
+  background-color: rgba(237, 237, 237, 1);
+    border: 0.1rem black solid;
+    border-radius: 1rem;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.section_turno > p{
+  margin-left: 0.5rem;
+}
+
+.section_turno > section{
+  margin-right: 0.5rem;
+}
+
+.boton{
+  font: inherit;
+  cursor: pointer;
+  background-color: rgba(122, 208, 198, 1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+  border-color: unset;
+  font-weight: bold;
+}
+
+.boton:hover{
+  background-color: rgb(107, 177, 169);
+}

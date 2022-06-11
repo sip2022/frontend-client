@@ -67,7 +67,7 @@ export default function User_Pagos(params) {
           </section>
         )}
 
-        <button onClick={volverHandler}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>Volver</button>
       </section>
     </section>
   );

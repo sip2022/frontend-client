@@ -1,8 +1,16 @@
 .actividad{
   padding: 0.5rem;
   margin-right: 0.5rem;
-  background-color: #BFE0DC;
+  background-color: rgba(191, 224, 220, 1);
   border-radius: 15px;
   width: 20%;
   cursor: pointer;
+}
+
+.actividad:hover{
+  background-color: rgba(122, 208, 198, 1);
+}
+
+.actividad_nombre{
+  font-weight: bold;
 }

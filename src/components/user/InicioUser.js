@@ -54,7 +54,7 @@ function UserInfo(props) {
           />
         )}
       </section>
-      <button onClick={logoutHandler}>Cerrar Sesión</button>
+      <button onClick={logoutHandler} className={classes.boton}>Cerrar Sesión</button>
     </section>
   );
 }

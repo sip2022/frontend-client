@@ -59,8 +59,8 @@ function PagoPlan() {
             </section>
           </section>
           <section className={classes.infoPlan_botones}>
-            <button onClick={suscribeHandler}>Suscribirse</button>
-            <button onClick={cancelarHandler}>Cancelar</button>
+            <button onClick={suscribeHandler} className={classes.boton}>Suscribirse</button>
+            <button onClick={cancelarHandler} className={classes.boton}>Cancelar</button>
           </section>
         </section>
       )}
@@ -131,10 +131,10 @@ function ConfirmacionPago({
           <p>* Recuerde que es un solo pago, por el monto total.</p>
         </section>
         <section id="suscrip-section" className={classes.confirmacion_botones}>
-          <button onClick={pagoHandler}>Suscribirse</button>
+          <button onClick={pagoHandler} className={classes.boton}>Suscribirse</button>
         </section>
         <section>
-          <button onClick={callbackSetConfirmar}>Cancelar</button>
+          <button onClick={callbackSetConfirmar} className={classes.boton}>Cancelar</button>
         </section>
       </section>
     </section>
