@@ -21,18 +21,31 @@ export default function User_Pagos(params) {
   useEffect(() => {
     if (user.id) {
       try {
-        userService.get_Pagos_ByUserId(user.id).then((response) => {
-          setPagos(response);
-        });
+        // userService.get_Pagos_ByUserId(user.id).then((response) => {
+        //   setPagos(response);
+        // });
 
-        const susc = userService
-          .get_Subscriptions_ByUserId(user.id)
-          .then((response) => {
-            response.map((sub) => {
-              if (!sub.paymentDto)
+        userService.get_Subscriptions_ByUserId(user.id).then((response) => {
+          response.map((sub) => {
+            userService.get_Payment_ById(sub.paymentId).then((response) => {
+              if(response.paymentStatus){
+                setPagos((prev) => [...prev, response]);
+              }else{
                 setSubscriptionDebts((prev) => [...prev, sub]);
-            });
+              }
+            })
+
+
+            // if (!sub.paymentId) setSubscriptionDebts((prev) => [...prev, sub]);
+            // else {
+            //   userService.get_Payment_ById(sub.paymentId).then((response) => {
+            //     console.log(response);
+            //     if (!response.paymentStatus)
+            //       setSubscriptionDebts((prev) => [...prev, sub]);
+            //   });
+            // }
           });
+        });
       } catch (error) {
         console.log(error);
       }
@@ -67,7 +80,9 @@ export default function User_Pagos(params) {
           </section>
         )}
 
-        <button onClick={volverHandler} className={classes.boton}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>
+          Volver
+        </button>
       </section>
     </section>
   );
