@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import classes from "./admin.module.css"
+import classes from "./admin.module.css";
 
 function AdminMenu(params) {
   const navigate = useNavigate();
@@ -14,12 +14,30 @@ function AdminMenu(params) {
   return (
     <section className={classes.admin_menu}>
       <h1>Menu del Administrador</h1>
-      <button onClick={() => clickHandler("/admin/actividades")}>
+      <button
+        onClick={() => clickHandler("/admin/actividades")}
+        className={classes.boton}
+      >
         Actividades
       </button>
-      <button onClick={() => clickHandler("/admin/timeslot")}>Horarios</button>
-      <button onClick={() => clickHandler("/admin/classes")}>Clases</button>
-      <button onClick={() => clickHandler("/admin/assign-role-to-user")}>Asignar Roles</button>
+      <button
+        onClick={() => clickHandler("/admin/timeslot")}
+        className={classes.boton}
+      >
+        Horarios
+      </button>
+      <button
+        onClick={() => clickHandler("/admin/classes")}
+        className={classes.boton}
+      >
+        Clases
+      </button>
+      <button
+        onClick={() => clickHandler("/admin/assign-role-to-user")}
+        className={classes.boton}
+      >
+        Asignar Roles
+      </button>
     </section>
   );
 }
