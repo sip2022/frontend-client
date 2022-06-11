@@ -90,7 +90,9 @@ function Actividad(props) {
         );
       }
     } else {
-      if (window.confirm("Para reservar una actividad, primero debes loguearte!")){
+      if (
+        window.confirm("Para reservar una actividad, primero debes loguearte!")
+      ) {
         navigate("/login", { replace: true });
       }
     }
@@ -149,14 +151,23 @@ function Actividad(props) {
           <p>No hay clases establecidas para esta actviidad.</p>
         )}
       </section>
+      {error && (
+        <section>
+          <p>{error}</p>
+        </section>
+      )}
       {availableClasses && availableClasses != [] && (
         <section>
-          <button onClick={reservarHandler} className={classes.boton}>Reservar</button>
+          <button onClick={reservarHandler} className={classes.boton}>
+            Reservar
+          </button>
         </section>
       )}
 
       <section>
-        <button onClick={volverHandler} className={classes.boton}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>
+          Volver
+        </button>
       </section>
       {appearReserva && (
         <DisplayReserva
@@ -168,11 +179,6 @@ function Actividad(props) {
           id_clas={reserva.id}
           id_user={user.id}
         />
-      )}
-      {error && (
-        <section>
-          <p>{error}</p>
-        </section>
       )}
     </section>
   );
@@ -274,19 +280,21 @@ function DisplayReserva({
               </p>
             </section>
             <section>
-              <section>
-                <p>{attendeesLeft}</p>
+              <section className={classes.sectionLugares}>
                 <p>Lugares Disponibles</p>
+                <p>{attendeesLeft}</p>
               </section>
-              <section>
-                <p>{attendeesReserved}</p>
+              <section className={classes.sectionLugares}>
                 <p>Reservas Realizadas</p>
+                <p>{attendeesReserved}</p>
               </section>
             </section>
             <section>
               {alreadyReserved && <p>Ya tienes esta clase reservada</p>}
               {!alreadyReserved && canReserve && (
-                <button onClick={submitHandler}>Reservar</button>
+                <button onClick={submitHandler} className={classes.boton}>
+                  Reservar
+                </button>
               )}
               {!alreadyReserved && !canReserve && (
                 <section>
@@ -298,7 +306,9 @@ function DisplayReserva({
               )}
             </section>
             <section>
-              <button onClick={callbackCloseWindow}>Cancelar</button>
+              <button onClick={callbackCloseWindow} className={classes.boton}>
+                Cancelar
+              </button>
             </section>
           </section>
         ) : (

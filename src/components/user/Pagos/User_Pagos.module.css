@@ -1,5 +1,5 @@
 .sub_debt_card{
-  background-color: lightgray;
+  background-color: rgba(237, 237, 237, 1);
   border: 0.1rem black solid;
   border-radius: 1rem;
   margin: 1rem;
@@ -9,8 +9,24 @@
 
 .pago_card{
   width: 60%;
-  background-color: rgba(207, 207, 207, 1);
+  background-color: rgba(237, 237, 237, 1);
   border: 0.1rem black solid;
   border-radius: 1rem;
   margin-bottom: 1rem;
+}
+
+.boton{
+  font: inherit;
+  cursor: pointer;
+  background-color: rgba(122, 208, 198, 1);
+  padding: 0.5rem 1.5rem;
+  border-radius: 15px;
+  border-color: unset;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.boton:hover{
+  background-color: rgb(107, 177, 169);
 }
