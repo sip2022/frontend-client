@@ -7,6 +7,7 @@ import { load_list_activity } from "../../store/slices/activityList/activityList
 import { load_user_turnos } from "../../store/slices/userData/userDataSlice";
 import { reservar_Clase } from "../../utils/crud";
 import { translateDay } from "../../utils/translation";
+import GeneralModal from "../ui/GeneralModal";
 import classes from "./Actividad.module.css";
 
 function Actividad(props) {
@@ -170,6 +171,7 @@ function Actividad(props) {
         </button>
       </section>
       {appearReserva && (
+        // <GeneralModal text={"Modal displayed"} callbackClose={closeWindowHandler} buttonText="Volver" />
         <DisplayReserva
           callbackCloseWindow={closeWindowHandler}
           callbackSetError={setErrorText}
