@@ -18,3 +18,5 @@ export default function GeneralModal({ text, callbackClose, buttonText }) {
     </section>
   );
 }
+
+// <GeneralModal text={"Modal displayed"} callbackClose={closeWindowHandler} buttonText="Volver" />
