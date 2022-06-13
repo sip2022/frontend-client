@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../../utils/crud";
 import { setearEmail } from "../../../store/slices/userData/userDataSlice";
+import GeneralModal from "../../ui/GeneralModal";
 
 function UserEditInfo(props) {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function UserEditInfo(props) {
     email: "",
     birthDate: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -39,8 +41,7 @@ function UserEditInfo(props) {
       };
       await updateUser(newData);
       dispatch(setearEmail(datos.email));
-      alert("¡Datos actualizados!");
-      navigate("/user/info", { replace: true });
+      setShowModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +54,11 @@ function UserEditInfo(props) {
 
   function handleChange({ name, value }) {
     setDatos((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    navigate("/user/info", { replace: true });
   }
 
   return (
@@ -105,6 +111,7 @@ function UserEditInfo(props) {
           Cancelar
         </button>
       </section>
+      {showModal &&  <GeneralModal text={"¡Datos actualizados!"} callbackClose={closeModal} />}
     </section>
   );
 }

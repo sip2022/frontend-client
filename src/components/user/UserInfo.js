@@ -26,7 +26,7 @@ function UserInfo(props) {
     const now = new Date();
     const age = now.getFullYear() - user.birthDate[0];
     setAge(age);
-  }, []);
+  }, [user.id]);
 
   function editDatosHandler(event) {
     event.preventDefault();
