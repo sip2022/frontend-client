@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import userService from "../../services/user.service";
 import { reiniciarUser } from "../../store/slices/userData/userDataSlice";
 import classes from "./InicioUser.module.css";
 
@@ -22,6 +24,17 @@ function UserInfo(props) {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const [subs, setSubs] = useState(null);
+
+  // Aquí iría la cantidad de actividades extra que puede reservar
+  // Si es 0, explica que no puede reservar otra acitvidad, pero puede reservar horarios de las actividades actuales
+  const [cantActMock, setCantActMock] = useState(0);
+
+  useEffect(() => {
+    userService.get_Subscriptions_ByUserId(user.id).then((response) => {
+      if (response.length > 0) setSubs(response[response.length - 1]);
+    });
+  }, []);
 
   function logoutHandler() {
     localStorage.removeItem("logued_user");
@@ -29,10 +42,24 @@ function UserInfo(props) {
     navigate("/", { replace: true });
   }
 
+  function cantActividades() {
+    if (cantActMock > 0) {
+      if (cantActMock == 1) return "Puedes reserar 1 actividad más";
+    }else return "No puedes reservar más actividades, pero aún puedes anotarte en clases de tus actividades actuales"
+    return "Puedes reservar " + cantActMock + " actividades más";
+  }
+
   return (
     <section>
       <section>
-        <h1>Hola {user.firstName}</h1>
+        <h1>Hola {user.firstName + " " + user.lastName}</h1>
+        {subs && (
+          <h2>
+            Plan: {subs.planDto.name}<br />
+            Has reservado {"X"} actividades <br />
+            {cantActividades()}
+          </h2>
+        )}
       </section>
       <section className={classes.sectionCards}>
         <ItemCard
@@ -54,7 +81,9 @@ function UserInfo(props) {
           />
         )}
       </section>
-      <button onClick={logoutHandler} className={classes.boton}>Cerrar Sesión</button>
+      <button onClick={logoutHandler} className={classes.boton}>
+        Cerrar Sesión
+      </button>
     </section>
   );
 }
