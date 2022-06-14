@@ -24,7 +24,7 @@ export default function User_Pagos(params) {
         userService.get_Subscriptions_ByUserId(user.id).then((response) => {
           response.map((sub) => {
             userService.get_Payment_ById(sub.paymentId).then((response) => {
-              if (response.paymentStatus) {
+              if (response.paymentStatus && response.paymentStatus != "rejected") {
                 setPagos((prev) => [
                   ...prev,
                   { ...response, plan: sub.planDto.name },
