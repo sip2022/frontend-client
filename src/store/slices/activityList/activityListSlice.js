@@ -16,6 +16,7 @@ export const activityListSlice = createSlice({
   name: "activityList",
   initialState: {
     activityList: null,
+    status: null
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
@@ -23,13 +24,16 @@ export const activityListSlice = createSlice({
   },
   extraReducers: {
     [load_list_activity.pending]: (state, action) => {
+      state.status = "pending";
     },
     [load_list_activity.fulfilled]: (state, action) => {
       state.activityList = action.payload;
+      state.status = "fulfilled";
     },
     [load_list_activity.rejected]: (state, action) => {
       console.log(action);
       state.activityList = null;
+      state.status = "rejected";
     },
   },
 });

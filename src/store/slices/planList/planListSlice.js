@@ -16,18 +16,22 @@ export const load_list_planes = createAsyncThunk(
 export const planListSlice = createSlice({
   name: "planList",
   initialState: {
-    planList: null
+    planList: null,
+    status: null
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
   },
   extraReducers: {
     [load_list_planes.pending]: (state, action) => {
+      state.status = "pending";
     },
     [load_list_planes.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
       state.planList = action.payload;
     },
     [load_list_planes.rejected]: (state, action) => {
+      state.status = "rejected";
       console.log(action);
       state.planList = null;
     },

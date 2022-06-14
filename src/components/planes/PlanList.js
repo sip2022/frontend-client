@@ -27,28 +27,38 @@ function PlanCardPage({ id, name, activitiesLimit }) {
   );
 }
 
-function PlanList(props) {
-  // const [planes, setPlanes] = useState([]);
-  const planes = useSelector((state) => state.planList.planList);
+function PlanList() {
+  const { planList: planes, status } = useSelector((state) => state.planList);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!planes) dispatch(load_list_planes());
+    try {
+      if (!planes) dispatch(load_list_planes());
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
     <section>
-      <section className={classes.planes}>
-        {planes
-          ? planes.map((plan, index) => {
-              return <PlanCardPage {...plan} key={index} />;
-            })
-          : null}
-      </section>
-      <section>
-        <h2>¡Seleccioná un plan y comenzá a entrenar!</h2>
-        {/* <button>Suscribete</button> */}
-      </section>
+      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "fulfilled" && (
+        <section>
+          <section className={classes.planes}>
+            {planes
+              ? planes.map((plan, index) => {
+                  return <PlanCardPage {...plan} key={index} />;
+                })
+              : null}
+          </section>
+          <section>
+            <h2>¡Seleccioná un plan y comenzá a entrenar!</h2>
+          </section>
+        </section>
+      )}
+      {status == "rejected" && (
+        <p>No se han podido cargar la lista de planes</p>
+      )}
     </section>
   );
 }

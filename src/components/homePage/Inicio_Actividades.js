@@ -6,33 +6,45 @@ import ActividadCard from "../ui/ActividadCard";
 import classes from "./Actividades.module.css";
 
 function Inicio_Actividades() {
-  const actividades = useSelector((state) => state.activityList.activityList);
+  const { activityList: actividades, status } = useSelector(
+    (state) => state.activityList
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(()=> {
-    
+  useEffect(() => {
     if (!actividades) dispatch(load_list_activity());
-  }, [])
+  }, []);
 
-  function verActividadesHandler(event){
+  function verActividadesHandler(event) {
     event.preventDefault();
     navigate("/actividades", { replace: true });
   }
 
   return (
     <section className={classes.actividades_section}>
-      <section>
-        <h2>Actividades</h2>
-      </section>
-      <section className={classes.actividades_list}>
-        {actividades
-          ? actividades.slice(0,3).map((actividad, index) => {
-              return <ActividadCard actividad={actividad} key={index} />;
-            })
-          : null}
-        <section className={classes.card_verMas} onClick={verActividadesHandler}>Ver Mas Actividades</section>
-      </section>
+    <section>
+      <h2>Actividades</h2>
+    </section>
+      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "fulfilled" && (
+        <section>
+          <section className={classes.actividades_list}>
+            {actividades
+              ? actividades.slice(0, 3).map((actividad, index) => {
+                  return <ActividadCard actividad={actividad} key={index} />;
+                })
+              : null}
+            <section
+              className={classes.card_verMas}
+              onClick={verActividadesHandler}
+            >
+              Ver Mas Actividades
+            </section>
+          </section>
+        </section>
+      )}
+      {status == "rejected" && <p>No han podido cargarse las actividades.</p>}
     </section>
   );
 }

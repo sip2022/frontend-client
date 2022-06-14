@@ -22,7 +22,8 @@ function PlanCard({ plan }) {
 }
 
 function Planes() {
-  const planes = useSelector((state) => state.planList.planList);
+  // const planes = useSelector((state) => state.planList.planList);
+  const { planList: planes, status } = useSelector((state) => state.planList);
 
   const dispatch = useDispatch();
 
@@ -37,11 +38,17 @@ function Planes() {
         <h3 className={classes.planes_h3}>Planes</h3>
       </section>
 
-      {planes
-        ? planes.map((plan, index) => {
-            return <PlanCard plan={plan} key={index} />;
-          })
-        : null}
+      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "fulfilled" && (
+        <section>
+          {planes
+            ? planes.map((plan, index) => {
+                return <PlanCard plan={plan} key={index} />;
+              })
+            : null}
+        </section>
+      )}
+      {status == "rejected" && <p>No se han podido cargar los planes.</p>}
     </section>
   );
 }
