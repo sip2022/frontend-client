@@ -1,13 +1,10 @@
 import Layout from './components/layout/layout';
 import InicioPage from './pages/InicioPage'
 import List_Actividades from "./components/actividadesPage/List_Actividades";
-import PlanesPage from './pages/PlanesPage'
-import UserPage from './pages/UserPage'
-import LoginPage from './pages/LoginPage'
+import InicioUser from "./components/user/InicioUser";
 
 import {Routes, Route} from 'react-router-dom';
 import UserListPage from './pages/UserListPage';
-import ActivacionPage from './pages/ActivacionPage';
 import Actividad from './components/actividadesPage/Actividad';
 import UserInfo from './components/user/UserInfo';
 import UserEditInfo from './components/user/UserEdit/UserEditInfo';
@@ -26,6 +23,9 @@ import PagoPlan from './components/planes/PagoPlan';
 import User_Pagos from './components/user/Pagos/User_Pagos';
 import NewUserForm from './components/login/NewUserForm';
 import Asignar_Rol from './components/admin/roles/Asignar_Rol';
+import PlanList from './components/planes/PlanList';
+import LoginForm from './components/login/LoginForm';
+import ActivationSucces from './components/accountActivation/activationSucces';
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
           {/* TODO REFACTOR separar en distintos componentes las rutas de clientes y admin */}
           {/* User Routes */}
           <Route exact path='/' element={<InicioPage />} />
-          <Route path='/user' element={<UserPage />} />
+          <Route path='/user' element={<InicioUser />} />
           <Route path='/user/info' exact element={<UserInfo />} />
           <Route path='/user/info/change' exact element={<UserEditInfo />} />
           <Route path='/user/reservas' exact element={<UserTurnos />} />
@@ -47,12 +47,12 @@ function App() {
           <Route path='/actividad/:id_act' element={<Actividad />} />
 
           {/* Planes Routes */}
-          <Route path='/planes' element={<PlanesPage />} />
+          <Route path='/planes' element={<PlanList />} />
           <Route path='/planes/:id_plan' element={<PagoPlan />} />
 
-          <Route path='/login' element={<LoginPage />} />
+          <Route path='/login' element={<LoginForm />} />
           <Route path='/registro' element={<NewUserForm />} />
-          <Route path='/activacion' element={<ActivacionPage />} />
+          <Route path='/activacion' element={<ActivationSucces />} />
           <Route path='/userList' element={<UserListPage />} />
 
           {/* Admin Routes */}

@@ -41,6 +41,8 @@ function PlanList() {
 
   return (
     <section>
+      
+      <h1>Encontra el plan para vos!</h1>
       {status == "pending" && <p>Cargando lista de Planes...</p>}
       {status == "fulfilled" && (
         <section>
