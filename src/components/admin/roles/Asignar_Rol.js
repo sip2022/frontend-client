@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userService from "../../../services/user.service";
+import { load_list_user } from "../../../store/slices/usersList/usersListSlice";
 import { assignRoltoUser } from "../../../utils/crud";
 
 export default function Asignar_Rol() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [roles, setRoles] = useState(null);
-  const [users, setUsers] = useState(null);
+  // const [users, setUsers] = useState(null);
+  const { userList: users, status } = useSelector((state) => state.userList);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     try {
-      userService.get_User_List().then((response) => {
-        setUsers(response);
-      });
+      if (!users) dispatch(load_list_user());
+      // userService.get_User_List().then((response) => {
+      //   setUsers(response);
+      // });
       userService.get_Roles_List().then((response) => {
         setRoles(response);
       });
-      setLoading(true);
     } catch (error) {
       console.log(error);
     }

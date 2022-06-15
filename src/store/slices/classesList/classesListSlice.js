@@ -25,15 +25,15 @@ export const classListSlice = createSlice({
   },
   extraReducers: {
     [load_list_class.pending]: (state, action) => {
-      state.satus = "loading"
+      state.status = "pending"
     },
     [load_list_class.fulfilled]: (state, action) => {
-      state.satus = "loaded"
+      state.status = "fulfilled"
       state.classList = action.payload;
     },
     [load_list_class.rejected]: (state, action) => {
       console.log(action);
-      state.satus = "failed"
+      state.status = "rejected"
       state.classList = null;
     },
   },

@@ -30,3 +30,9 @@ select{
   border-radius: 1rem;
   font-weight: bold;
 }
+
+.section_buttons{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}

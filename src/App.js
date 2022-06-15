@@ -8,7 +8,7 @@ import UserListPage from './pages/UserListPage';
 import Actividad from './components/actividadesPage/Actividad';
 import UserInfo from './components/user/UserInfo';
 import UserEditInfo from './components/user/UserEdit/UserEditInfo';
-import ActividadesLista from './components/admin/actividades/ActividadesLista';
+import ActividadesLista from './components/admin/actividades/Admin_ActividadesLista';
 import NewActividadForm from './components/admin/actividades/NewActividad';
 import ActividadEditForm from './components/admin/actividades/ActividadEdit';
 import New_Class from './components/admin/availableClasses/New_Class';

@@ -16,6 +16,7 @@ export const timeslotListSlice = createSlice({
   name: "timeslotList",
   initialState: {
     timeslotList: null,
+    status: null
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
@@ -25,13 +26,16 @@ export const timeslotListSlice = createSlice({
   },
   extraReducers: {
     [load_list_timeslot.pending]: (state, action) => {
+      state.status = "pending";
     },
     [load_list_timeslot.fulfilled]: (state, action) => {
       state.timeslotList = action.payload;
+      state.status = "fulfilled";
     },
     [load_list_timeslot.rejected]: (state, action) => {
       console.log(action);
       state.timeslotList = null;
+      state.status = "rejected";
     },
   },
 });
