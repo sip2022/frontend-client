@@ -46,10 +46,7 @@ function List_TimeSlot(params) {
     <section>
       <h1>Lista de horarios disponibles</h1>
       {status == "pending" && (
-        <section>
-          <ImgLoading />
-          <p>Cargando lista de Horarios...</p>
-        </section>
+        <ImgLoading text={"Cargando lista de Horarios..."} />
       )}
       {status == "fulfilled" && (
         <section>

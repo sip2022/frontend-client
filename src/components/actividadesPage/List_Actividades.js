@@ -19,10 +19,7 @@ function List_Actividades() {
     <section>
       <h1>Disfruta nuestras actividades</h1>
       {status == "pending" && (
-        <section>
-          <ImgLoading />
-          <p>Cargando lista de Actividades...</p>
-        </section>
+        <ImgLoading text="Cargando lista de Actividades.." />
       )}
       {status == "fulfilled" && (
         <section className={classes.section_actividades}>

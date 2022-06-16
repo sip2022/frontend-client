@@ -42,12 +42,10 @@ function PlanList() {
 
   return (
     <section>
-      
       <h1>Encontra el plan para vos!</h1>
-      {status == "pending" && <section>
-          <ImgLoading />
-          <p>Cargando lista de Planes...</p>
-        </section>}
+      {status == "pending" && (
+        <ImgLoading text={"Cargando lista de Planes..."} />
+      )}
       {status == "fulfilled" && (
         <section>
           <section className={classes.planes}>

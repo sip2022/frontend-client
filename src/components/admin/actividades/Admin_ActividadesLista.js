@@ -61,10 +61,9 @@ function ActividadesLista() {
   return (
     <section className={classes.actividadesLista}>
       <h1>Actividades</h1>
-      {status == "pending" && <section>
-          <ImgLoading />
-          <p>Cargando lista de Actividades...</p>
-        </section>}
+      {status == "pending" && (
+        <ImgLoading text={"Cargando lista de Actividades..."} />
+      )}
       {status == "fulfilled" && (
         <section>
           <section className={classes.agregarSection}>

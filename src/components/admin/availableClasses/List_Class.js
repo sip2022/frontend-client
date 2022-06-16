@@ -46,10 +46,9 @@ function List_Class() {
     <section>
       <h1>Lista de Clases</h1>
       <section>
-        {status == "pending" && <section>
-          <ImgLoading />
-          <p>Cargando lista de Clases...</p>
-        </section>}
+        {status == "pending" && (
+          <ImgLoading text={"Cargando lista de Clases..."} />
+        )}
         {status == "fulfilled" && (
           <section>
             <section>
