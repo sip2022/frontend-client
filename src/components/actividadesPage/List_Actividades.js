@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import ActividadCard from "../ui/ActividadCard";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./ActividadesList.module.css";
 
 function List_Actividades() {
@@ -17,7 +18,12 @@ function List_Actividades() {
   return (
     <section>
       <h1>Disfruta nuestras actividades</h1>
-      {status == "pending" && <p>Cargando lista de Actividades...</p>}
+      {status == "pending" && (
+        <section>
+          <ImgLoading />
+          <p>Cargando lista de Actividades...</p>
+        </section>
+      )}
       {status == "fulfilled" && (
         <section className={classes.section_actividades}>
           {actividades

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import ActividadCard from "../ui/ActividadCard";
-import spinnerGif from "../ui/Spinner.gif";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./Actividades.module.css";
 
 function Inicio_Actividades() {
@@ -27,12 +27,7 @@ function Inicio_Actividades() {
       <section>
         <h2>Actividades</h2>
       </section>
-      {/* {status == "pending" && (
-        <section>
-          <img src={spinnerGif} alt="Loading Content" />
-        </section>
-      )} */}
-      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "pending" && <ImgLoading />}
       {status == "fulfilled" && (
         <section>
           <section className={classes.actividades_list}>

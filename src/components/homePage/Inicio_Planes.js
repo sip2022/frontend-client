@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./Planes.module.css";
 
 function PlanCard({ plan }) {
@@ -38,7 +39,7 @@ function Planes() {
         <h3 className={classes.planes_h3}>Planes</h3>
       </section>
 
-      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "pending" && <ImgLoading />}
       {status == "fulfilled" && (
         <section>
           {planes

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { load_list_class } from "../../../store/slices/classesList/classesListSlice";
 import { eliminarClass } from "../../../utils/crud";
 import { translateDay } from "../../../utils/translation";
+import ImgLoading from "../../ui/ImgLoading";
 
 function List_Class() {
   const { classList: classes, status } = useSelector(
@@ -45,7 +46,10 @@ function List_Class() {
     <section>
       <h1>Lista de Clases</h1>
       <section>
-        {status == "pending" && <p>Cargando lista de Clases...</p>}
+        {status == "pending" && <section>
+          <ImgLoading />
+          <p>Cargando lista de Clases...</p>
+        </section>}
         {status == "fulfilled" && (
           <section>
             <section>

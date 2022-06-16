@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { eliminarTimeslot } from "../../../utils/crud";
 import { translateDay } from "../../../utils/translation";
+import ImgLoading from "../../ui/ImgLoading";
 
 function List_TimeSlot(params) {
   const { timeslotList: timeslots, status } = useSelector(
@@ -44,7 +45,12 @@ function List_TimeSlot(params) {
   return (
     <section>
       <h1>Lista de horarios disponibles</h1>
-      {status == "pending" && <p>Cargando lista de Horarios...</p>}
+      {status == "pending" && (
+        <section>
+          <ImgLoading />
+          <p>Cargando lista de Horarios...</p>
+        </section>
+      )}
       {status == "fulfilled" && (
         <section>
           <section>

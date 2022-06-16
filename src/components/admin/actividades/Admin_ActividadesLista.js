@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_activity } from "../../../store/slices/activityList/activityListSlice";
 import { eliminarActividad } from "../../../utils/crud";
+import ImgLoading from "../../ui/ImgLoading";
 import classes from "./ActividadesLista.module.css";
 
 function ActividadItem({ actividad }) {
@@ -60,7 +61,10 @@ function ActividadesLista() {
   return (
     <section className={classes.actividadesLista}>
       <h1>Actividades</h1>
-      {status == "pending" && <p>Cargando lista de Actividades...</p>}
+      {status == "pending" && <section>
+          <ImgLoading />
+          <p>Cargando lista de Actividades...</p>
+        </section>}
       {status == "fulfilled" && (
         <section>
           <section className={classes.agregarSection}>

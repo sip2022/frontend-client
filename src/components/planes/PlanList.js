@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./PlanList.module.css";
 
 // Dummy data sobre los planes
@@ -43,7 +44,10 @@ function PlanList() {
     <section>
       
       <h1>Encontra el plan para vos!</h1>
-      {status == "pending" && <p>Cargando lista de Planes...</p>}
+      {status == "pending" && <section>
+          <ImgLoading />
+          <p>Cargando lista de Planes...</p>
+        </section>}
       {status == "fulfilled" && (
         <section>
           <section className={classes.planes}>
