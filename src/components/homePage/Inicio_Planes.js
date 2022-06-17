@@ -41,7 +41,7 @@ function Planes() {
 
       {status == "pending" && <ImgLoading />}
       {status == "fulfilled" && (
-        <section>
+        <section className={classes.planes_cards}>
           {planes
             ? planes.map((plan, index) => {
                 return <PlanCard plan={plan} key={index} />;

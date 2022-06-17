@@ -11,7 +11,9 @@ function MainNavigation() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    localStorage.setItem("logued_user", "43e64d36-7ff5-4f23-a7d2-ee7ea538a8c1");
+    // TODO borrar esta linea
+    localStorage.setItem("logued_user", "e9f25739-0bff-4ae2-852c-8aeb9db7defb");
+
     const id_logued = localStorage.getItem("logued_user");
     if (id_logued)
       userService.get_User_ById(id_logued).then((response) => {
