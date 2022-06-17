@@ -3,15 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_activity } from "../../../store/slices/activityList/activityListSlice";
 import { eliminarActividad } from "../../../utils/crud";
+import ImgLoading from "../../ui/ImgLoading";
 import classes from "./ActividadesLista.module.css";
-
-function NotAdminMessage(props) {
-  return (
-    <section>
-      <h1>Usted no es admin! Sample Text</h1>
-    </section>
-  );
-}
 
 function ActividadItem({ actividad }) {
   const navigate = useNavigate();
@@ -47,8 +40,10 @@ function ActividadItem({ actividad }) {
 
 function ActividadesLista() {
   const dispatch = useDispatch();
-  const actividades = useSelector((state) => state.activityList.activityList);
-  // const [isAdmin, setIsAdmin] = useState(false);
+  // const actividades = useSelector((state) => state.activityList.activityList);
+  const { activityList: actividades, status } = useSelector(
+    (state) => state.activityList
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,9 +59,12 @@ function ActividadesLista() {
   }
 
   return (
-    <section>
-      <section className={classes.actividadesLista}>
-        <h1>Actividades</h1>
+    <section className={classes.actividadesLista}>
+      <h1>Actividades</h1>
+      {status == "pending" && (
+        <ImgLoading text={"Cargando lista de Actividades..."} />
+      )}
+      {status == "fulfilled" && (
         <section>
           <section className={classes.agregarSection}>
             <button
@@ -88,9 +86,13 @@ function ActividadesLista() {
             )}
           </section>
         </section>
-        <section>
-          <button onClick={goBackHandler}>Volver</button>
-        </section>
+      )}
+      {status == "rejected" && (
+        <p>No se ha podido cargar la lista de actividades</p>
+      )}
+
+      <section>
+        <button onClick={goBackHandler}>Volver</button>
       </section>
     </section>
   );

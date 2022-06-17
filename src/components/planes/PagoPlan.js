@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import reduxService from "../../store/redux.service";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
 import { suscribir_Plan } from "../../utils/crud";
+import GeneralModal from "../ui/GeneralModal";
 import classes from "./PagoPlan.module.css";
 
 function PagoPlan() {
@@ -40,7 +41,6 @@ function PagoPlan() {
   }
 
   function ocultarConfirmacion(error) {
-    console.log(error);
     error && setError(error);
     setConfirmar(false);
   }
@@ -98,6 +98,8 @@ function ConfirmacionPago({
   const navigate = useNavigate();
   const [valorTotal, setValorTotal] = useState(0);
   const user = useSelector((state) => state.user);
+  
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setValorTotal(valorXMes * meses);
@@ -106,14 +108,17 @@ function ConfirmacionPago({
   async function pagoHandler() {
     try {
       await suscribir_Plan(user.id, id_plan, nombrePlan, meses);
-      alert(
-        "Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."
-      );
-      navigate("/user/pagos", { replace: true });
+      setShowModal(true);
     } catch (error) {
       callbackSetConfirmar("Usted ya tiene una suscripción activa con este mismo plan");
       console.log(error);
     }
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    callbackSetConfirmar();
+    navigate("/user/pagos", { replace: true });
   }
 
   return (
@@ -148,6 +153,13 @@ function ConfirmacionPago({
             Cancelar
           </button>
         </section>
+        
+        {showModal && (
+          <GeneralModal
+            text={"Se ha completado la suscripción.\nRevise su página de pagos para terminar el pago de la suscripción."}
+            callbackClose={closeModal}
+          />
+        )}
       </section>
     </section>
   );

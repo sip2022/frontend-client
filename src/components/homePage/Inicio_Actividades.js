@@ -3,19 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_activity } from "../../store/slices/activityList/activityListSlice";
 import ActividadCard from "../ui/ActividadCard";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./Actividades.module.css";
 
 function Inicio_Actividades() {
-  const actividades = useSelector((state) => state.activityList.activityList);
+  const { activityList: actividades, status } = useSelector(
+    (state) => state.activityList
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(()=> {
-    
+  useEffect(() => {
     if (!actividades) dispatch(load_list_activity());
-  }, [])
+  }, []);
 
-  function verActividadesHandler(event){
+  function verActividadesHandler(event) {
     event.preventDefault();
     navigate("/actividades", { replace: true });
   }
@@ -25,14 +27,25 @@ function Inicio_Actividades() {
       <section>
         <h2>Actividades</h2>
       </section>
-      <section className={classes.actividades_list}>
-        {actividades
-          ? actividades.slice(0,3).map((actividad, index) => {
-              return <ActividadCard actividad={actividad} key={index} />;
-            })
-          : null}
-        <section className={classes.card_verMas} onClick={verActividadesHandler}>Ver Mas Actividades</section>
-      </section>
+      {status == "pending" && <ImgLoading />}
+      {status == "fulfilled" && (
+        <section>
+          <section className={classes.actividades_list}>
+            {actividades
+              ? actividades.slice(0, 3).map((actividad, index) => {
+                  return <ActividadCard actividad={actividad} key={index} />;
+                })
+              : null}
+            <section
+              className={classes.card_verMas}
+              onClick={verActividadesHandler}
+            >
+              Ver Mas Actividades
+            </section>
+          </section>
+        </section>
+      )}
+      {status == "rejected" && <p>No han podido cargarse las actividades.</p>}
     </section>
   );
 }

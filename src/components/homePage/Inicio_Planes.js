@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import ImgLoading from "../ui/ImgLoading";
 import classes from "./Planes.module.css";
 
 function PlanCard({ plan }) {
@@ -22,7 +23,8 @@ function PlanCard({ plan }) {
 }
 
 function Planes() {
-  const planes = useSelector((state) => state.planList.planList);
+  // const planes = useSelector((state) => state.planList.planList);
+  const { planList: planes, status } = useSelector((state) => state.planList);
 
   const dispatch = useDispatch();
 
@@ -37,11 +39,17 @@ function Planes() {
         <h3 className={classes.planes_h3}>Planes</h3>
       </section>
 
-      {planes
-        ? planes.map((plan, index) => {
-            return <PlanCard plan={plan} key={index} />;
-          })
-        : null}
+      {status == "pending" && <ImgLoading />}
+      {status == "fulfilled" && (
+        <section className={classes.planes_cards}>
+          {planes
+            ? planes.map((plan, index) => {
+                return <PlanCard plan={plan} key={index} />;
+              })
+            : null}
+        </section>
+      )}
+      {status == "rejected" && <p>No se han podido cargar los planes.</p>}
     </section>
   );
 }

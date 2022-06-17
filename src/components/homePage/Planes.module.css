@@ -12,6 +12,13 @@
 .planes_text{
   display: flex;
   flex-direction: column;
+  width: 30%;
+}
+
+.planes_cards{
+  display: flex;
+  width: 70%;
+  justify-content: space-evenly;
 }
 
 .plan{
@@ -24,7 +31,6 @@
   margin-bottom: 1rem;
   border-radius: 15px;
   cursor: pointer;
-  width: 15%;
 }
 
 .plan:hover{

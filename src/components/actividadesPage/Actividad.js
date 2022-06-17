@@ -7,6 +7,7 @@ import { load_list_activity } from "../../store/slices/activityList/activityList
 import { load_user_turnos } from "../../store/slices/userData/userDataSlice";
 import { reservar_Clase } from "../../utils/crud";
 import { translateDay } from "../../utils/translation";
+import GeneralModal from "../ui/GeneralModal";
 import classes from "./Actividad.module.css";
 
 function Actividad(props) {
@@ -150,12 +151,8 @@ function Actividad(props) {
         ) : (
           <p>No hay clases establecidas para esta actviidad.</p>
         )}
+        {error && <p className={classes.setcion_Error}>{error}</p>}
       </section>
-      {error && (
-        <section>
-          <p>{error}</p>
-        </section>
-      )}
       {availableClasses && availableClasses != [] && (
         <section>
           <button onClick={reservarHandler} className={classes.boton}>
@@ -221,6 +218,7 @@ function DisplayReserva({
   const [canReserve, setCanReserve] = useState(null);
   const [alreadyReserved, setAlreadyReserved] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -245,8 +243,7 @@ function DisplayReserva({
     try {
       if (canReserve) {
         await reservar_Clase(id_clas, id_user);
-        alert("¡Reserva exitosa!\nSe listará en tu sección de reservas.");
-        navigate("/user/reservas", { replace: true });
+        setShowModal(true);
       } else {
         callbackSetError("No quedan vacantes disponibles para esta clase.");
       }
@@ -254,14 +251,23 @@ function DisplayReserva({
       callbackSetError(
         "Hubo un problema al enviar su formulario de reserva. Vuelva a intentar mas tarde."
       );
-    } finally {
       callbackCloseWindow();
     }
   }
 
+  function notCloseClick(event) {
+    event.stopPropagation();
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    callbackCloseWindow();
+    // navigate("/user/reservas", { replace: true });
+  }
+
   return (
-    <section className={classes.reserva_Section}>
-      <section className={classes.reserva_Display}>
+    <section className={classes.reserva_Section} onClick={callbackCloseWindow}>
+      <section className={classes.reserva_Display} onClick={notCloseClick}>
         {loaded ? (
           <section>
             <h2>{act_name}</h2>
@@ -313,6 +319,12 @@ function DisplayReserva({
           </section>
         ) : (
           <p>Cargando...</p>
+        )}
+        {showModal && (
+          <GeneralModal
+            text={"¡Reserva exitosa!\nSe listará en tu sección de reservas"}
+            callbackClose={closeModal}
+          />
         )}
       </section>
     </section>

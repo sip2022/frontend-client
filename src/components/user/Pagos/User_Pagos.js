@@ -24,8 +24,11 @@ export default function User_Pagos(params) {
         userService.get_Subscriptions_ByUserId(user.id).then((response) => {
           response.map((sub) => {
             userService.get_Payment_ById(sub.paymentId).then((response) => {
-              if (response.paymentStatus) {
-                setPagos((prev) => [...prev, response]);
+              if (response.paymentStatus && response.paymentStatus != "rejected") {
+                setPagos((prev) => [
+                  ...prev,
+                  { ...response, plan: sub.planDto.name },
+                ]);
               } else {
                 setSubscriptionDebts((prev) => [...prev, sub]);
               }
@@ -80,7 +83,7 @@ function PagoCard({ pago, index }) {
   return (
     <section className={classes.pago_card}>
       <p>
-        Pago #{index} - Fecha: {fechaATexto(pago.paymentDate)} - Monto pagado: $
+        Pago #{index} - Plan: {pago.plan} - Fecha: {fechaATexto(pago.paymentDate)} - Monto pagado: $
         {pago.amountPaid}
       </p>
       {pago.paymentStatus == "pending" && (

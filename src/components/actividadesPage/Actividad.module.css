@@ -28,6 +28,7 @@
   background-color: rgba(237, 237, 237, 1);
   border: 0.1rem black solid;
   border-radius: 1rem;
+  padding: 0rem 1rem 1rem
 }
 
 .horario_radio{
@@ -48,4 +49,9 @@
 
 .boton:hover{
   background-color: rgb(107, 177, 169);
+}
+
+.setcion_Error{
+  color: red;
+  font-weight: bold;
 }

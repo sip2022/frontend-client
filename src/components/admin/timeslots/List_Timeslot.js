@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { load_list_timeslot } from "../../../store/slices/timeslotList/timeslotListSlice";
 import { eliminarTimeslot } from "../../../utils/crud";
 import { translateDay } from "../../../utils/translation";
+import ImgLoading from "../../ui/ImgLoading";
 
 function List_TimeSlot(params) {
-  const timeslots = useSelector((state) => state.timeslotList.timeslotList);
+  const { timeslotList: timeslots, status } = useSelector(
+    (state) => state.timeslotList
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,43 +45,51 @@ function List_TimeSlot(params) {
   return (
     <section>
       <h1>Lista de horarios disponibles</h1>
-      <section>
+      {status == "pending" && (
+        <ImgLoading text={"Cargando lista de Horarios..."} />
+      )}
+      {status == "fulfilled" && (
         <section>
-          <button onClick={altaClickHandler}>Agregar Horario</button>
-        </section>
-        <section>
-          {timeslots &&
-            timeslots.map((time, index) => {
-              return (
-                <section key={index}>
-                  <p>
-                    {translateDay(time.dayOfWeek) +
-                      ": " +
-                      time.startTime[0] +
-                      ":" +
-                      time.startTime[1] +
-                      " - " +
-                      time.endTime[0] +
-                      ":" +
-                      time.endTime[1]}
-                  </p>
-                  {error.flag && (
+          <section>
+            <button onClick={altaClickHandler}>Agregar Horario</button>
+          </section>
+          <section>
+            {timeslots &&
+              timeslots.map((time, index) => {
+                return (
+                  <section key={index}>
+                    <p>
+                      {translateDay(time.dayOfWeek) +
+                        ": " +
+                        time.startTime[0] +
+                        ":" +
+                        time.startTime[1] +
+                        " - " +
+                        time.endTime[0] +
+                        ":" +
+                        time.endTime[1]}
+                    </p>
+                    {error.flag && (
+                      <section>
+                        <p>{error.message}</p>
+                      </section>
+                    )}
                     <section>
-                      <p>{error.message}</p>
+                      <button onClick={() => editarHandler(time.id)}>
+                        Editar
+                      </button>
+                      <button onClick={() => eliminarHandler(time.id)}>
+                        Eliminar
+                      </button>
                     </section>
-                  )}
-                  <section>
-                    <button onClick={() => editarHandler(time.id)}>
-                      Editar
-                    </button>
-                    <button onClick={() => eliminarHandler(time.id)}>
-                      Eliminar
-                    </button>
                   </section>
-                </section>
-              );
-            })}
+                );
+              })}
+          </section>
         </section>
+      )}
+      {status == "rejected" && <p>No se pudo cargar la lista de Horarios</p>}
+      <section>
         <section>
           <button onClick={goBackHandler}>Volver</button>
         </section>

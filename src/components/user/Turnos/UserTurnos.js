@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userService from "../../../services/user.service";
@@ -8,7 +8,8 @@ import {
 } from "../../../store/slices/userData/userDataSlice";
 import { cancelar_reserva } from "../../../utils/crud";
 import { translateDay } from "../../../utils/translation";
-import classes from "./User_Turnos.module.css"
+import GeneralModal from "../../ui/GeneralModal";
+import classes from "./User_Turnos.module.css";
 
 function UserTurnos(params) {
   const user = useSelector((state) => state.user);
@@ -26,7 +27,7 @@ function UserTurnos(params) {
   return (
     <section>
       <h1>Mis Reservas</h1>
-      {(user.turnos && (user.turnos.length != 0))  ?
+      {user.turnos && user.turnos.length != 0 ? (
         user.turnos.map((turno, index) => {
           return (
             <TurnoCard
@@ -37,9 +38,14 @@ function UserTurnos(params) {
               key={index}
             />
           );
-        }) : <p>¡No has realizado ninguna reserva!</p>}
+        })
+      ) : (
+        <p>¡No has realizado ninguna reserva!</p>
+      )}
       <section>
-        <button onClick={volverHandler} className={classes.boton}>Volver</button>
+        <button onClick={volverHandler} className={classes.boton}>
+          Volver
+        </button>
       </section>
     </section>
   );
@@ -56,18 +62,23 @@ function TurnoCard({
   actividadName,
 }) {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   async function clickHandler() {
     await cancelar_reserva(id_class, id_user)
       .then((response) => {
-        userService.get_Turnos_ByUserId(id_user).then((response) => {
-          alert("Reserva anulada exitosamente")
-          dispatch(setearUserTurnos(response));
-        });
+        setShowModal(true);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function closeModal() {
+    userService.get_Turnos_ByUserId(id_user).then((response) => {
+      dispatch(setearUserTurnos(response));
+    });
+    setShowModal(false);
   }
 
   return (
@@ -86,8 +97,16 @@ function TurnoCard({
           actividadName}
       </p>
       <section>
-        <button onClick={clickHandler} className={classes.boton}>Anular Reserva</button>
+        <button onClick={clickHandler} className={classes.boton}>
+          Anular Reserva
+        </button>
       </section>
+      {showModal && (
+        <GeneralModal
+          text="La reserva se ha anulado exitosamente"
+          callbackClose={closeModal}
+        />
+      )}
     </section>
   );
 }
