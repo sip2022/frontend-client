@@ -24,7 +24,11 @@ export default function User_Pagos(params) {
         userService.get_Subscriptions_ByUserId(user.id).then((response) => {
           response.map((sub) => {
             userService.get_Payment_ById(sub.paymentId).then((response) => {
-              if (response.paymentStatus && response.paymentStatus != "rejected") {
+              console.log(response);
+              if (
+                response.paymentStatus &&
+                response.paymentStatus != "rejected"
+              ) {
                 setPagos((prev) => [
                   ...prev,
                   { ...response, plan: sub.planDto.name },
@@ -83,8 +87,8 @@ function PagoCard({ pago, index }) {
   return (
     <section className={classes.pago_card}>
       <p>
-        Pago #{index} - Plan: {pago.plan} - Fecha: {fechaATexto(pago.paymentDate)} - Monto pagado: $
-        {pago.amountPaid}
+        Pago #{index} - Plan: {pago.plan} - Fecha:{" "}
+        {fechaATexto(pago.paymentDate)} - Monto pagado: ${pago.amountPaid}
       </p>
       {pago.paymentStatus == "pending" && (
         <p>El pago sigue en proceso de confirmación por MercadoPago</p>

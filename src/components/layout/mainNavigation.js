@@ -23,7 +23,7 @@ function MainNavigation() {
     //   });
 
     // TODO Esto es un mock, para recuperar al usuario cn el mail
-    const email_user = "ncavasin97@gmail.com";
+    const email_user = "analyst@mail.com";
     axios
       .post(backAPI + "/user/find-by-email/", {
         email: email_user,

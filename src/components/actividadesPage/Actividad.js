@@ -249,7 +249,7 @@ function DisplayReserva({
       }
     } catch (error) {
       callbackSetError(
-        "Hubo un problema al enviar su formulario de reserva. Vuelva a intentar mas tarde."
+        "Has reservado varios tipos de actividades. Tu plan actual no te permite reservar otras actividades."
       );
       callbackCloseWindow();
     }
