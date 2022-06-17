@@ -29,7 +29,6 @@ function MainNavigation() {
         email: email_user,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(setearEstado(response.data));
       });
   }, []);

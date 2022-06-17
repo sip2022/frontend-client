@@ -45,17 +45,24 @@ function UserInfo(props) {
   function cantActividades() {
     if (cantActMock > 0) {
       if (cantActMock == 1) return "Puedes reserar 1 actividad más";
-    }else return "No puedes reservar más actividades, pero aún puedes anotarte en clases de tus actividades actuales"
+    } else
+      return "No puedes reservar más actividades, pero aún puedes anotarte en clases de tus actividades actuales";
     return "Puedes reservar " + cantActMock + " actividades más";
   }
 
   return (
     <section>
       <section>
-        <h1>Hola {user.firstName + " " + user.lastName}</h1>
+        {subs ? (
+          <h1 className={classes[subs.planDto.name]}>
+            Hola {user.firstName + " " + user.lastName} <br />
+            Plan: {subs.planDto.name}
+          </h1>
+        ) : (
+          <h1>Hola {user.firstName + " " + user.lastName}</h1>
+        )}
         {subs && (
           <h2>
-            Plan: {subs.planDto.name}<br />
             Has reservado {"X"} actividades <br />
             {cantActividades()}
           </h2>
