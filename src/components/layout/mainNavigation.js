@@ -13,23 +13,10 @@ function MainNavigation() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO borrar esta linea
-    // localStorage.setItem("logued_user", "e9f25739-0bff-4ae2-852c-8aeb9db7defb");
-
-    // const id_logued = localStorage.getItem("logued_user");
-    // if (id_logued)
-    //   userService.get_User_ById(id_logued).then((response) => {
-    //     dispatch(setearEstado(response));
-    //   });
-
-    // TODO Esto es un mock, para recuperar al usuario cn el mail
-    const email_user = "seba.p.marchetti@gmail.com";
-    axios
-      .post(backAPI + "/user/find-by-email/", {
-        email: email_user,
-      })
-      .then((response) => {
-        dispatch(setearEstado(response.data));
+    const id_logued = localStorage.getItem("logued_user");
+    if (id_logued)
+      userService.get_User_ById(id_logued).then((response) => {
+        dispatch(setearEstado(response));
       });
   }, []);
 
