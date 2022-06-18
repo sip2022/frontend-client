@@ -21,9 +21,6 @@ function UserInfo(props) {
 
   useEffect(() => {
     if (!user.id) navigate("/login", { replace: true });
-    // TODO get info del estado del usuario
-    // if(usuario no está logueado)
-    //   navigate("/login", { replace: true });
     if (user.birthDate) {
       const now = new Date();
       const age = now.getFullYear() - user.birthDate[0];
@@ -55,7 +52,7 @@ function UserInfo(props) {
           {user.dni && <p>DNI: {user.dni}</p>}
           {user.phone && <p>Telefono: {user.phone}</p>}
           {user.email && <p>Mail: {user.email}</p>}
-          {age && <p>Edad: {age}</p>}
+          {!!age && <p>Edad: {age}</p>}
         </section>
       </section>
       <section className={classes.userEdit}>
