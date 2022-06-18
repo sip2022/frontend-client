@@ -6,6 +6,9 @@ map["THURSDAY"] = "Jueves";
 map["FRIDAY"] = "Viernes";
 map["SATURDAY"] = "Sabado";
 map["SUNDAY"] = "Domingo";
+map["ACTIVE"] = "Activo";
+map["DEACTIVATED"] = "Desactivado";
+map["INACTIVE"] = "Inactivo";
 map["User is not subscribed to any plan"] =
   "Usted no está suscrito a ningún plan";
 // map["Bronze"] = "Bronce";
