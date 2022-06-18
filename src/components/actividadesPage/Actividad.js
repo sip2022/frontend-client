@@ -249,7 +249,7 @@ function DisplayReserva({
       }
     } catch (error) {
       callbackSetError(
-        "Has reservado varios tipos de actividades. Tu plan actual no te permite reservar otras actividades."
+        "Has realizado varias reservas. Tu plan actual no te permite reservar más clases."
       );
       callbackCloseWindow();
     }

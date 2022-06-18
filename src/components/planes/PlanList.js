@@ -21,7 +21,7 @@ function PlanCardPage({ id, name, activitiesLimit }) {
       <section>
         <h2>{name}</h2>
         <ul>
-          <li>{"Limite de actividades: " + activitiesLimit}</li>
+          <li>{"Limite de reservas: " + activitiesLimit}</li>
         </ul>
       </section>
     </section>

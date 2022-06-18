@@ -52,7 +52,7 @@ function PagoPlan() {
           <h1>Suscripcion a Plan</h1>
           <section className={classes.infoPlan_section}>
             <p>Plan {plan.name}</p>
-            <p>Limite de actividades para reservar: {plan.activitiesLimit}</p>
+            <p>Limite de reservas para hacer: {plan.activitiesLimit}</p>
             <p>Valor por mes: ${plan.price}</p>
             <section>
               <p>Indique cuantos meses quiere que dure la suscripción</p>
