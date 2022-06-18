@@ -21,7 +21,6 @@ function PagoPlan() {
 
   useEffect(() => {
     dispatch(load_list_planes());
-    if (!user.id) navigate("/login", { replace: true });
     const plan_rec = reduxService.get_Plan_byID(id_plan);
     setPlan(plan_rec);
   }, []);

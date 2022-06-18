@@ -62,40 +62,55 @@ function Actividad(props) {
   async function reservarHandler(event) {
     clearError();
     if (user.id) {
-      try {
-        var ele = document.getElementsByName("horario");
-        let hor_selected = null;
-        for (let i = 0; i < ele.length; i++) {
-          if (ele[i].checked) hor_selected = ele[i];
-        }
-        if (hor_selected) {
-          // get ID of Available Class selected (radio buttons) and recover the available class
-          const id_clas_select = hor_selected.getAttribute("id_class");
-          const reserva_elegida = availableClasses.find((clas) => {
-            return clas.id == id_clas_select;
-          });
-          // get atendees reserved amount
-          setAmountReserved(
-            await userService.get_reservation_atendeesAmount(id_clas_select)
-          );
-          setReserva(reserva_elegida);
-          setAppearReserva(true);
-        } else {
+      let flag = true;
+      await userService
+        .get_remaining_activities_byUserId(user.id)
+        .then((response) => {
+          console.log(response);
+          if (response == 0) 
+            flag = false;
+        }).catch((error) => {
+          flag = false;
+        });
+      if(flag){
+        try {
+          var ele = document.getElementsByName("horario");
+          let hor_selected = null;
+          for (let i = 0; i < ele.length; i++) {
+            if (ele[i].checked) hor_selected = ele[i];
+          }
+          if (hor_selected) {
+            // get ID of Available Class selected (radio buttons) and recover the available class
+            const id_clas_select = hor_selected.getAttribute("id_class");
+            const reserva_elegida = availableClasses.find((clas) => {
+              return clas.id == id_clas_select;
+            });
+            // get atendees reserved amount
+            setAmountReserved(
+              await userService.get_reservation_atendeesAmount(id_clas_select)
+            );
+            setReserva(reserva_elegida);
+            setAppearReserva(true);
+          } else {
+            setError(
+              "Para reservar la actividad, seleccione primero uno de los horarios mostrados"
+            );
+          }
+        } catch (error) {
           setError(
-            "Para reservar la actividad, seleccione primero uno de los horarios mostrados"
+            "Algo salió mal con la solicitud al servidor. Vuelva a intentarlo mas tarde."
           );
         }
-      } catch (error) {
+
+      }else{
         setError(
-          "Algo salió mal con la solicitud al servidor. Vuelva a intentarlo mas tarde."
+          "Ya has alcanzado tu limite de clases para reservar según tu plan"
         );
       }
     } else {
-      if (
-        window.confirm("Para reservar una actividad, primero debes loguearte!")
-      ) {
-        navigate("/login", { replace: true });
-      }
+      setError(
+        "Debes estar registrado y suscribirte a un plan para reservar clases"
+      );
     }
   }
 
@@ -219,6 +234,7 @@ function DisplayReserva({
   const [alreadyReserved, setAlreadyReserved] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -296,6 +312,9 @@ function DisplayReserva({
               </section>
             </section>
             <section>
+              {limitReached && (
+                <p>Has alcanzado el límite de clases que puedes reservar</p>
+              )}
               {alreadyReserved && <p>Ya tienes esta clase reservada</p>}
               {!alreadyReserved && canReserve && (
                 <button onClick={submitHandler} className={classes.boton}>
