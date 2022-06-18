@@ -28,13 +28,28 @@ function UserInfo(props) {
 
   // Aquí iría la cantidad de actividades extra que puede reservar
   // Si es 0, explica que no puede reservar otra acitvidad, pero puede reservar horarios de las actividades actuales
-  const [cantActMock, setCantActMock] = useState(0);
+  const [cantClassLimit, setCantClassLimit] = useState(0);
+  const [cantClassRemaining, setCantClassRemaining] = useState(0);
+  const cantAct = 0;
 
   useEffect(() => {
-    userService.get_Subscriptions_ByUserId(user.id).then((response) => {
-      if (response.length > 0) setSubs(response[response.length - 1]);
-    });
-  }, []);
+    if (user.id) {
+      userService.get_Subscriptions_ByUserId(user.id).then((response) => {
+        if (response.length > 0) {
+          setSubs(response[response.length - 1]);
+          setCantClassLimit(
+            response[response.length - 1].planDto.activitiesLimit
+          );
+        }
+      });
+
+      userService
+        .get_remaining_activities_byUserId(user.id)
+        .then((response) => {
+          setCantClassRemaining(response);
+        });
+    }
+  }, [user.id]);
 
   function logoutHandler() {
     localStorage.removeItem("logued_user");
@@ -42,22 +57,34 @@ function UserInfo(props) {
     navigate("/", { replace: true });
   }
 
-  function cantActividades() {
-    if (cantActMock > 0) {
-      if (cantActMock == 1) return "Puedes reserar 1 actividad más";
-    }else return "No puedes reservar más actividades, pero aún puedes anotarte en clases de tus actividades actuales"
-    return "Puedes reservar " + cantActMock + " actividades más";
+  function cantClassesRemaining() {
+    if (cantClassRemaining > 0) {
+      if (cantClassRemaining == 1) return "Puedes reservar 1 clase más";
+      return "Puedes reservar " + cantClassRemaining + " clases más";
+    } else return "No puedes reservar más clases";
+  }
+
+  function cantClassesActual() {
+    const cant = cantClassLimit - cantClassRemaining;
+    if (cant == 1) return "Has reservado 1 clase";
+    return "Has reservado " + cant + " clases";
   }
 
   return (
     <section>
       <section>
-        <h1>Hola {user.firstName + " " + user.lastName}</h1>
+        {subs ? (
+          <h1 className={classes[subs.planDto.name]}>
+            Hola {user.firstName + " " + user.lastName} <br />
+            Plan: {subs.planDto.name}
+          </h1>
+        ) : (
+          <h1>Hola {user.firstName + " " + user.lastName}</h1>
+        )}
         {subs && (
           <h2>
-            Plan: {subs.planDto.name}<br />
-            Has reservado {"X"} actividades <br />
-            {cantActividades()}
+            {cantClassesActual()} <br />
+            {cantClassesRemaining()}
           </h2>
         )}
       </section>
@@ -68,11 +95,11 @@ function UserInfo(props) {
           navigate={navigate}
         />
         <ItemCard
-          titulo="Mis Reservas"
+          titulo="Clases Reservadas"
           link="/user/reservas"
           navigate={navigate}
         />
-        <ItemCard titulo="Mis Pagos" link="/user/pagos" navigate={navigate} />
+        <ItemCard titulo="Pagos Realizados" link="/user/pagos" navigate={navigate} />
         {user.roles && user.roles.find((elem) => elem == "ROLE_ADMIN") && (
           <ItemCard
             titulo="Menú de Administrador"

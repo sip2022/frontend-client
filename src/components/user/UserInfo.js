@@ -2,11 +2,12 @@ import classes from "./UserInfo.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { isRejected } from "@reduxjs/toolkit";
 
 function UserInfo(props) {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState(null);
   const [{ nombre, apellido, dni, telefono, mail, edad, imagen }, setDatos] =
     useState({
       nombre: "",
@@ -23,9 +24,11 @@ function UserInfo(props) {
     // TODO get info del estado del usuario
     // if(usuario no está logueado)
     //   navigate("/login", { replace: true });
-    const now = new Date();
-    const age = now.getFullYear() - user.birthDate[0];
-    setAge(age);
+    if (user.birthDate) {
+      const now = new Date();
+      const age = now.getFullYear() - user.birthDate[0];
+      setAge(age);
+    }
   }, [user.id]);
 
   function editDatosHandler(event) {
@@ -49,10 +52,10 @@ function UserInfo(props) {
           {user.firstName + " " + user.lastName}
         </h1>
         <section>
-          <p>DNI: {user.dni}</p>
-          <p>Telefono: {user.phone}</p>
-          <p>Mail: {user.email}</p>
-          <p>Edad: {age}</p>
+          {user.dni && <p>DNI: {user.dni}</p>}
+          {user.phone && <p>Telefono: {user.phone}</p>}
+          {user.email && <p>Mail: {user.email}</p>}
+          {age && <p>Edad: {age}</p>}
         </section>
       </section>
       <section className={classes.userEdit}>

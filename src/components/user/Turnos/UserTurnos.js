@@ -26,7 +26,7 @@ function UserTurnos(params) {
 
   return (
     <section>
-      <h1>Mis Reservas</h1>
+      <h1>Mis Clases reservadas</h1>
       {user.turnos && user.turnos.length != 0 ? (
         user.turnos.map((turno, index) => {
           return (

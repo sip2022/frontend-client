@@ -42,3 +42,23 @@
 .boton:hover{
   background-color: rgb(107, 177, 169);
 }
+
+.Bronze{
+  border: black 1px solid;
+  background-color: #9A8C12;
+}
+
+.Silver{
+  border: black 1px solid;
+  background-color: #EDEDED;
+}
+
+.Gold{
+  border: black 1px solid;
+  background-color: #FFCC81;
+}
+
+.Platinum{
+  border: black 1px solid;
+  background-color: #BFE0DC;
+}
