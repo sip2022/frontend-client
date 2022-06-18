@@ -95,11 +95,11 @@ function UserInfo(props) {
           navigate={navigate}
         />
         <ItemCard
-          titulo="Mis Reservas"
+          titulo="Clases Reservadas"
           link="/user/reservas"
           navigate={navigate}
         />
-        <ItemCard titulo="Mis Pagos" link="/user/pagos" navigate={navigate} />
+        <ItemCard titulo="Pagos Realizados" link="/user/pagos" navigate={navigate} />
         {user.roles && user.roles.find((elem) => elem == "ROLE_ADMIN") && (
           <ItemCard
             titulo="Menú de Administrador"
