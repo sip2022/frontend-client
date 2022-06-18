@@ -91,15 +91,6 @@ export async function getUser(email) {
   return result;
 }
 
-export async function activateUser(id_user) {
-  try {
-    await axios.put(backAPI + "/user/activate/" + id_user, {
-      headers: authHeader(),
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 export async function updateUser({ id, email }) {
   // TODO actualiza todos los datos en EditInfo

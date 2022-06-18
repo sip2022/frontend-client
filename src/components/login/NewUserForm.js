@@ -3,7 +3,7 @@ import { useNavigate, useRoutes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardForm from "../ui/CardForm";
 import { useDispatch, useSelector } from "react-redux";
-import { activateUser, register } from "../../utils/crud";
+import { register } from "../../utils/crud";
 import userService from "../../services/user.service";
 import { setearEstado } from "../../store/slices/userData/userDataSlice";
 
@@ -87,7 +87,6 @@ export default function NewUserForm() {
     event.preventDefault();
     const result = await register(input);
     if (!result.message) {
-      await activateUser(result.newUserData.id);
       localStorage.setItem("logued_user", result.newUserData.id);
       dispatch(setearEstado(result.newUserData));
       navigate("/activacion", { replace: true });
