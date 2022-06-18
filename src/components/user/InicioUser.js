@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import userService from "../../services/user.service";
 import { reiniciarUser } from "../../store/slices/userData/userDataSlice";
+import { translateDay } from "../../utils/translation";
 import classes from "./InicioUser.module.css";
 
 function ItemCard({ titulo, link, navigate }) {
@@ -70,6 +71,11 @@ function UserInfo(props) {
     return "Has reservado " + cant + " clases";
   }
 
+  function resendHandler(event) {
+    event.preventDefault();
+    userService.resendActivation(user.id);
+  }
+
   return (
     <section>
       <section>
@@ -81,6 +87,17 @@ function UserInfo(props) {
         ) : (
           <h1>Hola {user.firstName + " " + user.lastName}</h1>
         )}
+        <section>
+          <h2>Estado del usuario: {translateDay(user.status)}</h2>
+          {user.status == "INACTIVE" && (
+            <h2>
+              Para activar tu cuenta,{" "}
+              <a href="#" onClick={resendHandler}>
+                haz click aqui
+              </a>
+            </h2>
+          )}
+        </section>
         {subs && (
           <h2>
             {cantClassesActual()} <br />
@@ -99,7 +116,11 @@ function UserInfo(props) {
           link="/user/reservas"
           navigate={navigate}
         />
-        <ItemCard titulo="Pagos Realizados" link="/user/pagos" navigate={navigate} />
+        <ItemCard
+          titulo="Pagos Realizados"
+          link="/user/pagos"
+          navigate={navigate}
+        />
         {user.roles && user.roles.find((elem) => elem == "ROLE_ADMIN") && (
           <ItemCard
             titulo="Menú de Administrador"

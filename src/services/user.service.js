@@ -120,6 +120,10 @@ class UserService {
     );
     return response.data.remainingReservations;
   }
+
+  async resendActivation(id_user){
+    await axios.post(backAPI + "/register/resend/" + id_user);
+  }
 }
 
 export default new UserService();

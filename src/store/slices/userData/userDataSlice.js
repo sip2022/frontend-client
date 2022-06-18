@@ -27,6 +27,7 @@ export const userDataSlice = createSlice({
     birthDate: null,
     roles: null,
     turnos: null,
+    status: null
   },
   reducers: {
     // (state, action) -> state: el estado actual, 'initialState' / action: payload
