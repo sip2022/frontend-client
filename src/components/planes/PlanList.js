@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { load_list_planes } from "../../store/slices/planList/planListSlice";
+import GeneralModal from "../ui/GeneralModal";
 import ImgLoading from "../ui/ImgLoading";
 import classes from "./PlanList.module.css";
 
@@ -10,10 +11,17 @@ import classes from "./PlanList.module.css";
 
 function PlanCardPage({ id, name, activitiesLimit }) {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const user = useSelector((state) => state.user);
 
   function clickHandler(event) {
     event.preventDefault();
-    navigate("/planes/" + id, { replace: true });
+    if (user.id) navigate("/planes/" + id, { replace: true });
+    else setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
   }
 
   return (
@@ -24,6 +32,12 @@ function PlanCardPage({ id, name, activitiesLimit }) {
           <li>{"Limite de reservas: " + activitiesLimit}</li>
         </ul>
       </section>
+      {showModal && (
+        <GeneralModal
+          text={"Debes registrarte antes de poder suscribirte a un plan"}
+          callbackClose={closeModal}
+        />
+      )}
     </section>
   );
 }
@@ -42,7 +56,7 @@ function PlanList() {
 
   return (
     <section>
-      <h1>Encontra el plan para vos!</h1>
+      <h1>¡Encontra el plan para vos!</h1>
       {status == "pending" && (
         <ImgLoading text={"Cargando lista de Planes..."} />
       )}

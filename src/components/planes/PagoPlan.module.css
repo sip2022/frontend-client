@@ -24,6 +24,10 @@
   font-weight: bold;
 }
 
+.confirmacion_Display p{
+  margin: 0.5rem;
+}
+
 .infoPlan_section{
   width: 50%;
     border: black 0.1rem solid;

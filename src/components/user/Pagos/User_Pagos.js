@@ -95,8 +95,11 @@ function PagoCard({ pago, index }) {
         Pago #{index} - Plan: {pago.plan} - Fecha:{" "}
         {fechaATexto(pago.paymentDate)} - Monto pagado: ${pago.amountPaid}
       </p>
-      {pago.paymentStatus == "pending" && (
+      {pago.status == "pending" && (
         <p>El pago sigue en proceso de confirmación por MercadoPago</p>
+      )}
+      {pago.status == "rejected" && (
+        <p>El pago no pudo concretarse<br/>Vuelva a intentalo</p>
       )}
     </section>
   );
